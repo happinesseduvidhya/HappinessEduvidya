@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f8f8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/moderator_constraint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:padding="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/attendee_constraint"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/moderator_card"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="#ffffff"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/create_meeting_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="2dp"
+                    android:src="@drawable/moderator" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/moderator_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Teacher"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13dp"
+            app:layout_constraintLeft_toLeftOf="@id/moderator_card"
+            app:layout_constraintRight_toRightOf="@id/moderator_card"
+            app:layout_constraintTop_toBottomOf="@id/moderator_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/attendee_constraint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:padding="5dp"
+        app:layout_constraintLeft_toRightOf="@id/moderator_constraint"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/attendee_card"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="#ffffff"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/join_meeting_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_attendee" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/attendee_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Student"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13dp"
+            app:layout_constraintLeft_toLeftOf="@id/attendee_card"
+            app:layout_constraintRight_toRightOf="@id/attendee_card"
+            app:layout_constraintTop_toBottomOf="@id/attendee_card" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/signin_heading"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/margin_20"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|center"
+        android:text="Sign in as Teacher"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moderator_constraint" />
+
+    <EditText
+        android:id="@+id/enter_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|start"
+        android:hint="Name"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signin_heading" />
+    <EditText
+        android:id="@+id/enter_email"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|start"
+        android:hint="Email"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_name" />
+
+    <EditText
+        android:id="@+id/enter_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|start"
+        android:hint="Password"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_email" />
+
+    <Button
+        android:id="@+id/signin_btn"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/bg_round_btn"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Sign in"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_password" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
