@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -14,9 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
-import com.happiness.eduvidhya.adapters.AdapterAllScheduledMeetings
 import com.happiness.eduvidhya.adapters.AdapterShowBatches
-import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
 
 class FragementShowBatches : Fragment() {
@@ -59,7 +56,7 @@ class FragementShowBatches : Fragment() {
 
                 }
 
-                mRecyclerAdapter = AdapterShowBatches(requireActivity(), list_of_batches)
+                mRecyclerAdapter = AdapterShowBatches(requireActivity(), list_of_batches,get_classroom)
                 show_batches_recycler.adapter = mRecyclerAdapter
 
 

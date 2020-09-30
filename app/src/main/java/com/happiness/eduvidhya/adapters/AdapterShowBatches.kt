@@ -2,23 +2,30 @@ package com.happiness.eduvidhya.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
+import com.happiness.eduvidhya.activities.ActivityBaseForFragment
+import com.happiness.eduvidhya.datamodels.BatchDeatailModel
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
 
-class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBatchesModel>?) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
+class AdapterShowBatches(
+    val context: Activity,
+    show_batches: ArrayList<ListOfBatchesModel>?,
+    getClassroom: String?
+) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
 
     var create_classroom: DocumentReference? = null
     val db = FirebaseFirestore.getInstance()
+    val classname:String?=""
     val teacher_collection = db.collection("teachers")
     var mArray: ArrayList<ListOfBatchesModel>? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,6 +43,25 @@ class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBa
 //            .collection("Batches")
 //
         holder.etTitleTextView.setText(mArray?.get(position)?.batches_name)
+        val mySharedPreferences =context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+        val email = mySharedPreferences.getString("user_email", "")
+        teacher_collection.document(email!!).collection("classrooms").document(classname!!).collection("Batches").document(mArray?.get(position)?.batches_name.toString()).get().
+        addOnSuccessListener {  documents ->
+//            for (document in documents) {
+////                    Log.d("TAG", "${document.id} => ${document.data}")
+//
+//                detail_db = ListOfBatchesModel(document.id)
+//                list_of_batches!!.add(detail_db!!)
+//
+//            } }
+            val get_value= BatchDeatailModel()
+        }
+        holder.card_view.setOnClickListener {
+            val i = Intent(context, ActivityBaseForFragment::class.java)
+            i.putExtra("checkPage", "batch_details")
+
+            context. startActivity(i)
+        }
 //        holder.card_view.setOnClickListener {
 //
 //            Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show()
@@ -96,5 +122,6 @@ class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBa
 
     init {
         this.mArray = show_batches
+        this.classname=getClassroom
     }
 }
