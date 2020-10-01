@@ -60,8 +60,8 @@ class FragmentCreateMeeting : Fragment() {
         display_name_text = v.findViewById(R.id.display_name_text)
         display_name_value = v.findViewById(R.id.display_name_value)
         share_btn = v.findViewById(R.id.share_btn)
-        val date =
-            OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
+
+        val date = OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year)
                 myCalendar.set(Calendar.MONTH, monthOfYear)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -110,6 +110,7 @@ class FragmentCreateMeeting : Fragment() {
     }
 
     private fun createMeeting(meeting_name: String) {
+
         val ran = Random()
         val code = (100000 + ran.nextInt(900000)).toString()
         val meeting_id = "random-" + code.toString()
@@ -117,25 +118,20 @@ class FragmentCreateMeeting : Fragment() {
         val parameters =
             "allowStartStopRecording=true&attendeePW=11&autoStartRecording=false&meetingID=" + meeting_id + "&moderatorPW=22&name=" + meeting_name + "&record=true&welcome=Welcometo"
         val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
+
         if (Constant.hasNetworkAvailable(requireActivity())) {
             updatedProgressDilaog.show(requireActivity())
 
             try {
-                val call: Call<response> = ApiCllientXml.getClientXml.CreateMeeting(
-                    true,
-                    "11", false, meeting_id, "22", meeting_name
-                    , true, "Welcometo", checksum
-                )
+                val call: Call<response> = ApiCllientXml.getClientXml.CreateMeeting(true, "11", false, meeting_id, "22", meeting_name,true, "Welcometo", checksum)
                 call.enqueue(object : Callback<response> {
                     override fun onFailure(call: Call<response>, t: Throwable) {
                         updatedProgressDilaog.dialog.dismiss()
                         Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onResponse(
-                        call: Call<response>,
-                        response: retrofit2.Response<response>
-                    ) {
+                    override fun onResponse(call: Call<response>, response: retrofit2.Response<response>) {
+
                         updatedProgressDilaog.dialog.dismiss()
                         var dataValue: response? = null
 
@@ -146,11 +142,7 @@ class FragmentCreateMeeting : Fragment() {
                             Toast.makeText(activity, "No data found", Toast.LENGTH_SHORT).show()
 
                         } else {
-                            Toast.makeText(
-                                activity,
-                                "Successfully Created Meeting",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(activity, "Successfully Created Meeting", Toast.LENGTH_SHORT).show()
                             Log.e("status", dataValue.returncode + dataValue.meetingID.toString())
                             meeting_id_from_api = dataValue.meetingID.toString()
                             display_code_text.visibility = View.VISIBLE
@@ -159,18 +151,15 @@ class FragmentCreateMeeting : Fragment() {
                             display_name_value.visibility = View.VISIBLE
                             share_btn.visibility = View.VISIBLE
                             display_code_value.setText(dataValue.meetingID.toString())
-                            display_name_value.setText(meeting_name.toString())
+                            display_name_value.setText(meeting_name)
 
                         }
                     }
                 })
             } catch (ex: java.lang.Exception) {
                 updatedProgressDilaog.dialog.dismiss()
-                // updatedProgressDilaog.dialog.dismiss()
-                // Toast.makeText(activity, ex.message.toString(), Toast.LENGTH_SHORT).show()
                 Log.e("catch_message", ex.message.toString())
             }
-
         } else {
             Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
         }

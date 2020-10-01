@@ -20,13 +20,16 @@ import com.happiness.eduvidhya.fragments.FragmentHome
 import com.happiness.eduvidhya.utils.Constant
 
 class ActivityHome : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var home_frame_layout: FrameLayout
+
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home2)
+
         auth = FirebaseAuth.getInstance()
         val transcation = supportFragmentManager.beginTransaction()
         transcation.isAddToBackStackAllowed

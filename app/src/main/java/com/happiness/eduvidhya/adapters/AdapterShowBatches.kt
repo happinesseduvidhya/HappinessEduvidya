@@ -17,17 +17,16 @@ import com.happiness.eduvidhya.activities.ActivityBaseForFragment
 import com.happiness.eduvidhya.datamodels.BatchDeatailModel
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
 
-class AdapterShowBatches(
-    val context: Activity,
-    show_batches: ArrayList<ListOfBatchesModel>?,
-    getClassroom: String?
-) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
+class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBatchesModel>?, getClassroom: String?) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
 
     var create_classroom: DocumentReference? = null
     val db = FirebaseFirestore.getInstance()
     val classname:String?=""
     val teacher_collection = db.collection("teachers")
     var mArray: ArrayList<ListOfBatchesModel>? = null
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.for_showing_btaches, parent, false)
@@ -122,6 +121,5 @@ class AdapterShowBatches(
 
     init {
         this.mArray = show_batches
-        this.classname=getClassroom
     }
 }

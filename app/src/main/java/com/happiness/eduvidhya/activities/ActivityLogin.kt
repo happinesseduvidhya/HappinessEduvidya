@@ -45,8 +45,8 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun loginUserAccount(view:View) {
-        var email = email_edittext.text.toString()
-        var password = password_edittext.text.toString()
+        val email = email_edittext.text.toString()
+        val password = password_edittext.text.toString()
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(applicationContext, "Please enter email...", Toast.LENGTH_LONG)
                 .show()
