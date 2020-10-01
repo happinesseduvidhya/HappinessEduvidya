@@ -61,21 +61,20 @@ class FragmentScheduleMeeting : Fragment() {
         updatedProgressDilaog.show(requireActivity())
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
-            teacher_collection.document(email!!).collection("classrooms").get()
-                .addOnSuccessListener { documents ->
-                    updatedProgressDilaog.dialog.dismiss()
-                    for (document in documents) {
-//                    Log.d("TAG", "${document.id} => ${document.data}")
 
+            teacher_collection.document(email!!).collection("classrooms").get()
+
+                .addOnSuccessListener { documents ->
+
+                    updatedProgressDilaog.dialog.dismiss()
+
+                    for (document in documents) {
                         detail_db = ClassroomDetailsModel(document.id, "0", "0", "0")
                         mArrayBatchesWithMeeting!!.add(detail_db!!)
-
                     }
 
                     mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
                     schedule_meeting_recyler.adapter = mRecyclerAdapter
-
-
 
                 }.addOnFailureListener { exception ->
                     updatedProgressDilaog.dialog.dismiss()
@@ -85,7 +84,7 @@ class FragmentScheduleMeeting : Fragment() {
             Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
         }
 
-        title_top_bar_txt.setText("All Meetings")
+        title_top_bar_txt.setText("All Classrooms")
 
         back_top_bar_img.setOnClickListener {
             requireActivity().finish()

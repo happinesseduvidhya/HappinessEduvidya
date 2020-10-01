@@ -9,11 +9,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-   android:layout_marginTop="100dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/join_meeting_card"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,19 +29,22 @@
                 android:layout_height="match_parent"
                 android:padding="2dp"
                 android:src="@drawable/image_create_meeting" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/create_meeting_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Create Meeting"
-        app:layout_constraintTop_toBottomOf="@id/create_meeting_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/create_meeting_card"
         app:layout_constraintRight_toRightOf="@id/create_meeting_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/create_meeting_card" />
 
 
     <androidx.cardview.widget.CardView
@@ -49,11 +52,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="100dp"
         app:layout_constraintLeft_toRightOf="@id/create_meeting_card"
         app:layout_constraintRight_toLeftOf="@id/scheduled_meeting_card"
         app:layout_constraintTop_toTopOf="parent">
@@ -71,27 +74,29 @@
                 android:src="@drawable/image_join_meeting" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/join_meeting_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Join Meeting"
-        app:layout_constraintTop_toBottomOf="@id/join_meeting_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/join_meeting_card"
         app:layout_constraintRight_toRightOf="@id/join_meeting_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/join_meeting_card" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/scheduled_meeting_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="100dp"
         app:layout_constraintLeft_toRightOf="@id/join_meeting_card"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -109,28 +114,29 @@
                 android:src="@drawable/image_scheduled_meeting" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/scheduled_meeting_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Schedule Meeting"
-        app:layout_constraintTop_toBottomOf="@id/scheduled_meeting_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/scheduled_meeting_card"
         app:layout_constraintRight_toRightOf="@id/scheduled_meeting_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/scheduled_meeting_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/Attendance_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/batch_class_card"
         app:layout_constraintTop_toBottomOf="@id/create_meeting_text">
@@ -148,28 +154,29 @@
                 android:src="@drawable/image_attendance" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/attendance_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Attendance"
-        app:layout_constraintTop_toBottomOf="@id/Attendance_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/Attendance_card"
         app:layout_constraintRight_toRightOf="@id/Attendance_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/Attendance_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/batch_class_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toRightOf="@id/Attendance_card"
         app:layout_constraintRight_toLeftOf="@id/scoreboard_card"
         app:layout_constraintTop_toBottomOf="@id/join_meeting_text">
@@ -188,28 +195,29 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/batch_class_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Classrooms"
-        app:layout_constraintTop_toBottomOf="@id/batch_class_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/batch_class_card"
         app:layout_constraintRight_toRightOf="@id/batch_class_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/batch_class_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/scoreboard_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toRightOf="@id/batch_class_card"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scheduled_meeting_text">
@@ -227,28 +235,29 @@
                 android:src="@drawable/image_growth" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/scoreboard_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Score Board"
-        app:layout_constraintTop_toBottomOf="@id/scoreboard_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/scoreboard_card"
         app:layout_constraintRight_toRightOf="@id/scoreboard_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/scoreboard_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/meeting_history_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/saved_recordings_card"
@@ -267,28 +276,29 @@
                 android:src="@drawable/image_meeting_history" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/meeting_history_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Meeting History"
-        app:layout_constraintTop_toBottomOf="@id/meeting_history_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/meeting_history_card"
         app:layout_constraintRight_toRightOf="@id/meeting_history_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/meeting_history_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/saved_recordings_card"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:background="#ffffff"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toRightOf="@id/meeting_history_card"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scoreboard_text">
@@ -306,62 +316,63 @@
                 android:src="@drawable/image_recordings" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/saved_recordings_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="Recordings"
-        app:layout_constraintTop_toBottomOf="@id/saved_recordings_card"
+        android:textColor="@color/colorBlack"
+        android:textSize="10dp"
         app:layout_constraintLeft_toLeftOf="@id/saved_recordings_card"
         app:layout_constraintRight_toRightOf="@id/saved_recordings_card"
-        android:fontFamily="@font/montserrat"
-        android:textColor="@color/colorBlack"
-        android:textSize="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/saved_recordings_card" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/enter_meeying_name"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginRight="10dp"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:backgroundTint="#000000"-->
-<!--        android:gravity="start|center_vertical"-->
-<!--        android:hint="Enter Meeting Name"-->
-<!--        android:textColor="#000000"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/create_meeting_btn"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent" />-->
+    <!--    <EditText-->
+    <!--        android:id="@+id/enter_meeying_name"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginLeft="10dp"-->
+    <!--        android:layout_marginRight="10dp"-->
+    <!--        android:layout_marginBottom="30dp"-->
+    <!--        android:backgroundTint="#000000"-->
+    <!--        android:gravity="start|center_vertical"-->
+    <!--        android:hint="Enter Meeting Name"-->
+    <!--        android:textColor="#000000"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/create_meeting_btn"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent" />-->
 
-<!--    <Button-->
-<!--        android:id="@+id/create_meeting_btn"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginBottom="50dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="create meeting"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/create_meeting_btn"-->
+    <!--        android:layout_width="250dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginBottom="50dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="create meeting"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/display_code"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_marginLeft="40dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/display_code"-->
+    <!--        android:layout_width="200dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:layout_marginLeft="40dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent" />-->
 
-<!--    <Button-->
-<!--        android:id="@+id/share_btn"-->
-<!--        android:layout_width="40dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_marginLeft="40dp"-->
-<!--        android:background="@drawable/ic_share"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/display_code"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/share_btn"-->
+    <!--        android:layout_width="40dp"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginLeft="40dp"-->
+    <!--        android:background="@drawable/ic_share"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/display_code"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

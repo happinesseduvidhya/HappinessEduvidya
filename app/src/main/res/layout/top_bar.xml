@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_50"
-        android:background="#F0F0F0"
+        android:background="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +36,7 @@
             android:text="Upload Your Adhar Card"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

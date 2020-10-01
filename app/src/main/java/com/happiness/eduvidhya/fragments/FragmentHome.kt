@@ -22,6 +22,7 @@ class FragmentHome : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.activity_home, container, false)
+
         create_meeting_cardview = v.findViewById(R.id.create_meeting_card)
         join_meeting_cardview = v.findViewById(R.id.join_meeting_card)
         attendance_cardview = v.findViewById(R.id.Attendance_card)

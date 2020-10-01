@@ -22,11 +22,13 @@ class ActivityBaseForFragment: AppCompatActivity() {
             val position= intent.getStringExtra("position")
             val classname= intent.getStringExtra("classname")
             val get_class_name= intent.getStringExtra("classroom_name")
+
+
             val bundle = Bundle()
             bundle.putString("subject_name", subject)
             bundle.putString("topic_name", topic)
-            bundle.putString("position", topic)
-            bundle.putString("classname", topic)
+            bundle.putString("position", position)
+            bundle.putString("classname", classname)
             bundle.putString("get_class_name", get_class_name)
 
 
@@ -35,39 +37,39 @@ class ActivityBaseForFragment: AppCompatActivity() {
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentCreate)
                 transcation.commit()
             }
-            if (checkPage!!.equals("join")) {
+            if (checkPage.equals("join")) {
                 val fragmentJoin = FragmentJoinMeeting()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentJoin)
                 transcation.commit()
             }
-            if (checkPage!!.equals("attendance")) {
+            if (checkPage.equals("attendance")) {
                 val fragmentAttendance = FragmentAttendance()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentAttendance)
                 transcation.commit()
             }
-            if (checkPage!!.equals("batch")) {
+            if (checkPage.equals("batch")) {
                 val fragmentBatchClass = FragmentSmallClassroom()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentBatchClass)
                 transcation.commit()
             }
-            if (checkPage!!.equals("createClassroom")) {
+            if (checkPage.equals("createClassroom")) {
                 val fragmentCreateBatch = FragmentCreateClassRoom()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentCreateBatch)
                 transcation.commit()
             }
-            if (checkPage!!.equals("batch_details")) {
+            if (checkPage.equals("batch_details")) {
                 val fragmenBatchDetails = FragmentAddBatchDetails()
-                fragmenBatchDetails.setArguments(bundle);
+                fragmenBatchDetails.setArguments(bundle)
                 transcation.replace(R.id.frame_layout_base_fragment, fragmenBatchDetails)
                 transcation.commit()
             }
-            if (checkPage!!.equals("all_scheduled_meetings")) {
+            if (checkPage.equals("all_scheduled_meetings")) {
                 val fragmentScheduledMeetings = FragmentScheduleMeeting()
                 fragmentScheduledMeetings.setArguments(bundle);
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentScheduledMeetings)
                 transcation.commit()
             }
-            if (checkPage!!.equals("list_of_batches")) {
+            if (checkPage.equals("list_of_batches")) {
                 val fragment_show_batches = FragementShowBatches()
                 fragment_show_batches.setArguments(bundle);
                 transcation.replace(R.id.frame_layout_base_fragment, fragment_show_batches)

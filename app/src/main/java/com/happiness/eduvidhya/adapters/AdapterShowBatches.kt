@@ -16,20 +16,19 @@ import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.activities.ActivityBaseForFragment
 import com.happiness.eduvidhya.datamodels.BatchDeatailModel
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
+import com.happiness.eduvidhya.utils.Constant
 
-class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBatchesModel>?, getClassroom: String?) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
+class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBatchesModel>?, classNameBack: String?) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
 
     var create_classroom: DocumentReference? = null
     val db = FirebaseFirestore.getInstance()
-    val classname:String?=""
+    var classname: String? = ""
     val teacher_collection = db.collection("teachers")
     var mArray: ArrayList<ListOfBatchesModel>? = null
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.for_showing_btaches, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.for_showing_btaches, parent, false)
         return ViewHolder(view)
     }
 
@@ -42,24 +41,32 @@ class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBa
 //            .collection("Batches")
 //
         holder.etTitleTextView.setText(mArray?.get(position)?.batches_name)
-        val mySharedPreferences =context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
-        val email = mySharedPreferences.getString("user_email", "")
-        teacher_collection.document(email!!).collection("classrooms").document(classname!!).collection("Batches").document(mArray?.get(position)?.batches_name.toString()).get().
-        addOnSuccessListener {  documents ->
-//            for (document in documents) {
-////                    Log.d("TAG", "${document.id} => ${document.data}")
-//
-//                detail_db = ListOfBatchesModel(document.id)
-//                list_of_batches!!.add(detail_db!!)
-//
-//            } }
-            val get_value= BatchDeatailModel()
-        }
-        holder.card_view.setOnClickListener {
-            val i = Intent(context, ActivityBaseForFragment::class.java)
-            i.putExtra("checkPage", "batch_details")
 
-            context. startActivity(i)
+        holder.card_view.setOnClickListener {
+
+            val mySharedPreferences =
+                context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+            val email = mySharedPreferences.getString("user_email", "")
+            teacher_collection.document(email!!).collection("classrooms").document(classname!!).collection("Batches").
+            document(mArray?.get(position)?.batches_name.toString()).get().addOnSuccessListener {
+
+                documents ->
+
+                val data = documents.data!!
+                val meetingName = data.getValue("metting_name")
+                val meetingDate = data.getValue("meeting_date")
+                val meetingTime = data.getValue("meeting_time")
+
+                val i = Intent(it.context, ActivityBaseForFragment::class.java)
+                i.putExtra("checkPage", "batch_details")
+                i.putExtra("subjectname", meetingName.toString())
+                i.putExtra("topicname", meetingDate.toString())
+                i.putExtra("position", meetingTime.toString())
+                it.context.startActivity(i)
+
+            }
+
+
         }
 //        holder.card_view.setOnClickListener {
 //
@@ -88,8 +95,6 @@ class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBa
 //        }
 
 
-
-
     }
 
     override fun getItemCount(): Int {
@@ -97,29 +102,20 @@ class AdapterShowBatches(val context: Activity, show_batches: ArrayList<ListOfBa
     }
 
 
-
     inner class ViewHolder(parent: View) : RecyclerView.ViewHolder(parent) {
         val etTitleTextView: TextView
-        val crossImage: ImageView
         val card_view: CardView
-
-        val mySharedPreferences =context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+        val mySharedPreferences = context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val email = mySharedPreferences.getString("user_email", "")
-
-
         init {
             etTitleTextView = parent.findViewById(R.id.new_batch_item) as TextView
-            crossImage = parent.findViewById(R.id.crossImage) as ImageView
             card_view = parent.findViewById(R.id.card_view) as CardView
-
-
-
         }
     }
 
 
-
     init {
         this.mArray = show_batches
+        this.classname = classNameBack
     }
 }

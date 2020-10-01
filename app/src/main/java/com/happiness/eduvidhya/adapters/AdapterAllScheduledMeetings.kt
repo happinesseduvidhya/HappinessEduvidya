@@ -48,7 +48,7 @@ class AdapterAllScheduledMeetings(val context: Activity, mArrayBatchesWithMeetin
             .document(mArray?.get(position)?.classroom_name.toString())
             .collection("Batches")
 
-        holder.etTitleTextView.setText(mArray?.get(position)?.classroom_name)
+        holder.etTitleTextView.setText("ClassName : "+mArray?.get(position)?.classroom_name)
         holder.card_view.setOnClickListener {
             val i = Intent(context, ActivityBaseForFragment::class.java)
             i.putExtra("checkPage", "list_of_batches")

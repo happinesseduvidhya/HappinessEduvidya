@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterShowBatches
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
+import com.happiness.eduvidhya.utils.Constant
+import com.happiness.eduvidhya.utils.CustomProgressDialog
 
 class FragementShowBatches : Fragment() {
     private var mRecyclerAdapter: AdapterShowBatches? = null
@@ -28,6 +31,7 @@ class FragementShowBatches : Fragment() {
     lateinit var back_top_bar_img: ImageView
     lateinit var title_top_bar_txt: TextView
 
+    var updatedProgressDilaog = CustomProgressDialog()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -46,24 +50,28 @@ class FragementShowBatches : Fragment() {
         val email = mySharedPreferences.getString("user_email", "")
         val get_classroom=requireArguments().getString("get_class_name")
 
-        teacher_collection.document(email!!).collection("classrooms").document(get_classroom.toString()).collection("Batches").get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-//                    Log.d("TAG", "${document.id} => ${document.data}")
+        updatedProgressDilaog.show(requireActivity())
 
-                    detail_db = ListOfBatchesModel(document.id)
-                    list_of_batches!!.add(detail_db!!)
+        if (Constant.hasNetworkAvailable(requireActivity())) {
+            teacher_collection.document(email!!).collection("classrooms").document(get_classroom.toString()).collection("Batches").get()
+                .addOnSuccessListener { documents ->
+                    updatedProgressDilaog.dialog.dismiss()
+                    for (document in documents) {
+                        detail_db = ListOfBatchesModel(document.id)
+                        list_of_batches!!.add(detail_db!!)
+                    }
 
+                    mRecyclerAdapter = AdapterShowBatches(requireActivity(),list_of_batches,get_classroom.toString())
+                    show_batches_recycler.adapter = mRecyclerAdapter
+
+                }.addOnFailureListener { exception ->
+                    updatedProgressDilaog.dialog.dismiss()
+                    Log.w("TAG", "Error getting documents: ", exception)
                 }
+        }else {
+            Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
+        }
 
-                mRecyclerAdapter = AdapterShowBatches(requireActivity(), list_of_batches,get_classroom)
-                show_batches_recycler.adapter = mRecyclerAdapter
-
-
-
-            }.addOnFailureListener { exception ->
-                Log.w("TAG", "Error getting documents: ", exception)
-            }
         title_top_bar_txt.setText("All Batches")
 
         back_top_bar_img.setOnClickListener {
