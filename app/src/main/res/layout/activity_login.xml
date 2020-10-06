@@ -36,7 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
@@ -53,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
@@ -65,11 +64,38 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enter_email" />
 
+    <EditText
+        android:id="@+id/type_edt"
+        android:layout_width="match_parent"
+        android:drawablePadding="10dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:lineSpacingExtra="@dimen/margin_20"
+        android:fontFamily="@font/montserrat"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center_vertical|start"
+        android:focusable="false"
+        android:hint="Select your type"
+        android:textColorHint="@color/theme_grey"
+        android:textColor="@color/colorBlack"
+        android:drawableEnd="@drawable/downward_move"
+        android:maxLength="30"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_password" />
+
     <Button
         android:id="@+id/login_btn"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
@@ -80,7 +106,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_password" />
+        app:layout_constraintTop_toBottomOf="@id/type_edt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

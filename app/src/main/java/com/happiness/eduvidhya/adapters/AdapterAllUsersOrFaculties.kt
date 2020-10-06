@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
+import com.happiness.eduvidhya.activities.ActivityAdminControlClassesAndOthers
 import com.happiness.eduvidhya.activities.ActivityBaseForFragment
 import com.happiness.eduvidhya.datamodels.BatchDeatailModel
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
 import com.happiness.eduvidhya.utils.Constant
 
-class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBatchesModel>?, classNameBack: String?) : RecyclerView.Adapter<AdapterShowBatches.ViewHolder>() {
+class AdapterAllUsersOrFaculties(val context: Context, show_batches: ArrayList<ListOfBatchesModel>?, classNameBack: String?) : RecyclerView.Adapter<AdapterAllUsersOrFaculties.ViewHolder>() {
 
     var create_classroom: DocumentReference? = null
     val db = FirebaseFirestore.getInstance()
@@ -28,7 +29,7 @@ class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBat
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.for_showing_btaches, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.custom_all_users_or_faculties, parent, false)
         return ViewHolder(view)
     }
 
@@ -43,56 +44,14 @@ class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBat
 
         holder.etTitleTextView.setText(mArray?.get(position)?.batches_name)
 
+
         holder.card_view.setOnClickListener {
 
-            val mySharedPreferences = context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
-            val email = mySharedPreferences.getString("user_email", "")
-            teacher_collection.document(email!!).collection("classrooms").document(classname!!).collection("Batches").
-            document(mArray?.get(position)?.batches_name.toString()).get().addOnSuccessListener {
-
-                documents ->
-
-                val data = documents.data!!
-                val meetingName = data.getValue("metting_name")
-                val meetingDate = data.getValue("meeting_date")
-                val meetingTime = data.getValue("meeting_time")
-
-                val i = Intent(it.context, ActivityBaseForFragment::class.java)
-                i.putExtra("checkPage", "batch_details")
-                i.putExtra("subjectname", meetingName.toString())
-                i.putExtra("topicname", meetingDate.toString())
-                i.putExtra("position", meetingTime.toString())
-                it.context.startActivity(i)
-
-            }
-
+            val intent = Intent(it.context, ActivityAdminControlClassesAndOthers::class.java)
+            intent.putExtra("Email",mArray?.get(position)?.batches_name.toString())
+            it.context.startActivity(intent)
 
         }
-//        holder.card_view.setOnClickListener {
-//
-//            Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show()
-//            check.get()
-//                .addOnSuccessListener { documents ->
-//                    for (document in documents) {
-//                        Log.d("TAG", "${document.id} => ${document.data}")
-//                        Toast.makeText(
-//                            context,
-//                            document.data.toString(),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//
-//
-//                }.addOnFailureListener { exception ->
-//                    Log.w("TAG", "Error getting documents: ", exception)
-//                    Toast.makeText(
-//                        context,
-//                        exception.message.toString(),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//
-//        }
 
 
     }

@@ -20,10 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.ActivityAdminControlClassesAndOthers"></activity>
+        <activity android:name=".activities.ActivityUsers" />
+        <activity android:name=".activities.ActivityAllFaculties" />
+        <activity android:name=".activities.ActivityHomeAdmin" />
         <activity
             android:name=".activities.ActivityHome"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.ActivityWebView" />
         <activity
             android:name=".activities.ActivitySplash"

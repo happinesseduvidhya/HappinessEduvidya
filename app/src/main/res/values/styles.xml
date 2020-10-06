@@ -19,4 +19,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Popup"
+        parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
 </resources>

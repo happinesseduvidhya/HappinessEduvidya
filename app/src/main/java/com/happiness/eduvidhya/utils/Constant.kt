@@ -20,6 +20,6 @@ object Constant {
     var myauth:FirebaseAuth?=null
 
     fun showMessage(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).setAction("Action", null).show()
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).setAction("Action", null).show()
     }
 }

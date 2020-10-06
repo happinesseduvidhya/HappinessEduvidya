@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,12 +21,14 @@ import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
 
 class FragementShowBatches : Fragment() {
+
     private var mRecyclerAdapter: AdapterShowBatches? = null
     private lateinit var show_batches_recycler:RecyclerView
     var list_of_batches: ArrayList<ListOfBatchesModel>? = null
     var detail_db: ListOfBatchesModel? = null
     val db = FirebaseFirestore.getInstance()
     val teacher_collection = db.collection("teachers")
+
 
     // top bar
     lateinit var back_top_bar_img: ImageView
@@ -36,6 +39,8 @@ class FragementShowBatches : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_show_batches, container, false)
+
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         list_of_batches = ArrayList<ListOfBatchesModel>()
         show_batches_recycler = v.findViewById(R.id.show_batches_recycler)

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.webkit.*
 import androidx.fragment.app.Fragment
 import com.happiness.eduvidhya.R
@@ -18,7 +19,7 @@ class FragmentAttendance : Fragment() { private lateinit var webv: WebView
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_attedance, container, false)
 
-
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 //        webv = v.findViewById(R.id.webview)
 //        webv.getSettings().setDomStorageEnabled(true)
 //        webv.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE)

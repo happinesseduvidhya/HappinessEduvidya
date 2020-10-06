@@ -14,7 +14,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.happiness.eduvidhya.R
 
 class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
+
+
     private lateinit var auth: FirebaseAuth
+
     override fun onAnimationRepeat(p0: Animation?) {
     }
 
@@ -26,18 +29,22 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
 
     private lateinit var animBlink: Animation
     private lateinit var constraint: ConstraintLayout
-    private val SPLASH_DELAY: Long = 2000 //3 seconds
+    private val SPLASH_DELAY: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         auth = FirebaseAuth.getInstance()
+
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+
         this.getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
         setContentView(R.layout.activity_splash)
+
         constraint = findViewById(R.id.splash_constraint)
         animBlink = AnimationUtils.loadAnimation(
             this,

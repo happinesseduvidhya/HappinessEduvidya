@@ -48,7 +48,7 @@ class FragmentCreateMeeting : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-// Inflate the layout for this fragment
+
         val v: View = inflater.inflate(R.layout.fragment_create_meeting, container, false)
 
 
@@ -60,7 +60,9 @@ class FragmentCreateMeeting : Fragment() {
         display_code_value = v.findViewById(R.id.display_code_value)
         display_name_text = v.findViewById(R.id.display_name_text)
         display_name_value = v.findViewById(R.id.display_name_value)
+
         share_btn = v.findViewById(R.id.share_btn)
+
         val date =
             OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year)
@@ -83,11 +85,18 @@ class FragmentCreateMeeting : Fragment() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
         }
+
         enter_meeting_date.setOnClickListener {
-            DatePickerDialog(
-                requireActivity(), date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
-                myCalendar[Calendar.DAY_OF_MONTH]
-            ).show()
+
+            val mDate = activity?.let { it1 ->
+                DatePickerDialog(it1, date, 2016, 2, 24) }
+            mDate?.getDatePicker()?.setMinDate(System.currentTimeMillis() - 1000)
+            mDate?.show()
+
+//            DatePickerDialog(
+//                requireActivity(), date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
+//                myCalendar[Calendar.DAY_OF_MONTH]
+//            ).show()
         }
         enter_meeting_time.setOnClickListener {
             val mcurrentTime = Calendar.getInstance()
@@ -118,7 +127,7 @@ class FragmentCreateMeeting : Fragment() {
         val parameters = "allowStartStopRecording=true&attendeePW=11&autoStartRecording=false&meetingID=" + meeting_id + "&moderatorPW=22&name=" + meeting_name + "&record=true&welcome=Welcometo"
 //        val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
 
-        val checksum = String(Hex.encodeHex(DigestUtils.sha(method + parameters + Constant.shared_secret)));
+        val checksum = String(Hex.encodeHex(DigestUtils.sha(method + parameters + Constant.shared_secret)))
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
             updatedProgressDilaog.show(requireActivity())

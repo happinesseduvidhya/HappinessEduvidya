@@ -5,29 +5,17 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/edit_profile"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_person_24"
             android:title="Profile" />
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Log Out" />
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="LogOut" />
 
 
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_clock"
-                android:title="menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="menu_send" />
-        </menu>
-    </item>
 
 </menu>

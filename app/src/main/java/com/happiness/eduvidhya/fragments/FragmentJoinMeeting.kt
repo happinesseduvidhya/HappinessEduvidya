@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.happiness.eduvidhya.activities.ActivityWebView
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.utils.Constant
+import com.happiness.eduvidhya.utils.CustomProgressDialog
+import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
 
 
@@ -22,7 +25,8 @@ class FragmentJoinMeeting : Fragment() {
     private lateinit var webview_screen: WebView
     private var meeting_id: String? = null
 
-    //  var updatedProgressDilaog = CustomProgressDialog()
+      var updatedProgressDilaog = CustomProgressDialog()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,14 +54,26 @@ class FragmentJoinMeeting : Fragment() {
 
     private fun join_meeting(meeting_id: String) {
 
-        val method = "join"
-        val parameters =
-            "fullName=gurpreet&meetingID="+ meeting_id +"&password=22&redirect=true"
-        val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
-        val s="https://noblekeyz.com/bigbluebutton/api/join?fullName=gurpreet&meetingID="+meeting_id+"&password=22&redirect=true&checksum="+checksum
-        val i = Intent(activity, ActivityWebView::class.java)
-        i.putExtra("url", s)
-        startActivity(i)
+        if (Constant.hasNetworkAvailable(requireActivity())) {
+
+            updatedProgressDilaog.show(requireActivity())
+
+            val method = "join"
+            val parameters = "fullName=gurpreet&meetingID="+ meeting_id +"&password=22&redirect=true"
+            //        val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
+            val checksum = String(Hex.encodeHex(DigestUtils.sha(method + parameters + Constant.shared_secret)))
+            updatedProgressDilaog.dialog.dismiss()
+            val s="https://noblekeyz.com/bigbluebutton/api/join?fullName=gurpreet&meetingID="+meeting_id+"&password=22&redirect=true&checksum="+checksum
+            val i = Intent(activity, ActivityWebView::class.java)
+            i.putExtra("url", s)
+            startActivity(i)
+
+        }
+        else{
+            Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 }
 

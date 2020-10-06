@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_profile"
+        android:title="Select your type" />
+    <item
+        android:id="@+id/calculator"
+        android:title="Admin" />
+
+    <item
+        android:id="@+id/loan_eligibility"
+        android:title="Teacher" />
+
+    <item
+        android:id="@+id/student_item"
+        android:title="Student" />
+
+</menu>

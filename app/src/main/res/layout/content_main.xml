@@ -5,19 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <ImageView
         android:id="@+id/navgationImgBtn"
         android:layout_width="@dimen/margin_25"
         android:layout_height="@dimen/margin_25"
         android:layout_margin="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
         android:scaleType="fitXY"
         android:src="@drawable/ic_menu_icon"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="@dimen/margin_10" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/mLogoutBtn"
+        android:layout_width="@dimen/margin_25"
+        android:layout_height="@dimen/margin_25"
+        android:layout_margin="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_logout_"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <FrameLayout
         android:id="@+id/home_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_50"/>
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navgationImgBtn"
+        android:layout_marginTop="@dimen/margin_20"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

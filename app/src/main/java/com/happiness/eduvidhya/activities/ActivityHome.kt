@@ -1,29 +1,31 @@
 package com.happiness.eduvidhya.activities
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.Toast
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.fragments.FragmentHome
 import com.happiness.eduvidhya.utils.Constant
+
 
 class ActivityHome : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var home_frame_layout: FrameLayout
+    private lateinit var mLogoutBtn: ImageView
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +39,30 @@ class ActivityHome : AppCompatActivity() {
         setSupportActionBar(toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
         home_frame_layout = findViewById(R.id.home_frame_layout)
-        val fragmenthome = FragmentHome()
-        transcation.replace(R.id.home_frame_layout, fragmenthome)
-        transcation.commit()
+        mLogoutBtn = findViewById(R.id.mLogoutBtn)
+
+        if (savedInstanceState == null)
+        {
+            val fragmenthome = FragmentHome()
+            transcation.replace(R.id.home_frame_layout, fragmenthome)
+            transcation.commit()
+        }
+
+
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val headerView: View = navView.getHeaderView(0)
+
+
         val navgationImgBtn: ImageView = findViewById(R.id.navgationImgBtn)
+
+        val navUsername = headerView.findViewById(R.id.txt_person) as TextView
+
+        val mySharedPreferences = applicationContext.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+        val name = mySharedPreferences.getString("user_name", "")
+        navUsername.setText(name)
+
         navgationImgBtn.setOnClickListener {
+
             drawerLayout.openDrawer(Gravity.START)
             navView.itemIconTintList = null
             navView.setNavigationItemSelectedListener(object :
@@ -58,8 +78,11 @@ class ActivityHome : AppCompatActivity() {
                                 if(c!=null)
                                 {
                                 auth.signOut()
-                                startActivity(
-                                    Intent(applicationContext, ActivityStart::class.java))
+
+                                    val intent = Intent(applicationContext, ActivityStart::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    startActivity(intent)
+
                                 }
                                 Constant.myauth=null
                             } else {
@@ -71,6 +94,23 @@ Toast.makeText(applicationContext,"problem",Toast.LENGTH_SHORT).show()
                     return true
                 }
             })
+        }
+
+
+        mLogoutBtn.setOnClickListener {
+            if (FirebaseAuth.getInstance() != null) {
+                val c=auth.currentUser
+                if(c!=null)
+                {
+                    auth.signOut()
+                    val intent = Intent(applicationContext, ActivityStart::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
+                Constant.myauth=null
+            } else {
+                Toast.makeText(applicationContext,"problem",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

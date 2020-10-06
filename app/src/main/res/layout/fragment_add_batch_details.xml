@@ -227,7 +227,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/student_list_constraint"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

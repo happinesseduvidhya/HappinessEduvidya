@@ -39,9 +39,11 @@ class ActivityRegisterAsAdminOrModeratorOrUser : AppCompatActivity() {
     private var mDatabase: FirebaseDatabase? = null
     private var mAuth: FirebaseAuth? = null
     val db = FirebaseFirestore.getInstance()
+
     val teacher_collection = db.collection("teachers")
     val student_collection = db.collection("student")
-    var user_type: String? = ""
+    val admin_collection = db.collection("admin")
+    var user_type: String? = "Teacher"
 
     val progressBar = CustomProgressDialog()
 
@@ -74,7 +76,7 @@ class ActivityRegisterAsAdminOrModeratorOrUser : AppCompatActivity() {
         attendee_constraint_lay.setOnClickListener(listener)
         moderator_constraint_lay.setOnClickListener(listener)
         mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference!!.child("Users")
+        mDatabaseReference = mDatabase!!.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
 
         signin_btn.setOnClickListener {
@@ -109,10 +111,14 @@ class ActivityRegisterAsAdminOrModeratorOrUser : AppCompatActivity() {
 
 
                 auth.createUserWithEmailAndPassword(email, password)
+
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
 
                             progressBar.dialog.dismiss()
+
+                            Toast.makeText(this, user_type, Toast.LENGTH_SHORT).show()
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "createUserWithEmail:success")
                             val user = auth.currentUser
@@ -124,26 +130,32 @@ class ActivityRegisterAsAdminOrModeratorOrUser : AppCompatActivity() {
                             editor.putString("user_email", email)
                             editor.putString("user_name", name)
                             editor.putString("user_password", password)
+                            editor.putString("type", user_type)
                             editor.apply()
                             if (user_type == "Teacher") {
                                 val particular_user_database = teacher_collection.document(email)
                                 particular_user_database.set(detail_db)
+
+                                Toast.makeText(this, "Teacher Side", Toast.LENGTH_SHORT).show()
+
                             } else if (user_type == "Student") {
                                 val particular_user_database = student_collection.document(email)
                                 particular_user_database.set(detail_db)
+
+                                Toast.makeText(this, "Student Side", Toast.LENGTH_SHORT).show()
+
                             } else if (user_type == "Admin") {
-//                                val particular_user_database = student_collection.document(email)
-//                                particular_user_database.set(detail_db)
+                                val particular_user_database = admin_collection.document(email)
+                                particular_user_database.set(detail_db)
                             }
-                            startActivity(Intent(this, ActivityHome::class.java))
+                            val intent = Intent(applicationContext, ActivityHome::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
 
                         } else {
                             // If sign in fails, display a message to the user.
                             progressBar.dialog.dismiss()
-                            Toast.makeText(
-                                baseContext, task.exception.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(baseContext, task.exception.toString(), Toast.LENGTH_SHORT).show()
 
                         }
 
@@ -168,6 +180,9 @@ class ActivityRegisterAsAdminOrModeratorOrUser : AppCompatActivity() {
     }
 
     private fun changeColor(layout: ConstraintLayout, text: String) {
+
+
+
         signin_heading.setText("Sign in as " + text)
         user_type = text
         layout.setBackgroundResource(R.color.color_light_orange)

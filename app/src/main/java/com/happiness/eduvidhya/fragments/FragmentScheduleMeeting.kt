@@ -36,12 +36,10 @@ class FragmentScheduleMeeting : Fragment() {
     lateinit var back_top_bar_img: ImageView
     lateinit var title_top_bar_txt: TextView
 
+    lateinit var no_data_found: TextView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v: View = inflater.inflate(R.layout.fragment_schedule_meeting, container, false)
 
 
@@ -51,6 +49,7 @@ class FragmentScheduleMeeting : Fragment() {
         schedule_meeting_recyler = v.findViewById(R.id.schedule_meeting_recycler)
         back_top_bar_img = v.findViewById(R.id.back_top_bar_img)
         title_top_bar_txt= v.findViewById(R.id.title_top_bar_txt)
+        no_data_found= v.findViewById(R.id.no_data_found)
 
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -62,7 +61,9 @@ class FragmentScheduleMeeting : Fragment() {
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
 
-            teacher_collection.document(email!!).collection("classrooms").get()
+            val query = teacher_collection.document(email!!).collection("classrooms")
+
+            teacher_collection.document(email).collection("classrooms").get()
 
                 .addOnSuccessListener { documents ->
 
@@ -73,8 +74,15 @@ class FragmentScheduleMeeting : Fragment() {
                         mArrayBatchesWithMeeting!!.add(detail_db!!)
                     }
 
-                    mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
-                    schedule_meeting_recyler.adapter = mRecyclerAdapter
+                    if (mArrayBatchesWithMeeting!!.size ==0)
+                    {
+                        no_data_found.visibility = View.VISIBLE
+                    }
+                    else{
+                        mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
+                        schedule_meeting_recyler.adapter = mRecyclerAdapter
+                    }
+
 
                 }.addOnFailureListener { exception ->
                     updatedProgressDilaog.dialog.dismiss()

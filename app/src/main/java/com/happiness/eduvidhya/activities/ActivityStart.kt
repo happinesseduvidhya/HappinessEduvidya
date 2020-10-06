@@ -1,5 +1,6 @@
 package com.happiness.eduvidhya.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -34,8 +35,21 @@ class ActivityStart:AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            Toast.makeText(this, "already signed in", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, ActivityHome::class.java))
+
+            val mySharedPreferences = applicationContext.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+            val type = mySharedPreferences.getString("type", "")
+
+            if (type.equals("Admin"))
+            {
+                Toast.makeText(this, "already signed in", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ActivityHomeAdmin::class.java))
+            }
+            else {
+                Toast.makeText(this, "already signed in", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ActivityHome::class.java))
+            }
+
+
         }
     }
 }

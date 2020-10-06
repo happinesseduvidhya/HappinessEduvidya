@@ -25,11 +25,7 @@ import com.happiness.eduvidhya.datamodels.BatchListDescriptionDataModel
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
 
 
-class BatchListRecyclerAdapter(
-    val context: Activity,
-    myList: ArrayList<BatchListDescriptionDataModel>?,
-    listner: RemoveClickListener,classroom_name:String,
-subject_name:String,topic_name:String
+class BatchListRecyclerAdapter(val context: Activity, myList: ArrayList<BatchListDescriptionDataModel>?, listner: RemoveClickListener,classroom_name:String, subject_name:String,topic_name:String
 ) :
     RecyclerView.Adapter<BatchListRecyclerAdapter.ViewHolder>() {
     private var myList: ArrayList<BatchListDescriptionDataModel>?
@@ -59,16 +55,9 @@ subject_name:String,topic_name:String
             BatchDeatailModel("", "", "")
 
         create_classroom!!.collection("Batches").document("Batch"+(position+1)).set(batch_detail).addOnSuccessListener {
-            Toast.makeText(
-                context, "batch created",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, "batch created", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(
-                context,
-                it.message,
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
         }
         val pos=position+1
         holder.etTitleTextView.setText(subjectName+" : "+topicName+" - "+"Batch "+pos)
@@ -92,6 +81,7 @@ subject_name:String,topic_name:String
         val crossImage: ImageView
 
         init {
+
             etTitleTextView = parent.findViewById(R.id.new_batch_item) as TextView
             crossImage = parent.findViewById(R.id.crossImage) as ImageView
             etTitleTextView.setOnClickListener {

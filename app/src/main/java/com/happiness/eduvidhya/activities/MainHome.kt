@@ -46,5 +46,12 @@ class MainHome:AppCompatActivity() {
             i.putExtra("checkPage", "batch")
             startActivity(i)
         }
+
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
