@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/margin_5"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_history_meeting"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_5"
+        app:cardCornerRadius="@dimen/margin_5"
+        android:padding="@dimen/margin_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_5"
+            app:layout_constraintEnd_toStartOf="@+id/crossImage"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/meeting_id_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Meeting ID - 787889"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_12sp"
+                android:fontFamily="@font/montserrat"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/meeting_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Meeting Name - 787889"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_12sp"
+                android:fontFamily="@font/montserrat"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/meeting_id_txt"/>
+
+            <TextView
+                android:id="@+id/meeting_time_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Meeting Time - 12-02-2020"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_12sp"
+                android:fontFamily="@font/montserrat"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/meeting_name_txt"/>
+
+            <TextView
+                android:id="@+id/meeting_status_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Meeting Status - 12-02-2020"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_12sp"
+                android:fontFamily="@font/montserrat"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/meeting_time_txt"/>
+
+
+            <ImageView
+                android:id="@+id/moveForwardImg"
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="@dimen/margin_30"
+                android:background="@drawable/ic_forward"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/description_constraint"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.cardview.widget.CardView>

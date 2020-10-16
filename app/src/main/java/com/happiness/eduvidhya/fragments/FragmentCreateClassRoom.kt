@@ -23,6 +23,7 @@ import com.happiness.eduvidhya.Interface.RemoveClickListener
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.datamodels.BatchListDescriptionDataModel
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
+import com.happiness.eduvidhya.datamodels.StudentEmail
 import com.happiness.eduvidhya.datamodels.UserDetailDataModel
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
@@ -38,7 +39,8 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
     private lateinit var create_classroom_btn: Button
     private lateinit var create_batch_text: TextView
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+    val classes = db.collection("Classes")
+    val faculties = db.collection("Faculties")
     var create_classroom :DocumentReference?=null
     private var mRecyclerAdapter: BatchListRecyclerAdapter? = null
     var myList: ArrayList<BatchListDescriptionDataModel> = ArrayList()
@@ -76,9 +78,6 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
                 val email = mySharedPreferences.getString("user_email", "")
                 mCallApiFireStore(email.toString())
 
-
-
-
             }
 
         }
@@ -96,59 +95,68 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
 
     fun mCallApiFireStore(email:String)
     {
-        activity?.let { updatedProgressDilaog.show(it) }
+        if (Constant.hasNetworkAvailable(requireActivity())) {
+            activity?.let { updatedProgressDilaog.show(it) }
 
-        teacher_collection.document(email.toString()).get().addOnCompleteListener(object :
-            OnCompleteListener<DocumentSnapshot> {
-            override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
+            faculties.document(email.toString()).get().addOnCompleteListener(object :
+                OnCompleteListener<DocumentSnapshot> {
+                override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
 
-                if (task.isSuccessful()) {
-                    updatedProgressDilaog.dialog.dismiss()
+                    if (task.isSuccessful()) {
+                        updatedProgressDilaog.dialog.dismiss()
 
-                    val document = task.getResult()
-                    if (document!!.exists()) {
-                        val class_status = document.get("class_status")
+                        val document = task.getResult()
+                        if (document!!.exists()) {
+                            val class_status = document.get("class_status")
 
-                        if (class_status!!.equals("0"))
-                        {
-                            val classroom_name = enter_classroom_name.text.toString()
-                            val subject_name = subject_name_edit.text.toString()
-                            val topic_name = topic_name_edit.text.toString()
-                            val classroom_detail = ClassroomDetailsModel(classroom_name, subject_name, topic_name,"")
+                            if (class_status!!.equals("0"))
+                            {
+                                Toast.makeText(activity!!, "Create class disabled by admin", Toast.LENGTH_SHORT).show()
+                            }
+                            else{
+                                val classroom_name = enter_classroom_name.text.toString()
+                                val subject_name = subject_name_edit.text.toString()
+                                val topic_name = topic_name_edit.text.toString()
+                                val classroom_detail = ClassroomDetailsModel(classroom_name, subject_name, topic_name)
 
-                            if (Constant.hasNetworkAvailable(requireActivity())) {
+                                if (Constant.hasNetworkAvailable(requireActivity())) {
 
-                                updatedProgressDilaog.show(requireActivity())
+                                    updatedProgressDilaog.show(requireActivity())
 
-                                create_classroom = teacher_collection.document(email!!).collection("classrooms").document(enter_classroom_name.text.toString())
-                                create_classroom!!.set(classroom_detail).addOnSuccessListener {
+                                    val model = StudentEmail(email.toString())
+                                    classes.document(email).set(model)
 
-                                    updatedProgressDilaog.dialog.dismiss()
-                                    create_batch_text.visibility = View.VISIBLE
+                                    create_classroom = classes.document(email).collection("classrooms").document(enter_classroom_name.text.toString())
+                                    create_classroom!!.set(classroom_detail).addOnSuccessListener {
 
-                                    create_classroom_btn.isEnabled = false
-                                    add_batch.visibility = View.VISIBLE
-                                    Toast.makeText(context, "Successfully created class", Toast.LENGTH_SHORT).show() }.addOnFailureListener {
+                                        updatedProgressDilaog.dialog.dismiss()
+                                        create_batch_text.visibility = View.VISIBLE
+
+                                        create_classroom_btn.isEnabled = false
+                                        add_batch.visibility = View.VISIBLE
+                                        Toast.makeText(context, "Successfully created class", Toast.LENGTH_SHORT).show() }.addOnFailureListener {
+                                    }
+                                }
+                                else
+                                {
+                                    Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            else
-                            {
-                                Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        else{
-                            Toast.makeText(activity!!, "You have not permission to create a class", Toast.LENGTH_SHORT).show()
-                        }
 
 
+                        } else {
+                            Toast.makeText(activity!!, "type is not valid", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
-                        Toast.makeText(activity!!, "type is not valid", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity!!, task.getException().toString(), Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(activity!!, task.getException().toString(), Toast.LENGTH_SHORT).show()
                 }
-            }
-        })
+            })
+        } else {
+            Toast.makeText(requireActivity(), "No network available!", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     override fun OnRemoveClick(index: Int) {

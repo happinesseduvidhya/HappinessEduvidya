@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -18,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class ActivityLogin : AppCompatActivity() {
@@ -39,8 +39,11 @@ class ActivityLogin : AppCompatActivity() {
     val progressBar = CustomProgressDialog()
 
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
-    val student_collection = db.collection("student")
+
+
+    val users_collection = db.collection("Users")
+    val faculties_collection = db.collection("Faculties")
+
     val admin_collection = db.collection("admin")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,9 +75,12 @@ class ActivityLogin : AppCompatActivity() {
 
 
             popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+
                 override fun onMenuItemClick(item: MenuItem): Boolean {
+
                     val types = item.getTitle()
                     if (types.equals("Select your type")) {
+
                         Constant.showMessage(it, "select your type")
                         return false
                     } else {
@@ -93,6 +99,7 @@ class ActivityLogin : AppCompatActivity() {
         val email = email_edittext.text.toString()
         val password = password_edittext.text.toString()
         val type = type_edt.text.toString()
+
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(applicationContext, "Please enter email...", Toast.LENGTH_LONG)
                 .show()
@@ -109,86 +116,95 @@ class ActivityLogin : AppCompatActivity() {
             return
         }
 
-        progressBar.show(this, "Loading")
+        if (Constant.hasNetworkAvailable(this)) {
+            progressBar.show(this, "Loading")
+            if (type.equals("Admin")) {
+                admin_collection.document(email).get().addOnCompleteListener(object :
+                    OnCompleteListener<DocumentSnapshot> {
+                    override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
+                        if (task.isSuccessful()) {
+                            progressBar.dialog.dismiss()
 
-        mAuth.signInWithEmailAndPassword(email.toString().trim(), password.trim())
-            .addOnCompleteListener(this,
-                OnCompleteListener<AuthResult> { task ->
-                    if (!task.isSuccessful) {
-                        progressBar.dialog.dismiss()
-                        Constant.showMessage(view, "Password or email is not correct")
-                    } else {
+                            val document = task.getResult()
+                            if (document!!.exists()) {
+                                val name = document.get("name")
+                                mLoginSucess(email,name.toString(),password,type)
 
-                        if (type.equals("Admin")) {
-                            admin_collection.document(email).get().addOnCompleteListener(object :
-                                OnCompleteListener<DocumentSnapshot> {
-                                override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
-                                    if (task.isSuccessful()) {
-                                        progressBar.dialog.dismiss()
-
-                                        val document = task.getResult()
-                                        if (document!!.exists()) {
-                                            val name = document.get("name")
-                                            mLoginSucess(email,name.toString(),password,type)
-
-                                        } else {
-                                            Constant.showMessage(view,"type is not valid")
-                                        }
-                                    } else {
-                                        Constant.showMessage(view,task.getException().toString())
-                                    }
-                                }
-                            })
-
-                        } else if (type.equals("Teacher")) {
-
-                            val docRef = db.collection("teachers").document(email)
-                            docRef.get().addOnCompleteListener(object :
-                                OnCompleteListener<DocumentSnapshot> {
-                                override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
-                                    if (task.isSuccessful()) {
-                                        progressBar.dialog.dismiss()
-
-                                        val document = task.getResult()
-                                        if (document!!.exists()) {
-                                            val name = document.get("name")
-                                            mLoginSucess(email,name.toString(),password,type)
-
-                                        } else {
-                                            Constant.showMessage(view,"type is not valid")
-                                        }
-                                    } else {
-                                        Constant.showMessage(view,task.getException().toString())
-                                    }
-                                }
-                            })
-
-                        } else if (type.equals("Student")) {
-
-                            student_collection.document(email).get().addOnCompleteListener(object :
-                                OnCompleteListener<DocumentSnapshot> {
-                                override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
-                                    if (task.isSuccessful()) {
-                                        progressBar.dialog.dismiss()
-
-                                        val document = task.getResult()
-                                        if (document!!.exists()) {
-                                            val name = document.get("name")
-                                            mLoginSucess(email,name.toString(),password,type)
-
-                                        } else {
-                                            Constant.showMessage(view,"type is not valid")
-                                        }
-                                    } else {
-                                        Constant.showMessage(view,task.getException().toString())
-                                    }
-                                }
-                            })
+                            } else {
+                                Constant.showMessage(view,"type is not valid")
+                            }
+                        } else {
+                            Constant.showMessage(view,task.getException().toString())
                         }
-
-
                     }
                 })
+
+            } else if (type.equals("Faculty")) {
+
+                faculties_collection.document(email)
+                    .get().addOnCompleteListener(object :
+                        OnCompleteListener<DocumentSnapshot> {
+                        override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
+                            if (task.isSuccessful()) {
+                                progressBar.dialog.dismiss()
+
+                                val document = task.getResult()
+                                if (document!!.exists()) {
+                                    val name = document.get("name")
+                                    val admin_status = document.get("admin_approvable")
+                                    if (admin_status!!.equals("0"))
+                                    {
+                                        Constant.showMessage(view,"your login is not approved")
+                                    }
+                                    else{
+                                        mLoginSucess(email,name.toString(),password,type)
+                                    }
+
+
+                                } else {
+                                    Constant.showMessage(view,"type is not valid")
+                                }
+                            } else {
+                                Constant.showMessage(view,task.getException().toString())
+                            }
+                        }
+                    })
+
+            } else if (type.equals("User")) {
+
+                users_collection.document(email).get().addOnCompleteListener(object :
+                    OnCompleteListener<DocumentSnapshot> {
+                    override fun onComplete(@NonNull task: Task<DocumentSnapshot>) {
+                        if (task.isSuccessful()) {
+                            progressBar.dialog.dismiss()
+
+                            val document = task.getResult()
+                            if (document!!.exists()) {
+                                val name = document.get("name")
+                                val admin_status = document.get("admin_approvable")
+                                if (admin_status!!.equals("0"))
+                                {
+                                    Constant.showMessage(view,"your login is not approved")
+                                }
+                                else{
+                                    mLoginSucess(email,name.toString(),password,type)
+                                }
+
+                            } else {
+                                Constant.showMessage(view,"type is not valid")
+                            }
+                        } else {
+                            Constant.showMessage(view,task.getException().toString())
+                        }
+                    }
+                })
+            }
+        }
+        else {
+            Toast.makeText(applicationContext, "No network available!", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     fun mLoginSucess(email:String,name:String,password:String,type:String)
@@ -204,10 +220,14 @@ class ActivityLogin : AppCompatActivity() {
 
         val type = type_edt.text.toString()
         if (type.equals("Admin")) {
-            startActivity(Intent(this, ActivityHomeAdmin::class.java))
+            val intent = Intent(this, ActivityHomeAdmin::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
         else{
-            startActivity(Intent(this, ActivityHome::class.java))
+            val intent = Intent(this, ActivityHome::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
 
     }

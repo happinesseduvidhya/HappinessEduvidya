@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddStudentByFaculty">
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/top_bar"/>
+
+
+    <TextView
+        android:id="@+id/add_student_in_classes_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Please select yout class"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar" />
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/custom_spinner"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="@+id/add_student_in_classes_txt"
+        app:layout_constraintTop_toBottomOf="@+id/add_student_in_classes_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/enter_user_email_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Enter user email"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relative_layout" />
+
+    <EditText
+        android:id="@+id/search_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_vertical|start"
+        android:hint="search email of user here"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_12sp"
+        app:layout_constraintLeft_toLeftOf="@+id/relative_layout"
+        app:layout_constraintRight_toRightOf="@+id/relative_layout"
+        app:layout_constraintTop_toBottomOf="@id/enter_user_email_txt" />
+
+    <TextView
+        android:id="@+id/check_email_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="ENTER_EMAIL"
+        android:visibility="invisible"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_user" />
+
+    <Button
+        android:id="@+id/add_student_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/bg_round_btn"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Add"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

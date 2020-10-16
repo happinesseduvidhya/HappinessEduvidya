@@ -23,7 +23,7 @@ class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBat
     var create_classroom: DocumentReference? = null
     val db = FirebaseFirestore.getInstance()
     var classname: String? = ""
-    val teacher_collection = db.collection("teachers")
+    val classes = db.collection("Classes")
     var mArray: ArrayList<ListOfBatchesModel>? = null
 
 
@@ -47,7 +47,8 @@ class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBat
 
             val mySharedPreferences = context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
             val email = mySharedPreferences.getString("user_email", "")
-            teacher_collection.document(email!!).collection("classrooms").document(classname!!).collection("Batches").
+
+            classes.document(email!!).collection("classrooms").document(classname!!).collection("Batches").
             document(mArray?.get(position)?.batches_name.toString()).get().addOnSuccessListener {
 
                 documents ->

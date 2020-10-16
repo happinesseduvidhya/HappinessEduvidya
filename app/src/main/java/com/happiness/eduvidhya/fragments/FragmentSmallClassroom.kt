@@ -9,10 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.happiness.eduvidhya.activities.ActivityBaseForFragment
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterAllScheduledMeetings
@@ -27,18 +31,15 @@ class FragmentSmallClassroom : Fragment() {
     var detail_db: ClassroomDetailsModel? = null
     private var mRecyclerAdapter: AdapterAllScheduledMeetings? = null
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+    val faculties_collection = db.collection("Classes")
     var mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>? = null
 
     var updatedProgressDilaog = CustomProgressDialog()
 
 
-private lateinit var create_batch_btn:Button
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var create_batch_btn: Button
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_small_classroom, container, false)
 
@@ -46,18 +47,21 @@ private lateinit var create_batch_btn:Button
 
         schedule_meeting_recyler = v.findViewById(R.id.all_classes_recyclerview)
 
+        create_batch_btn = v.findViewById(R.id.create_classroom_btn)
 
-        create_batch_btn=v.findViewById(R.id.create_classroom_btn)
         create_batch_btn.setOnClickListener {
             val i = Intent(activity, ActivityBaseForFragment::class.java)
             i.putExtra("checkPage", "createClassroom")
             startActivity(i)
             //Toast.makeText(activity, "skdnskncfkd", Toast.LENGTH_SHORT).show()
+
         }
+
 
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         schedule_meeting_recyler.setLayoutManager(layoutManager)
+
         val mySharedPreferences = requireActivity().getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val email = mySharedPreferences.getString("user_email", "")
 
@@ -65,24 +69,47 @@ private lateinit var create_batch_btn:Button
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
 
-            teacher_collection.document(email!!).collection("classrooms").get()
-
-                .addOnSuccessListener { documents ->
+            faculties_collection.document(email!!).collection("classrooms").get().addOnCompleteListener(object:
+                OnCompleteListener<QuerySnapshot> {
+                override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
 
                     updatedProgressDilaog.dialog.dismiss()
 
-                    for (document in documents) {
-                        detail_db = ClassroomDetailsModel(document.id, "0", "0", "0")
-                        mArrayBatchesWithMeeting!!.add(detail_db!!)
+                    if (task.isSuccessful())
+                    {
+                        for (document in task.getResult()!!)
+                        {
+                            detail_db = ClassroomDetailsModel(document.id, "0", "0")
+                            mArrayBatchesWithMeeting!!.add(detail_db!!)
+                        }
+                        mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
+                        schedule_meeting_recyler.adapter = mRecyclerAdapter
                     }
-
-                    mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
-                    schedule_meeting_recyler.adapter = mRecyclerAdapter
-
-                }.addOnFailureListener { exception ->
-                    updatedProgressDilaog.dialog.dismiss()
-                    Log.w("TAG", "Error getting documents: ", exception)
+                    else
+                    {
+                        Log.d("TAG", "Error getting documents: ", task.getException())
+                    }
                 }
+            })
+
+
+//            faculties_collection.document(email!!).collection("classrooms").get()
+//
+//                .addOnSuccessListener { documents ->
+//
+//                    updatedProgressDilaog.dialog.dismiss()
+//
+//                    for (document in documents) {
+//                        detail_db = ClassroomDetailsModel(document.id, "0", "0")
+//                        mArrayBatchesWithMeeting!!.add(detail_db!!)
+//                    }
+//
+//                    mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
+//                    schedule_meeting_recyler.adapter = mRecyclerAdapter
+//
+//                }.addOnFailureListener { exception ->
+//                    updatedProgressDilaog.dialog.dismiss()
+//                }
         } else {
             Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
         }

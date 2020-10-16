@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.MICROPHONE" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,8 +22,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ActivityAdminControlClassesAndOthers"></activity>
-        <activity android:name=".activities.ActivityUsers" />
+        <activity android:name=".activities.ActivityMeetingAttendUsers"></activity>
+        <activity android:name=".activities.ActivityMeetingsHistoryAndAttendence" />
+        <activity android:name=".activities.ActivityMeetingStartByFaculty" />
+        <activity android:name=".activities.ActivityAllMeetingsSeeByUser" />
+        <activity android:name=".activities.ActivityUsersAllClasses" />
+        <activity android:name=".activities.ActivityMeetingsFaculties" />
+        <activity android:name=".activities.AddStudentByFaculty" />
+        <activity android:name=".activities.AllClassesByAdmin" />
+        <activity android:name=".activities.ActivityUserOrFacultyAddOrUpdate" />
+        <activity android:name=".activities.ActivityAdminControlClassesAndOthers" />
+        <activity android:name=".activities.ActivityListUsersOrFaculty" />
         <activity android:name=".activities.ActivityAllFaculties" />
         <activity android:name=".activities.ActivityHomeAdmin" />
         <activity
@@ -43,7 +54,7 @@
         <activity android:name=".activities.MainHome" />
         <activity android:name=".activities.ActivityStart" />
         <activity android:name=".activities.ActivityBaseForFragment" />
-        <activity android:name=".activities.ActivityRegisterAsAdminOrModeratorOrUser" />
+        <activity android:name=".activities.ActivityRegister" />
         <activity android:name=".activities.ActivityLogin" />
 
         <meta-data

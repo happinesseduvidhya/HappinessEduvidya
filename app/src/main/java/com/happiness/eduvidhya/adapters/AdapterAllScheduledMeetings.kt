@@ -19,20 +19,19 @@ import com.happiness.eduvidhya.Interface.RemoveClickListener
 import com.happiness.eduvidhya.Interface.SendPosition
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.activities.ActivityBaseForFragment
+import com.happiness.eduvidhya.activities.ActivityMeetingStartByFaculty
+import com.happiness.eduvidhya.activities.ActivityMeetingsFaculties
 import com.happiness.eduvidhya.datamodels.BatchDeatailModel
 import com.happiness.eduvidhya.datamodels.BatchListDescriptionDataModel
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
 
 
-class AdapterAllScheduledMeetings(val context: Activity, mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>?) : RecyclerView.Adapter<AdapterAllScheduledMeetings.ViewHolder>() {
-    var mLastPosition = 0
-    var subjectName: String? = null
-    var topicName: String? = null
-    var classroom_name: String? = null
-    var position: SendPosition? = null
-    var create_classroom: DocumentReference? = null
+class AdapterAllScheduledMeetings(
+    val context: Activity,
+    mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>?
+) : RecyclerView.Adapter<AdapterAllScheduledMeetings.ViewHolder>() {
+
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
     var mArray: ArrayList<ClassroomDetailsModel>? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -44,19 +43,24 @@ class AdapterAllScheduledMeetings(val context: Activity, mArrayBatchesWithMeetin
         val mySharedPreferences =
             context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val email = mySharedPreferences.getString("user_email", "")
-        var check = teacher_collection.document(email!!).collection("classrooms")
-            .document(mArray?.get(position)?.classroom_name.toString())
-            .collection("Batches")
+//        var check = teacher_collection.document(email!!).collection("classrooms")
+//            .document(mArray?.get(position)?.classroom_name.toString())
+//            .collection("Batches")
 
-        holder.etTitleTextView.setText("ClassName : "+mArray?.get(position)?.classroom_name)
+        holder.etTitleTextView.setText("ClassName : " + mArray?.get(position)?.classroom_name)
         holder.card_view.setOnClickListener {
-            val i = Intent(context, ActivityBaseForFragment::class.java)
-            i.putExtra("checkPage", "list_of_batches")
-            i.putExtra("classroom_name",mArray?.get(position)?.classroom_name.toString())
-           context. startActivity(i)
-                    }
 
+            val i = Intent(context, ActivityMeetingStartByFaculty::class.java)
+            i.putExtra("classroom_name", mArray?.get(position)?.classroom_name.toString())
+            context.startActivity(i)
+
+//            val i = Intent(context, ActivityBaseForFragment::class.java)
+//            i.putExtra("checkPage", "list_of_batches")
+//            i.putExtra("classroom_name", mArray?.get(position)?.classroom_name.toString())
+//            context.startActivity(i)
         }
+
+    }
 
 
     override fun getItemCount(): Int {
@@ -68,7 +72,8 @@ class AdapterAllScheduledMeetings(val context: Activity, mArrayBatchesWithMeetin
         val crossImage: ImageView
         val card_view: CardView
 
-        val mySharedPreferences =context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+        val mySharedPreferences =
+            context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val email = mySharedPreferences.getString("user_email", "")
 
 
@@ -76,7 +81,7 @@ class AdapterAllScheduledMeetings(val context: Activity, mArrayBatchesWithMeetin
             etTitleTextView = parent.findViewById(R.id.new_batch_item) as TextView
             crossImage = parent.findViewById(R.id.crossImage) as ImageView
             card_view = parent.findViewById(R.id.card_view) as CardView
-    }
+        }
     }
 
     init {

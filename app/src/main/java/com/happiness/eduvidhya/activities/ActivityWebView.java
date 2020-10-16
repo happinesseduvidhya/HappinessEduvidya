@@ -1,8 +1,12 @@
 package com.happiness.eduvidhya.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,21 +29,41 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.happiness.eduvidhya.R;
+import com.happiness.eduvidhya.datamodels.ModelAttendenceUser;
+import com.happiness.eduvidhya.datamodels.ModelMeetingHistories;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ActivityWebView extends AppCompatActivity {
 
     private WebView wv1;
+    FirebaseFirestore firebaseFirestore;
+    String linkMy,meetingID,email,type,facultyEmailWhenUserComeOnThisScreen;
+    SharedPreferences mySharedPreferences;
 
+
+    String strCheckMeetingWorkingOrExpired = "0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         wv1 = (WebView) findViewById(R.id.webview);
+
+        mySharedPreferences = getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -92,11 +116,15 @@ public class ActivityWebView extends AppCompatActivity {
             wv1.getSettings().setMediaPlaybackRequiresUserGesture(false);
         }
 
-        String linkMy = getIntent().getExtras().getString("url");
+        linkMy = getIntent().getExtras().getString("url");
+        meetingID = getIntent().getExtras().getString("meetingID");
+        facultyEmailWhenUserComeOnThisScreen = getIntent().getExtras().getString("facultyEmailWhenUserComeOnThisScreen");
 
 
         wv1.loadUrl(linkMy);
     }
+
+
     private class MyBrowser extends WebViewClient {
 
 
@@ -109,16 +137,44 @@ public class ActivityWebView extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
             if (url.equals("https://noblekeyz.com/b")) {
-                wv1.clearView();
-                finish();
+                // meeting expired
+
+                if (strCheckMeetingWorkingOrExpired.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "first if", Toast.LENGTH_SHORT).show();
+
+//                    email = mySharedPreferences.getString("user_email", "");
+//                    type = mySharedPreferences.getString("type", "");
+
+                    finish();
+
+                }
+
+
+
             }
+            else if (url.equals("https://noblekeyz.com/")) {
+                // End meeting click or Logout
+
+                strCheckMeetingWorkingOrExpired = "1";
+
+                Toast.makeText(getApplicationContext(), "second if", Toast.LENGTH_SHORT).show();
+
+                email = mySharedPreferences.getString("user_email", "");
+                type = mySharedPreferences.getString("type", "");
+
+                dismissClass(email,type);
+
+
+            }
+
         }
     }
 
@@ -126,4 +182,55 @@ public class ActivityWebView extends AppCompatActivity {
     public void onBackPressed() {
 
     }
+
+    public void dismissClass(String email,String type)
+    {
+
+
+        if (type.equals("Faculty"))
+        {
+            Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+            Date currentTime = localCalendar.getTime();
+            int currentDay = localCalendar.get(Calendar.DATE);
+            int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
+            int currentYear = localCalendar.get(Calendar.YEAR);
+            String dateAndTime = String.valueOf(currentDay)+"-"+String.valueOf(currentMonth)+String.valueOf(currentYear);
+            ModelMeetingHistories modelMeetingHistories = new ModelMeetingHistories("",meetingID,dateAndTime,currentTime.toString(),"3","");
+
+            DocumentReference document = firebaseFirestore.collection("Faculties").document(email).collection("MeetingHistory").document(meetingID);
+            document.set(modelMeetingHistories).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "not", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        }
+        else if (type.equals("User"))
+        {
+            String FacultyEmail = facultyEmailWhenUserComeOnThisScreen;
+
+            Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+            Date currentTime = localCalendar.getTime();
+            int currentDay = localCalendar.get(Calendar.DATE);
+            int currentMonth = localCalendar.get(Calendar.MONTH) + 1;
+            int currentYear = localCalendar.get(Calendar.YEAR);
+
+
+            String dateAndTime = String.valueOf(currentDay)+"-"+String.valueOf(currentMonth)+String.valueOf(currentYear)+" "+String.valueOf(currentTime);
+
+            ModelAttendenceUser modelAttendenceUser = new ModelAttendenceUser(email,meetingID,dateAndTime,"P");
+            firebaseFirestore.collection("Faculties").document(FacultyEmail).collection("MeetingHistory").document(meetingID).collection("Users").document(email).set(modelAttendenceUser);
+        }
+        finish();
+    }
+
+
+
 }

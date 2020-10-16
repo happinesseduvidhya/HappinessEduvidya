@@ -37,7 +37,7 @@ class BatchListRecyclerAdapter(val context: Activity, myList: ArrayList<BatchLis
     private val mListner: RemoveClickListener
     var create_classroom : DocumentReference?=null
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+    val classes = db.collection("Classes")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.create_batch_list_items, parent, false)
@@ -45,16 +45,18 @@ class BatchListRecyclerAdapter(val context: Activity, myList: ArrayList<BatchLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("onBindViewHoler ", myList!!.size.toString() + "")
+
         val mySharedPreferences =context.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val email = mySharedPreferences.getString("user_email", "")
-        create_classroom = teacher_collection.document(email!!).collection("classrooms")
-            .document(classroom_name!!)
 
         val batch_detail =
             BatchDeatailModel("", "", "")
 
-        create_classroom!!.collection("Batches").document("Batch"+(position+1)).set(batch_detail).addOnSuccessListener {
+//        create_classroom = classes.document(email!!).collection("Batchers").document("8th")
+
+
+
+        classes.document(email!!).collection("classrooms").document(classroom_name.toString()).collection("Batches").document("Batch"+(position+1)).set(batch_detail).addOnSuccessListener {
             Toast.makeText(context, "batch created", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -64,6 +66,20 @@ class BatchListRecyclerAdapter(val context: Activity, myList: ArrayList<BatchLis
 //        holder.etDescriptionTextView.setText(myList!![position].getDescription())
 //        holder.crossImage.setImageResource(R.drawable.cross)
         mLastPosition = position
+
+        holder.etTitleTextView.setOnClickListener {
+//                Toast.makeText(
+//                    itemView.context,"Position:" + Integer.toString(position),Toast.LENGTH_SHORT).show()
+            val i = Intent(context, ActivityBaseForFragment::class.java)
+            i.putExtra("checkPage", "batch_details")
+            i.putExtra("subjectname",subjectName)
+            i.putExtra("topicname","createBatch")
+            i.putExtra("classname",classroom_name)
+            i.putExtra("position", (position+1).toString())
+
+            context.startActivity(i)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -84,17 +100,6 @@ class BatchListRecyclerAdapter(val context: Activity, myList: ArrayList<BatchLis
 
             etTitleTextView = parent.findViewById(R.id.new_batch_item) as TextView
             crossImage = parent.findViewById(R.id.crossImage) as ImageView
-            etTitleTextView.setOnClickListener {
-//                Toast.makeText(
-//                    itemView.context,"Position:" + Integer.toString(position),Toast.LENGTH_SHORT).show()
-                val i = Intent(context, ActivityBaseForFragment::class.java)
-                i.putExtra("checkPage", "batch_details")
-                i.putExtra("subjectname",subjectName)
-                i.putExtra("topicname",topicName)
-                i.putExtra("classname",classroom_name)
-                i.putExtra("position",adapterPosition)
-               context.startActivity(i)
-            }
 
             crossImage.setOnClickListener(View.OnClickListener {
                 mListner.OnRemoveClick(

@@ -11,10 +11,10 @@
 
     <item
         android:id="@+id/loan_eligibility"
-        android:title="Teacher" />
+        android:title="Faculty" />
 
     <item
         android:id="@+id/student_item"
-        android:title="Student" />
+        android:title="User" />
 
 </menu>

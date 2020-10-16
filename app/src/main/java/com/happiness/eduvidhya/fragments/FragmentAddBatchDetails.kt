@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,13 +45,19 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
 
     var updatedProgressDilaog = CustomProgressDialog()
 
+    var create_classroom : DocumentReference?=null
+    val db = FirebaseFirestore.getInstance()
+    val teacher_collection = db.collection("teachers")
+
+    val classes = db.collection("Classes")
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_add_batch_details, container, false)
 
         requireActivity()!!.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
-        val bundle = Bundle()
         val subject = requireArguments().getString("subject_name")
         val topic = requireArguments().getString("topic_name")
         val position = requireArguments().getString("position")
@@ -97,15 +102,26 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
             Toast.makeText(context, "No meetings found", Toast.LENGTH_SHORT).show()
         }
         else{
-            enter_meeting_name.setText(subject)
-            enter_meeting_time.setText(position)
-            enter_meeting_date.setText(topic)
 
-            enter_meeting_name.isEnabled = false
-            enter_meeting_time.isEnabled = false
-            enter_meeting_date.isEnabled = false
+            if (topic.equals("createBatch"))
+            {
+                submit_batch.visibility = View.VISIBLE
+                enter_meeting_time.isEnabled = true
+                enter_meeting_date.isEnabled = true
+            }
+            else{
+                enter_meeting_name.setText(subject)
+                enter_meeting_time.setText(position)
+                enter_meeting_date.setText(topic)
 
-            submit_batch.visibility = View.GONE
+                enter_meeting_name.isEnabled = false
+                enter_meeting_time.isEnabled = false
+                enter_meeting_date.isEnabled = false
+
+                submit_batch.visibility = View.GONE
+            }
+
+
         }
 
 
@@ -150,11 +166,13 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
 
                         val batch_detail = BatchDeatailModel(enter_meeting_name.text.toString(), enter_meeting_date.text.toString(), enter_meeting_time.text.toString())
 
-                        create_classroom!!.collection("Batches").document("Batch"+(position)).set(batch_detail).addOnSuccessListener {
+                        classes.document(email!!).collection("classrooms").document(classname.toString()).collection("Batches").document("Batch"+(position)).set(batch_detail).addOnSuccessListener {
 
                             updatedProgressDilaog.dialog.dismiss()
                             submit_batch.isEnabled = false
                             Toast.makeText(context, "meeting created", Toast.LENGTH_SHORT).show()
+
+
                         }.addOnFailureListener {
                             Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                         }
@@ -167,12 +185,13 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
                     Constant.showMessage(it,"enter meeting time")
                 }
             }
-            else{
+                else{
                 Constant.showMessage(it,"enter meeting name")
             }
 
-
         }
+
+
 
 //        add_student_to_list.setOnClickListener {
 //            if(add_student_name.text.toString().isEmpty())
@@ -192,9 +211,7 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
 
         return v
     }
-    var create_classroom : DocumentReference?=null
-    val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+
     override fun OnRemoveClick(index: Int) {
         myStudentList.removeAt(index)
         mAdapter!!.notifyData(myStudentList)

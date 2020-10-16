@@ -10,10 +10,11 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterShowBatches
 import com.happiness.eduvidhya.datamodels.ListOfBatchesModel
@@ -27,7 +28,7 @@ class FragementShowBatches : Fragment() {
     var list_of_batches: ArrayList<ListOfBatchesModel>? = null
     var detail_db: ListOfBatchesModel? = null
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+    val classes = db.collection("Classes")
 
 
     // top bar
@@ -58,7 +59,8 @@ class FragementShowBatches : Fragment() {
         updatedProgressDilaog.show(requireActivity())
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
-            teacher_collection.document(email!!).collection("classrooms").document(get_classroom.toString()).collection("Batches").get()
+
+            classes.document(email!!).collection("classrooms").document(get_classroom.toString()).collection("Batches").get()
                 .addOnSuccessListener { documents ->
                     updatedProgressDilaog.dialog.dismiss()
                     for (document in documents) {
@@ -74,13 +76,15 @@ class FragementShowBatches : Fragment() {
                     Log.w("TAG", "Error getting documents: ", exception)
                 }
         }else {
-            Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "No network available", Toast.LENGTH_SHORT).show()
+
         }
 
         title_top_bar_txt.setText("All Batches")
 
         back_top_bar_img.setOnClickListener {
             requireActivity().finish()
+
         }
 
         return v

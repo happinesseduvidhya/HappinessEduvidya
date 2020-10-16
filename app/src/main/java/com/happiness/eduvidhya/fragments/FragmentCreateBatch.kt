@@ -13,7 +13,8 @@ class FragmentCreateBatch : Fragment() {
     private lateinit var batch_name:EditText
     private lateinit var subject_name:EditText
     private lateinit var topic_name:EditText
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Inflate the layout for this fragment
             val v: View = inflater.inflate(R.layout.fragment_create_batch, container, false)
             batch_name=v.findViewById(R.id.enter_batch_name)

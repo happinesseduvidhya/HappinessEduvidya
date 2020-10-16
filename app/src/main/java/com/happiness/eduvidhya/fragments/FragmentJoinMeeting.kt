@@ -1,5 +1,6 @@
 package com.happiness.eduvidhya.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,18 +25,34 @@ class FragmentJoinMeeting : Fragment() {
     private lateinit var join_meeting_btn: Button
     private lateinit var webview_screen: WebView
     private var meeting_id: String? = null
+    private var facultyEmailWhenUserComeOnThisScreen: String? = null
 
-      var updatedProgressDilaog = CustomProgressDialog()
+    var updatedProgressDilaog = CustomProgressDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+// Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_join_meeting, container, false)
+
+
+
+
+
 
         join_meeting_btn = v.findViewById(R.id.enter_join_meeting_btn)
         enter_join_meeting_code = v.findViewById(R.id.enter_join_meeting_edit)
+
+        val joinMeetingID = requireArguments().getString("subject_name")
+        facultyEmailWhenUserComeOnThisScreen = requireArguments().getString("topic_name")
+
+        if (joinMeetingID != null)
+        {
+            enter_join_meeting_code.setText(joinMeetingID)
+            enter_join_meeting_code.isEnabled = false
+        }
+
         join_meeting_btn.setOnClickListener {
             meeting_id = enter_join_meeting_code.text.toString()
 
@@ -58,14 +75,41 @@ class FragmentJoinMeeting : Fragment() {
 
             updatedProgressDilaog.show(requireActivity())
 
+            val mySharedPreferences = requireActivity().getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+            val name = mySharedPreferences.getString("user_name", "")
+            val type = mySharedPreferences.getString("type", "")
+
             val method = "join"
-            val parameters = "fullName=gurpreet&meetingID="+ meeting_id +"&password=22&redirect=true"
-            //        val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
+
+            var parameters:String = ""
+            if (type.equals("Faculty"))
+            {
+                parameters = "fullName="+name!!.trim()+"&meetingID="+ meeting_id +"&password=mp&redirect=true"
+            }
+            else{
+                parameters = "fullName="+name!!.trim()+"&meetingID="+ meeting_id +"&password=ap&redirect=true"
+            }
+
+            // val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)
             val checksum = String(Hex.encodeHex(DigestUtils.sha(method + parameters + Constant.shared_secret)))
             updatedProgressDilaog.dialog.dismiss()
-            val s="https://noblekeyz.com/bigbluebutton/api/join?fullName=gurpreet&meetingID="+meeting_id+"&password=22&redirect=true&checksum="+checksum
+
+             var strUrl:String = ""
+             if (type.equals("Faculty"))
+             {
+             strUrl="https://noblekeyz.com/bigbluebutton/api/join?fullName="+name+"&meetingID="+meeting_id+"&password=mp&redirect=true&checksum="+checksum
+
+             }
+             else if (type.equals("User"))
+             {
+             strUrl="https://noblekeyz.com/bigbluebutton/api/join?fullName="+name+"&meetingID="+meeting_id+"&password=ap&redirect=true&checksum="+checksum
+             }
+
+//            val s="https://noblekeyz.com/bigbluebutton/api/join?fullName="+name+"&meetingID="+meeting_id+"&password=mp&redirect=true&checksum="+checksum
             val i = Intent(activity, ActivityWebView::class.java)
-            i.putExtra("url", s)
+            i.putExtra("url", strUrl)
+            i.putExtra("meetingID", meeting_id)
+            i.putExtra("facultyEmailWhenUserComeOnThisScreen", facultyEmailWhenUserComeOnThisScreen)
             startActivity(i)
 
         }
@@ -75,6 +119,9 @@ class FragmentJoinMeeting : Fragment() {
 
 
     }
+//noblekeyz.com/bigbluebutton/api/join?fullName=User+8198480&meetingID=random-6648035&password=mp&redirect=true&checksum=2ab5e7e747f137f510e93abc59f90793cd6d3f16
+//noblekeyz.com/bigbluebutton/api/join?fullName=User+8198480&meetingID=random-6648035&password=ap&redirect=true&checksum=94287993dcf6097b01dd2e118014f752ae58c65a
+//noblekeyz.com/bigbluebutton/api/join?fullName=userGaurav&meetingID=random-816074&password=ap&redirect=true&checksum=df331ffec0cddb9c93d21509236f8d140336aaba
 }
 
 

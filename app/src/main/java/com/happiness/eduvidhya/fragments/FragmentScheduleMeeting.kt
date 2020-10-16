@@ -27,7 +27,7 @@ class FragmentScheduleMeeting : Fragment() {
     var detail_db: ClassroomDetailsModel? = null
     private var mRecyclerAdapter: AdapterAllScheduledMeetings? = null
     val db = FirebaseFirestore.getInstance()
-    val teacher_collection = db.collection("teachers")
+    val classes = db.collection("Classes")
     var mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>? = null
 
     var updatedProgressDilaog = CustomProgressDialog()
@@ -61,16 +61,15 @@ class FragmentScheduleMeeting : Fragment() {
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
 
-            val query = teacher_collection.document(email!!).collection("classrooms")
 
-            teacher_collection.document(email).collection("classrooms").get()
+            classes.document(email.toString()).collection("classrooms").get()
 
                 .addOnSuccessListener { documents ->
 
                     updatedProgressDilaog.dialog.dismiss()
 
                     for (document in documents) {
-                        detail_db = ClassroomDetailsModel(document.id, "0", "0", "0")
+                        detail_db = ClassroomDetailsModel(document.id.toString(), "0", "0")
                         mArrayBatchesWithMeeting!!.add(detail_db!!)
                     }
 

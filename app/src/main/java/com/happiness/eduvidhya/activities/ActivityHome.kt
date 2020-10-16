@@ -41,6 +41,7 @@ class ActivityHome : AppCompatActivity() {
         home_frame_layout = findViewById(R.id.home_frame_layout)
         mLogoutBtn = findViewById(R.id.mLogoutBtn)
 
+
         if (savedInstanceState == null)
         {
             val fragmenthome = FragmentHome()
@@ -73,21 +74,17 @@ class ActivityHome : AppCompatActivity() {
 
                         }
                         R.id.logout -> {
-                            if (FirebaseAuth.getInstance() != null) {
-                                val c=auth.currentUser
-                                if(c!=null)
-                                {
-                                auth.signOut()
+                            val mySharedPreferences = getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+                            val editor = mySharedPreferences.edit()
+                            editor.putString("user_email", "")
+                            editor.putString("user_name", "")
+                            editor.putString("user_password", "")
+                            editor.putString("type", "")
+                            editor.apply()
 
-                                    val intent = Intent(applicationContext, ActivityStart::class.java)
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                    startActivity(intent)
-
-                                }
-                                Constant.myauth=null
-                            } else {
-Toast.makeText(applicationContext,"problem",Toast.LENGTH_SHORT).show()
-                            }
+                            val intent = Intent(this@ActivityHome, ActivityStart::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
                         }
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
@@ -98,19 +95,17 @@ Toast.makeText(applicationContext,"problem",Toast.LENGTH_SHORT).show()
 
 
         mLogoutBtn.setOnClickListener {
-            if (FirebaseAuth.getInstance() != null) {
-                val c=auth.currentUser
-                if(c!=null)
-                {
-                    auth.signOut()
-                    val intent = Intent(applicationContext, ActivityStart::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                }
-                Constant.myauth=null
-            } else {
-                Toast.makeText(applicationContext,"problem",Toast.LENGTH_SHORT).show()
-            }
+            val mySharedPreferences = getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+            val editor = mySharedPreferences.edit()
+            editor.putString("user_email", "")
+            editor.putString("user_name", "")
+            editor.putString("user_password", "")
+            editor.putString("type", "")
+            editor.apply()
+
+            val intent = Intent(this@ActivityHome, ActivityStart::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
     }
 

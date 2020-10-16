@@ -9,7 +9,7 @@
         android:id="@+id/image_back_arrow"
         android:layout_width="@dimen/margin_15"
         android:layout_height="@dimen/margin_15"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:src="@drawable/ic_back_arrow"
         app:layout_constraintBottom_toBottomOf="@id/create_heading_title"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,8 +20,8 @@
         android:id="@+id/create_heading_title"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
         android:text="Create Room"
@@ -38,9 +38,9 @@
         android:id="@+id/meeting_name_text"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
         android:gravity="start|center_vertical"
@@ -59,6 +59,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
+        android:hint="space not allowed in meeting name"
         android:fontFamily="@font/montserrat"
         android:gravity="start|center_vertical"
         android:textColor="#000000"
@@ -72,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
@@ -94,6 +95,7 @@
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
         android:clickable="true"
+        android:hint="enter meeting time"
         android:cursorVisible="false"
         android:drawableRight="@drawable/ic_clock"
         android:drawablePadding="@dimen/margin_10"
@@ -112,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
@@ -120,6 +122,7 @@
         android:text="Meeting Date :"
         android:textColor="#000000"
         android:textSize="14sp"
+        android:hint="enter meeting time"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -134,6 +137,7 @@
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
         android:clickable="true"
+        android:hint="enter meeting date"
         android:cursorVisible="false"
         android:drawableRight="@drawable/ic_calendar"
         android:drawablePadding="@dimen/margin_10"
@@ -147,11 +151,44 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meeting_date_text" />
 
+    <TextView
+        android:id="@+id/add_student_in_classes_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Please select yout class"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_meeting_date" />
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/custom_spinner"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="@+id/add_student_in_classes_txt"
+        app:layout_constraintTop_toBottomOf="@+id/add_student_in_classes_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+
     <Button
         android:id="@+id/create_meeting_btn"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
@@ -162,7 +199,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_meeting_date" />
+        app:layout_constraintTop_toBottomOf="@id/relative_layout" />
 
     <TextView
         android:id="@+id/display_name_text"

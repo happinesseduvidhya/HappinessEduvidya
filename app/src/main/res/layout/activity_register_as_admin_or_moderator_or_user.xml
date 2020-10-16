@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="Teacher"
+            android:text="Faculty"
             android:textColor="@color/colorPrimary"
             android:textSize="13dp"
             app:layout_constraintLeft_toLeftOf="@id/moderator_card"
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="Student"
+            android:text="User"
             android:textColor="@color/colorPrimary"
             android:textSize="13dp"
             app:layout_constraintLeft_toLeftOf="@id/attendee_card"
@@ -115,7 +115,7 @@
         android:layout_marginTop="@dimen/margin_20"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|center"
-        android:text="Sign in as Teacher"
+        android:text="Sign up as Faculty"
         android:textColor="@color/colorBlack"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -139,6 +139,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signin_heading" />
+
     <EditText
         android:id="@+id/enter_email"
         android:layout_width="match_parent"

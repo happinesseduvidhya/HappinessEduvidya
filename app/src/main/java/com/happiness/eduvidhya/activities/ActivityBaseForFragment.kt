@@ -33,12 +33,13 @@ class ActivityBaseForFragment: AppCompatActivity() {
 
 
             if (checkPage!!.equals("create")) {
-                val fragmentCreate = FragmentCreateMeeting()
+                val fragmentCreate = FragmentCreateMeetingByFaculty()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentCreate)
                 transcation.commit()
             }
             if (checkPage.equals("join")) {
                 val fragmentJoin = FragmentJoinMeeting()
+                fragmentJoin.setArguments(bundle);
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentJoin)
                 transcation.commit()
             }
@@ -47,7 +48,7 @@ class ActivityBaseForFragment: AppCompatActivity() {
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentAttendance)
                 transcation.commit()
             }
-            if (checkPage.equals("batch")) {
+            if (checkPage.equals("createRoom")) {
                 val fragmentBatchClass = FragmentSmallClassroom()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentBatchClass)
                 transcation.commit()
