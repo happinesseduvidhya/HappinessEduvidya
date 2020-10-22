@@ -72,8 +72,13 @@ class ActivityBaseForFragment: AppCompatActivity() {
             }
             if (checkPage.equals("list_of_batches")) {
                 val fragment_show_batches = FragementShowBatches()
-                fragment_show_batches.setArguments(bundle);
+                fragment_show_batches.setArguments(bundle)
                 transcation.replace(R.id.frame_layout_base_fragment, fragment_show_batches)
+                transcation.commit()
+            }
+            if (checkPage.equals("notification_bell")) {
+                val fragmentNotification = FragmentNotification()
+                transcation.replace(R.id.frame_layout_base_fragment, fragmentNotification)
                 transcation.commit()
             }
         }

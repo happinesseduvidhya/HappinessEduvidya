@@ -1,7 +1,6 @@
 package com.happiness.eduvidhya.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -9,14 +8,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.happiness.eduvidhya.Interface.CallBackFirst
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterAllUsersOrFaculties
@@ -25,6 +21,7 @@ import com.happiness.eduvidhya.datamodels.ModelUserInfo
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
 import kotlinx.android.synthetic.main.activity_users.*
+
 
 class ActivityListUsersOrFaculty : AppCompatActivity() {
 
@@ -82,57 +79,106 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
         updatedProgressDilaog.show(this)
         if (Constant.hasNetworkAvailable(applicationContext)) {
 
-            users_collection.get()
-                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot> {
-                    override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
+//            users_collection.get()
+//                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot> {
+//                    override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
+//
+//                        updatedProgressDilaog.dialog.dismiss()
+//                        if (task.isSuccessful()) {
+//
+//                            listOfUsers = ArrayList<ModelUserInfo>()
+//                            listOfUsers!!.clear()
+//
+//                            for (document in task.result!!) {
+//
+//                                val data = document.data
+//                                val emai = data.get("email")
+//                                val name = data.get("name")
+//                                val class_status = data.get("class_status")
+//                                val password = data.get("password")
+//                                val modelUserInfo = ModelUserInfo(name.toString(),emai.toString(),password.toString(),class_status.toString())
+//                                listOfUsers!!.add(modelUserInfo)
+//                            }
+//                            mRecyclerAdapter = AdapterAllUsersOrFaculties(
+//                                this@ActivityListUsersOrFaculty,
+//                                listOfUsers,
+//                                type
+//                            )
+//                            all_users_recyclerview.adapter = mRecyclerAdapter
+//                            mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+//                                override fun mCallBack(
+//                                    position: String,
+//                                    firstString: String,
+//                                    secondString: String
+//                                ) {
+//
+//                                    if (secondString.equals("delete")) {
+//                                        mAlertShowDelete(firstString,type.toString())
+//
+//                                    } else {
+//                                        mCallApiFireStoreGetUsers(secondString)
+//                                    }
+//
+//                                }
+//
+//                            }
+//                        } else {
+//                            Log.d("TAG", "Error getting documents: ", task.getException())
+//                        }
+//                    }
+//                }).addOnFailureListener { exception ->
+//                updatedProgressDilaog.dialog.dismiss()
+//                Log.w("TAG", "Error getting documents: ", exception)
+//        }
 
-                        updatedProgressDilaog.dialog.dismiss()
-                        if (task.isSuccessful()) {
+            users_collection.addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    updatedProgressDilaog.dialog.dismiss()
+                    listOfUsers = ArrayList<ModelUserInfo>()
+                    listOfUsers!!.clear()
+                    for (data in value!!.documents) {
+                        if (data.exists()) {
 
-                            listOfUsers = ArrayList<ModelUserInfo>()
-                            listOfUsers!!.clear()
-
-                            for (document in task.result!!) {
-
-                                val data = document.data
-                                val emai = data.get("email")
-                                val name = data.get("name")
-                                val class_status = data.get("class_status")
-                                val password = data.get("password")
-                                val modelUserInfo = ModelUserInfo(name.toString(),emai.toString(),password.toString(),class_status.toString())
-                                listOfUsers!!.add(modelUserInfo)
-                            }
-                            mRecyclerAdapter = AdapterAllUsersOrFaculties(
-                                this@ActivityListUsersOrFaculty,
-                                listOfUsers,
-                                type
+                            val emai = data.get("email")
+                            val name = data.get("name")
+                            val class_status = data.get("class_status")
+                            val password = data.get("password")
+                            val modelUserInfo = ModelUserInfo(
+                                name.toString(),
+                                emai.toString(),
+                                password.toString(),
+                                class_status.toString()
                             )
-                            all_users_recyclerview.adapter = mRecyclerAdapter
-                            mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
-                                override fun mCallBack(
-                                    position: String,
-                                    firstString: String,
-                                    secondString: String
-                                ) {
-
-                                    if (secondString.equals("delete")) {
-                                        mAlertShowDelete(firstString,type.toString())
-
-                                    } else {
-                                        mCallApiFireStoreGetUsers(secondString)
-                                    }
-
-                                }
-
-                            }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException())
+                            listOfUsers!!.add(modelUserInfo)
                         }
                     }
-                }).addOnFailureListener { exception ->
-                updatedProgressDilaog.dialog.dismiss()
-                Log.w("TAG", "Error getting documents: ", exception)
-            }
+                    mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                        this@ActivityListUsersOrFaculty,
+                        listOfUsers,
+                        type
+                    )
+                    all_users_recyclerview.adapter = mRecyclerAdapter
+                    mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+                        override fun mCallBack(
+                            position: String,
+                            firstString: String,
+                            secondString: String
+                        ) {
+
+                            if (secondString.equals("delete")) {
+                                mAlertShowDelete(firstString, type.toString())
+
+                            } else {
+                                mCallApiFireStoreGetUsers(secondString)
+                            }
+
+                        }
+
+                    }
+                }
+
+            })
+
         } else {
             Toast.makeText(applicationContext, "No network available!", Toast.LENGTH_SHORT).show()
         }
@@ -142,34 +188,86 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
         updatedProgressDilaog.show(this)
         if (Constant.hasNetworkAvailable(applicationContext)) {
 
-            faculties_collection.get()
-                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot> {
-                    override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
+//            faculties_collection.get()
+//                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot> {
+//                    override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
+//
+//                        updatedProgressDilaog.dialog.dismiss()
+//                        if (task.isSuccessful()) {
+//
+//                            listOfUsers = ArrayList<ModelUserInfo>()
+//                            listOfUsers!!.clear()
+//                            for (document in task.result!!) {
+//
+//
+//                                val data = document.data
+//                                val emai = data.get("email")
+//                                val name = data.get("name")
+//                                val class_status = data.get("class_status")
+//                                val password = data.get("password")
+//                                val modelUserInfo = ModelUserInfo(name.toString(),emai.toString(),password.toString(),class_status.toString())
+//                                listOfUsers!!.add(modelUserInfo)
+//
+//
+//                            }
+//                            mRecyclerAdapter = AdapterAllUsersOrFaculties(
+//                                this@ActivityListUsersOrFaculty,
+//                                listOfUsers,
+//                                type
+//                            )
+//                            all_users_recyclerview.adapter = mRecyclerAdapter
+//                            mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+//                                override fun mCallBack(
+//                                    position: String,
+//                                    firstString: String,
+//                                    secondString: String
+//                                ) {
+//                                    if (secondString.equals("delete")) {
+//                                        mAlertShowDelete(firstString,type.toString())
+//
+//                                    } else {
+//                                        mCallApiFireStoreGetFaculties(secondString)
+//                                    }
+//                                }
+//
+//                            }
+//                        } else {
+//                            Log.d("TAG", "Error getting documents: ", task.getException())
+//                        }
+//                    }
+//                }).addOnFailureListener { exception ->
+//                updatedProgressDilaog.dialog.dismiss()
+//                Log.w("TAG", "Error getting documents: ", exception)
+//            }
 
-                        updatedProgressDilaog.dialog.dismiss()
-                        if (task.isSuccessful()) {
-
+            faculties_collection.addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    updatedProgressDilaog.dialog.dismiss()
                             listOfUsers = ArrayList<ModelUserInfo>()
                             listOfUsers!!.clear()
-                            for (document in task.result!!) {
 
+                    for (data in value!!.documents) {
+                        if (data.exists()) {
 
-                                val data = document.data
-                                val emai = data.get("email")
-                                val name = data.get("name")
-                                val class_status = data.get("class_status")
-                                val password = data.get("password")
-                                val modelUserInfo = ModelUserInfo(name.toString(),emai.toString(),password.toString(),class_status.toString())
-                                listOfUsers!!.add(modelUserInfo)
-
-
-                            }
-                            mRecyclerAdapter = AdapterAllUsersOrFaculties(
-                                this@ActivityListUsersOrFaculty,
-                                listOfUsers,
-                                type
+                            val emai = data.get("email")
+                            val name = data.get("name")
+                            val class_status = data.get("class_status")
+                            val password = data.get("password")
+                            val modelUserInfo = ModelUserInfo(
+                                name.toString(),
+                                emai.toString(),
+                                password.toString(),
+                                class_status.toString()
                             )
-                            all_users_recyclerview.adapter = mRecyclerAdapter
+                            listOfUsers!!.add(modelUserInfo)
+                        }
+                    }
+                    mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                        this@ActivityListUsersOrFaculty,
+                        listOfUsers,
+                        type
+                    )
+                    all_users_recyclerview.adapter = mRecyclerAdapter
                             mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
                                 override fun mCallBack(
                                     position: String,
@@ -185,14 +283,11 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                                 }
 
                             }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException())
-                        }
-                    }
-                }).addOnFailureListener { exception ->
-                updatedProgressDilaog.dialog.dismiss()
-                Log.w("TAG", "Error getting documents: ", exception)
-            }
+                }
+
+            })
+
+
         } else {
             Toast.makeText(applicationContext, "No network available!", Toast.LENGTH_SHORT).show()
         }
@@ -239,6 +334,56 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                 }
             }
         })
+
+
+
+        faculties_collection.addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                updatedProgressDilaog.dialog.dismiss()
+                listOfUsers = ArrayList<ModelUserInfo>()
+                listOfUsers!!.clear()
+                for (data in value!!.documents) {
+                    if (data.exists()) {
+
+                        val emai = data.get("email")
+                        val name = data.get("name")
+                        val class_status = data.get("class_status")
+                        val password = data.get("password")
+                        val modelUserInfo = ModelUserInfo(
+                            name.toString(),
+                            emai.toString(),
+                            password.toString(),
+                            class_status.toString()
+                        )
+                        listOfUsers!!.add(modelUserInfo)
+                    }
+                }
+                mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                    this@ActivityListUsersOrFaculty,
+                    listOfUsers,
+                    type
+                )
+                all_users_recyclerview.adapter = mRecyclerAdapter
+                all_users_recyclerview.adapter = mRecyclerAdapter
+                mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+                    override fun mCallBack(
+                        position: String,
+                        firstString: String,
+                        secondString: String
+                    ) {
+                        if (secondString.equals("delete")) {
+                            mAlertShowDelete(firstString,type.toString())
+
+                        } else {
+                            mCallApiFireStoreGetFaculties(secondString)
+                        }
+                    }
+
+                }
+            }
+
+        })
+
     }
 
     fun mCallApiFireStoreGetUsers(email: String) {
@@ -319,7 +464,6 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
         updatedProgressDilaog.show(this)
         users_collection.document(email).delete().addOnSuccessListener {
             updatedProgressDilaog.dialog.dismiss()
-            finish()
                 Toast.makeText(applicationContext, "Deleted successfully", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
             updatedProgressDilaog.dialog.dismiss()
@@ -331,12 +475,12 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
         updatedProgressDilaog.show(this)
         faculties_collection.document(email).delete().addOnSuccessListener {
             updatedProgressDilaog.dialog.dismiss()
-            finish()
             Toast.makeText(applicationContext, "Deleted successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             updatedProgressDilaog.dialog.dismiss()
             Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
         }
+
     }
 
 

@@ -23,10 +23,14 @@ class ActivityStart:AppCompatActivity() {
         login = findViewById(R.id.loginBtn)
 
         login.setOnClickListener {
-            startActivity(Intent(this, ActivityLogin::class.java))
+            val intent = Intent(this, ActivityLogin::class.java)
+            startActivity(intent)
+            finish()
+
         }
         register_intent.setOnClickListener {
-            startActivity(Intent(this, ActivityRegister::class.java))
+            val intent = Intent(this, ActivityRegister::class.java)
+            startActivity(intent)
         }
     }
 

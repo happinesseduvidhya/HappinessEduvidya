@@ -17,6 +17,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <ru.nikartm.support.ImageBadgeView
+        android:id="@+id/notificationImgBtn"
+        android:layout_width="@dimen/margin_25"
+        android:layout_height="@dimen/margin_25"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_gravity="center"
+        app:ibv_badgeValue="12"
+        app:ibv_badgeTextSize="5sp"
+        app:ibv_fixedBadgeRadius="5dp"
+        app:ibv_badgeTextStyle="bold"
+        app:ibv_badgeTextColor="#ffffff"
+        android:visibility="visible"
+        app:ibv_badgeColor="@color/pink_main_app_color"
+        app:ibv_badgeLimitValue="false"
+        android:src="@drawable/ic_bell_"
+        app:layout_constraintEnd_toStartOf="@+id/mLogoutBtn"
+        app:layout_constraintTop_toTopOf="@+id/mLogoutBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/mLogoutBtn"/>
+
     <ImageView
         android:id="@+id/mLogoutBtn"
         android:layout_width="@dimen/margin_25"

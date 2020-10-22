@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f0f0f0">
+    android:background="@color/colorWhite">
 
     <ImageView
         android:id="@+id/image_back_arrow"
@@ -20,8 +20,8 @@
         android:id="@+id/class_heading_title"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
         android:text="Small Classrooms"
@@ -35,15 +35,16 @@
     <Button
         android:id="@+id/create_classroom_btn"
         android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="@dimen/margin_40"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="Create Classroom"
         android:textColor="@color/colorWhite"
-        android:textSize="13sp"
+        android:textSize="@dimen/text_size_12sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/class_heading_title" />
@@ -64,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/all_classes_recyclerview"/>
+
 
         <TextView
             android:visibility="gone"

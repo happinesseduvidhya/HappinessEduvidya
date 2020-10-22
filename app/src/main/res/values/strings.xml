@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HappinessEduvidhya</string>
+    <string name="app_name">Edu Lite</string>
     <string name="title_activity_home">ActivityHome</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,4 +14,6 @@
 
     <string name="dialogTitle">Delete</string>
     <string name="dialogMessage">Are you show want to delete?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

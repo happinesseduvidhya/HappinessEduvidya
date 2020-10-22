@@ -37,11 +37,15 @@ class ActivityHomeAdmin : AppCompatActivity() {
             editor.putString("user_name", "")
             editor.putString("user_password", "")
             editor.putString("type", "")
+            editor.putString("check","all things")
+            editor.putString("check","all things")
             editor.apply()
 
             val intent = Intent(this, ActivityStart::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+
+            finish()
 
         }
 

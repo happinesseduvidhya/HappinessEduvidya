@@ -15,12 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.happiness.eduvidhya.activities.ActivityBaseForFragment
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterAllScheduledMeetings
+import com.happiness.eduvidhya.adapters.AdapterSmallClassRoom
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
+import com.happiness.eduvidhya.datamodels.ModelUserInfo
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
 
@@ -29,7 +33,7 @@ class FragmentSmallClassroom : Fragment() {
 
     private lateinit var schedule_meeting_recyler: RecyclerView
     var detail_db: ClassroomDetailsModel? = null
-    private var mRecyclerAdapter: AdapterAllScheduledMeetings? = null
+    private var mRecyclerAdapter: AdapterSmallClassRoom? = null
     val db = FirebaseFirestore.getInstance()
     val faculties_collection = db.collection("Classes")
     var mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>? = null
@@ -69,28 +73,46 @@ class FragmentSmallClassroom : Fragment() {
 
         if (Constant.hasNetworkAvailable(requireActivity())) {
 
-            faculties_collection.document(email!!).collection("classrooms").get().addOnCompleteListener(object:
-                OnCompleteListener<QuerySnapshot> {
-                override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
-
+            faculties_collection.document(email!!).collection("classrooms").addSnapshotListener(object :
+                EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     updatedProgressDilaog.dialog.dismiss()
-
-                    if (task.isSuccessful())
-                    {
-                        for (document in task.getResult()!!)
-                        {
-                            detail_db = ClassroomDetailsModel(document.id, "0", "0")
+                    detail_db = null
+                    mArrayBatchesWithMeeting!!.clear()
+                    for (data in value!!.documents) {
+                        if (data.exists()) {
+                            detail_db = ClassroomDetailsModel(data.id, "0", "0")
                             mArrayBatchesWithMeeting!!.add(detail_db!!)
                         }
-                        mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
-                        schedule_meeting_recyler.adapter = mRecyclerAdapter
                     }
-                    else
-                    {
-                        Log.d("TAG", "Error getting documents: ", task.getException())
-                    }
+                    mRecyclerAdapter = AdapterSmallClassRoom(activity!!, mArrayBatchesWithMeeting)
+                    schedule_meeting_recyler.adapter = mRecyclerAdapter
                 }
+
             })
+
+//            faculties_collection.document(email!!).collection("classrooms").get().addOnCompleteListener(object:
+//                OnCompleteListener<QuerySnapshot> {
+//                override fun onComplete(@NonNull task: Task<QuerySnapshot>) {
+//
+//                    updatedProgressDilaog.dialog.dismiss()
+//
+//                    if (task.isSuccessful())
+//                    {
+//                        for (document in task.getResult()!!)
+//                        {
+//                            detail_db = ClassroomDetailsModel(document.id, "0", "0")
+//                            mArrayBatchesWithMeeting!!.add(detail_db!!)
+//                        }
+//                        mRecyclerAdapter = AdapterAllScheduledMeetings(requireActivity(), mArrayBatchesWithMeeting)
+//                        schedule_meeting_recyler.adapter = mRecyclerAdapter
+//                    }
+//                    else
+//                    {
+//                        Log.d("TAG", "Error getting documents: ", task.getException())
+//                    }
+//                }
+//            })
 
 
 //            faculties_collection.document(email!!).collection("classrooms").get()

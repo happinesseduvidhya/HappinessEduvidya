@@ -15,15 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.activities.ActivityMeetingAttendUsers
+import com.happiness.eduvidhya.datamodels.ModelMeetingHistories
 import com.happiness.eduvidhya.datamodels.UserOrFacultyInfo
 
 
-class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<UserOrFacultyInfo>?) : RecyclerView.Adapter<AdapterAllMeetingHistories.ViewHolder>() {
+class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<ModelMeetingHistories>?, strHistoryOrAttendence:String) : RecyclerView.Adapter<AdapterAllMeetingHistories.ViewHolder>() {
 
     val db = FirebaseFirestore.getInstance()
 
-    var mArray: ArrayList<UserOrFacultyInfo>? = null
+    var mArray: ArrayList<ModelMeetingHistories>? = null
 
+    var HistoryOrAttendence:String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,15 +36,43 @@ class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<U
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-        val sourceString = "<b>" + "Meeting ID : " + "</b> " + mArray?.get(position)?.strEmail
+        val sourceString = "<b>" + "Meeting ID : " + "</b> " + mArray?.get(position)?.strMeetingID
         holder.meeting_id_txt.setText(Html.fromHtml(sourceString))
 
 //        holder.meeting_id_txt.setText("Meeting ID : "+)
 
+        if (mArray!!.get(position).strMeetingName.isEmpty())
+        {
+            holder.meeting_name_txt.setText("Meeting Name - No name found")
+        }
+        else{
+            holder.meeting_name_txt.setText("Meeting Name - "+mArray!!.get(position).strMeetingName)
+        }
+
+        holder.meeting_time_txt.setText("Meeting End - "+mArray!!.get(position).strMeetingTime)
+
+        if (mArray!!.get(position).strMeetingStatus.equals("3"))
+        {
+            holder.meeting_status_txt.setText("Meeting Status - Completed")
+        }
+        else{
+            holder.meeting_status_txt.setText("Meeting Status - incomplete")
+        }
+
+
+
+        if (HistoryOrAttendence.equals("History"))
+        {
+            holder.moveForwardImg.visibility = View.INVISIBLE
+        }
+        else{
+            holder.moveForwardImg.visibility = View.VISIBLE
+        }
+
         holder.cardview_history_meeting.setOnClickListener {
 
             val intent = Intent(it.context, ActivityMeetingAttendUsers::class.java)
-            intent.putExtra("Email", mArray?.get(position)?.strEmail.toString())
+            intent.putExtra("Email", mArray?.get(position)?.strMeetingID)
             it.context.startActivity(intent)
         }
     }
@@ -76,6 +106,7 @@ class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<U
 
     init {
         this.mArray = show_batches
+        this.HistoryOrAttendence = strHistoryOrAttendence
 
     }
 }

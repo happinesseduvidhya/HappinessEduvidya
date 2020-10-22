@@ -25,6 +25,7 @@ class FragmentJoinMeeting : Fragment() {
     private lateinit var join_meeting_btn: Button
     private lateinit var webview_screen: WebView
     private var meeting_id: String? = null
+    private var classname: String? = null
     private var facultyEmailWhenUserComeOnThisScreen: String? = null
 
     var updatedProgressDilaog = CustomProgressDialog()
@@ -37,15 +38,12 @@ class FragmentJoinMeeting : Fragment() {
         val v: View = inflater.inflate(R.layout.fragment_join_meeting, container, false)
 
 
-
-
-
-
         join_meeting_btn = v.findViewById(R.id.enter_join_meeting_btn)
         enter_join_meeting_code = v.findViewById(R.id.enter_join_meeting_edit)
 
         val joinMeetingID = requireArguments().getString("subject_name")
         facultyEmailWhenUserComeOnThisScreen = requireArguments().getString("topic_name")
+        classname = requireArguments().getString("classname")
 
         if (joinMeetingID != null)
         {
@@ -110,6 +108,7 @@ class FragmentJoinMeeting : Fragment() {
             i.putExtra("url", strUrl)
             i.putExtra("meetingID", meeting_id)
             i.putExtra("facultyEmailWhenUserComeOnThisScreen", facultyEmailWhenUserComeOnThisScreen)
+            i.putExtra("classname", classname)
             startActivity(i)
 
         }

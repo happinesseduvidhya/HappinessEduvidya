@@ -98,7 +98,7 @@ class ActivityMeetingStartByFaculty : AppCompatActivity() {
                             }
                             else{
                                 meetingsCheckTxt.visibility = View.GONE
-                                mRecyclerAdapter = AdapterMeetingsCreatedByFaculties(this@ActivityMeetingStartByFaculty, meetingsArrays,"faculty","")
+                                mRecyclerAdapter = AdapterMeetingsCreatedByFaculties(this@ActivityMeetingStartByFaculty, meetingsArrays,"faculty",className.toString())
                                 meetings_recycler_start_faculty.adapter = mRecyclerAdapter
                             }
 

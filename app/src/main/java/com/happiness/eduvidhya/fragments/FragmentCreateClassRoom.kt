@@ -3,6 +3,7 @@ package com.happiness.eduvidhya.fragments
 import android.R.attr.description
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.Interface.RemoveClickListener
 import com.happiness.eduvidhya.R
+import com.happiness.eduvidhya.activities.ActivityCreateBatchByFaculty
 import com.happiness.eduvidhya.datamodels.BatchListDescriptionDataModel
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
 import com.happiness.eduvidhya.datamodels.StudentEmail
@@ -38,6 +40,7 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
     private lateinit var batch_list_recycler: RecyclerView
     private lateinit var create_classroom_btn: Button
     private lateinit var create_batch_text: TextView
+    private lateinit var createbatchBtn: TextView
     val db = FirebaseFirestore.getInstance()
     val classes = db.collection("Classes")
     val faculties = db.collection("Faculties")
@@ -59,6 +62,7 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
         batch_list_recycler = v.findViewById(R.id.recycler_view)
         create_classroom_btn = v.findViewById(R.id.create_classroom_btn)
         create_batch_text = v.findViewById(R.id.create_batch_text)
+        createbatchBtn = v.findViewById(R.id.createbatchBtn)
 
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -106,8 +110,11 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
                         updatedProgressDilaog.dialog.dismiss()
 
                         val document = task.getResult()
+
                         if (document!!.exists()) {
+
                             val class_status = document.get("class_status")
+
 
                             if (class_status!!.equals("0"))
                             {
@@ -133,7 +140,13 @@ class FragmentCreateClassRoom : Fragment(), RemoveClickListener {
                                         create_batch_text.visibility = View.VISIBLE
 
                                         create_classroom_btn.isEnabled = false
-                                        add_batch.visibility = View.VISIBLE
+                                        add_batch.visibility = View.GONE
+                                        createbatchBtn.visibility = View.VISIBLE
+                                        createbatchBtn.setOnClickListener {
+                                            val intent = Intent(requireActivity(), ActivityCreateBatchByFaculty::class.java)
+                                            intent.putExtra("className",enter_classroom_name.text.toString())
+                                            startActivity(intent)
+                                        }
                                         Toast.makeText(context, "Successfully created class", Toast.LENGTH_SHORT).show() }.addOnFailureListener {
                                     }
                                 }

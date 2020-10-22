@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -49,7 +50,7 @@ public class ActivityWebView extends AppCompatActivity {
 
     private WebView wv1;
     FirebaseFirestore firebaseFirestore;
-    String linkMy,meetingID,email,type,facultyEmailWhenUserComeOnThisScreen;
+    String linkMy,meetingID,email,type,facultyEmailWhenUserComeOnThisScreen,classname;
     SharedPreferences mySharedPreferences;
 
 
@@ -118,12 +119,32 @@ public class ActivityWebView extends AppCompatActivity {
 
         linkMy = getIntent().getExtras().getString("url");
         meetingID = getIntent().getExtras().getString("meetingID");
+        classname = getIntent().getExtras().getString("classname");
         facultyEmailWhenUserComeOnThisScreen = getIntent().getExtras().getString("facultyEmailWhenUserComeOnThisScreen");
 
 
         wv1.loadUrl(linkMy);
-    }
 
+        handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                String type = mySharedPreferences.getString("type", "");
+                handler.removeCallbacksAndMessages(null);
+                if (type.equals("Faculty"))
+                {
+
+                    String email = mySharedPreferences.getString("user_email", "");
+
+                    DocumentReference document = firebaseFirestore.collection("Meetings").document(email).collection("Classes").document(classname).collection("Meetings").document(meetingID);
+                    document.update("meetingStatus","1");
+                }
+
+            }
+        },5000);
+    }
+    Handler handler;
 
     private class MyBrowser extends WebViewClient {
 
@@ -148,16 +169,16 @@ public class ActivityWebView extends AppCompatActivity {
 
                 if (strCheckMeetingWorkingOrExpired.equals("0"))
                 {
-                    Toast.makeText(getApplicationContext(), "first if", Toast.LENGTH_SHORT).show();
+                    String type = mySharedPreferences.getString("type", "");
 
-//                    email = mySharedPreferences.getString("user_email", "");
-//                    type = mySharedPreferences.getString("type", "");
+                    if (type.equals("Faculty"))
+                    {
 
+                        mFacultyMeetingStatus();
+                    }
+                    handler.removeCallbacksAndMessages(null);
                     finish();
-
                 }
-
-
 
             }
             else if (url.equals("https://noblekeyz.com/")) {
@@ -165,14 +186,21 @@ public class ActivityWebView extends AppCompatActivity {
 
                 strCheckMeetingWorkingOrExpired = "1";
 
-                Toast.makeText(getApplicationContext(), "second if", Toast.LENGTH_SHORT).show();
-
                 email = mySharedPreferences.getString("user_email", "");
                 type = mySharedPreferences.getString("type", "");
 
                 dismissClass(email,type);
 
-
+            }
+            else {
+//                String type = mySharedPreferences.getString("type", "");
+//                handler.removeCallbacksAndMessages(null);
+//                if (type.equals("Faculty"))
+//                {
+//
+//                    mFacultyMeetingStatus();
+//                }
+//                finish();
             }
 
         }
@@ -232,5 +260,25 @@ public class ActivityWebView extends AppCompatActivity {
     }
 
 
+    private void mFacultyMeetingStatus()
+    {
+        String email = mySharedPreferences.getString("user_email", "");
+
+        DocumentReference document = firebaseFirestore.collection("Meetings").document(email).collection("Classes").document(classname).collection("Meetings").document(meetingID);
+        document.update("meetingStatus","2");
+
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+    }
 
 }

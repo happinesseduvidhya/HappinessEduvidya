@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-
 import com.happiness.eduvidhya.R
 
 class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
@@ -29,7 +28,7 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
 
     private lateinit var animBlink: Animation
     private lateinit var constraint: ConstraintLayout
-    private val SPLASH_DELAY: Long = 2000
+    private val SPLASH_DELAY: Long = 5000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +37,8 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
 
         this.getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         setContentView(R.layout.activity_splash)
 
@@ -50,9 +50,8 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
         )
         animBlink.setAnimationListener(this)
         constraint.startAnimation(animBlink)
-        
-        Handler().postDelayed({
 
+        Handler().postDelayed({
 
             val mySharedPreferences = applicationContext.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
             val type = mySharedPreferences.getString("type", "")
@@ -65,12 +64,14 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
             }
             else if (type.equals("User")) {
                 val intent = Intent(this, ActivityHome::class.java)
+                intent.putExtra("Type","User")
                 startActivity(intent)
                 finish()
 
             }
             else if (type.equals("Faculty")) {
                 val intent = Intent(this, ActivityHome::class.java)
+                intent.putExtra("Type","Faculty")
                 startActivity(intent)
                 finish()
             }
@@ -81,6 +82,14 @@ class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
             }
 
         }, SPLASH_DELAY)
+
+
+
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

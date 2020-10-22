@@ -217,7 +217,6 @@ class ActivityLogin : AppCompatActivity() {
         editor.putString("type", type)
         editor.apply()
 
-
         val type = type_edt.text.toString()
         if (type.equals("Admin")) {
             val intent = Intent(this, ActivityHomeAdmin::class.java)
@@ -225,10 +224,15 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(intent)
         }
         else{
+
+            //gaurav comment this code just beacuse near by
+
             val intent = Intent(this, ActivityHome::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.putExtra("Type",type)
             startActivity(intent)
         }
+        finish()
 
     }
 

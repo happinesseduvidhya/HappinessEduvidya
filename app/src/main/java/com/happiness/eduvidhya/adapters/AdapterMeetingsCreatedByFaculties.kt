@@ -74,33 +74,16 @@ class AdapterMeetingsCreatedByFaculties(
             holder.meetingStatusTxt.setText("Completed")
         }
 
+
         holder.nextBtn.setOnClickListener {
 
             val i = Intent(it.context, ActivityBaseForFragment::class.java)
             i.putExtra("checkPage", "join")
             i.putExtra("subjectname", mArray?.get(position)?.meetingID)
             i.putExtra("topicname", strFacultyEmail)
+            i.putExtra("classname", ClassNameComeFromClasses)
             it.context.startActivity(i)
-
         }
-
-//        holder.etTitleTextView.setOnClickListener {
-//
-//            if (strFacultyOrClasses.equals("faculty")) {
-//
-//                val intent = Intent(it.context, ActivityUsersAllClasses::class.java)
-//                intent.putExtra("Email", mArray?.get(position)?.strEmail.toString())
-//                it.context.startActivity(intent)
-//            }
-//            else if (strFacultyOrClasses.equals("AllUsersClasses")) {
-//                val intent = Intent(it.context, ActivityAllMeetingsSeeByUser::class.java)
-//                intent.putExtra("Email", mArray?.get(position)?.strEmail.toString())
-//                intent.putExtra("className", mArray?.get(position)?.strEmail.toString())
-//                it.context.startActivity(intent)
-//            }
-//
-//        }
-
 
     }
 

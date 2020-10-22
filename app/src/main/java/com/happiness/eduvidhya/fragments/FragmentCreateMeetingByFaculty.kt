@@ -17,6 +17,7 @@ import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.RetrofitConnection.ApiCllientXml
 import com.happiness.eduvidhya.datamodels.ModelMeetings
 import com.happiness.eduvidhya.datamodels.StudentEmail
+import com.happiness.eduvidhya.datamodels.notificationModel
 import com.happiness.eduvidhya.datamodels.response
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
@@ -54,6 +55,7 @@ class FragmentCreateMeetingByFaculty : Fragment() {
     val db = FirebaseFirestore.getInstance()
     val classes = db.collection("Classes")
     val meetings = db.collection("Meetings")
+    val myNotifications = db.collection("Notifications")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -201,6 +203,11 @@ class FragmentCreateMeetingByFaculty : Fragment() {
                             val model = StudentEmail(email)
                             meetings.document(email.toString()).set(model)
                             meetings.document(email.toString()).collection("Classes").document(strClass.toString()).set(model)
+
+
+                            val notificationModel = notificationModel(email.toString(),display_code_value.text.toString(),enter_meeting_time.text.toString()+", "+enter_meeting_date.text.toString(),"0")
+                            myNotifications.document(display_code_value.text.toString()).set(notificationModel)
+
                             val meetings = meetings.document(email.toString()).collection("Classes").document(strClass.toString()).collection("Meetings").document(display_code_value.text.toString())
 
                             meetings.set(meetingsModel).addOnSuccessListener {
@@ -208,7 +215,6 @@ class FragmentCreateMeetingByFaculty : Fragment() {
                                 create_meeting_btn.isEnabled = false
                                 Toast.makeText(activity, "Successfully Created Meeting", Toast.LENGTH_SHORT).show()
                             }.addOnFailureListener {
-
                             }
                         }
                     }

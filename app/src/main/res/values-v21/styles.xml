@@ -5,4 +5,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="SpinnerTheme">
+        <item name="android:textColor">#333333</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
 </resources>

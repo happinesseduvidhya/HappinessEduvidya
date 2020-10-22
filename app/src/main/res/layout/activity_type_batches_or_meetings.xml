@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ActivityTypeBatchesOrMeetings">
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/top_bar"/>
+
+    <Button
+        android:id="@+id/mangesMeetingBtn"
+        android:text="Manages Meetings"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/background_custom_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/managesBatchesBtn"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="@dimen/margin_200"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/managesBatchesBtn"
+        android:text="Manages Batches"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/mangesMeetingBtn"
+        android:background="@drawable/background_custom_btn"
+        android:layout_marginTop="@dimen/margin_10"
+        android:fontFamily="@font/montserrat"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/colorWhite"
+        android:layout_width="@dimen/margin_200"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

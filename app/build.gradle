@@ -64,6 +64,8 @@ dependencies {
 
 //    implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
 
+    implementation 'com.github.nikartm:image-support:1.0.5'
+
     implementation group: 'de.mindpipe.android', name: 'android-logging-log4j', version: '1.0.3'
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
 

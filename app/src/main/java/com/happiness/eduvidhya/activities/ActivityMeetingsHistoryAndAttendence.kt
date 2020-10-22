@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.adapters.AdapterAllClassesUser
 import com.happiness.eduvidhya.adapters.AdapterAllMeetingHistories
+import com.happiness.eduvidhya.datamodels.ModelMeetingHistories
 import com.happiness.eduvidhya.datamodels.UserOrFacultyInfo
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
@@ -35,6 +36,7 @@ class ActivityMeetingsHistoryAndAttendence : AppCompatActivity() {
 
     var updatedProgressDilaog = CustomProgressDialog()
 
+    var strHistoryOrAttendence:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +50,21 @@ class ActivityMeetingsHistoryAndAttendence : AppCompatActivity() {
             finish()
         }
 
+        strHistoryOrAttendence = intent.getStringExtra("HistoryOrAttendence")
+
 
         val layoutManager = LinearLayoutManager(this@ActivityMeetingsHistoryAndAttendence)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         all_users_recyclerview.setLayoutManager(layoutManager)
 
-        mFaculties()
+        mFaculties(strHistoryOrAttendence)
 
     }
 
-    var users_faculty: ArrayList<UserOrFacultyInfo>? = null
+    var ARRAYS_USERS_HISTORY_OR_ATTENDENCE: ArrayList<ModelMeetingHistories>? = null
     private var mRecyclerAdapter: AdapterAllMeetingHistories? = null
 
-    fun mFaculties() {
+    fun mFaculties(strHistoryOrAttendence:String) {
         updatedProgressDilaog.show(this)
         if (Constant.hasNetworkAvailable(applicationContext)) {
 
@@ -74,25 +78,33 @@ class ActivityMeetingsHistoryAndAttendence : AppCompatActivity() {
                         updatedProgressDilaog.dialog.dismiss()
                         if (task.isSuccessful()) {
 
-                            users_faculty = ArrayList<UserOrFacultyInfo>()
-                            users_faculty!!.clear()
+                            ARRAYS_USERS_HISTORY_OR_ATTENDENCE = ArrayList<ModelMeetingHistories>()
+                            ARRAYS_USERS_HISTORY_OR_ATTENDENCE!!.clear()
 
                             for (document in task.result!!) {
 
                                 val facultyID = document.id
-                                val userOrFacultyInfo = UserOrFacultyInfo("", facultyID.toString(), "")
-                                users_faculty!!.add(userOrFacultyInfo)
+
+                                val strMeetingName = document.data.get("strMeetingName")
+                                val  strMeetingID = document.data.get("strMeetingID")
+                                val  strMeetingDate = document.data.get("strMeetingDate")
+                                val  strMeetingTime = document.data.get("strMeetingTime")
+                                val  strMeetingStatus = document.data.get("strMeetingStatus")
+                                val  strClassName = document.data.get("strClassName")
+
+                                val modelMeetingHistories = ModelMeetingHistories(strMeetingName.toString(), strMeetingID.toString(), strMeetingDate.toString(),strMeetingTime.toString(),strMeetingStatus.toString(),strClassName.toString())
+                                ARRAYS_USERS_HISTORY_OR_ATTENDENCE!!.add(modelMeetingHistories)
 
                             }
 
-                            if (users_faculty!!.size == 0)
+                            if (ARRAYS_USERS_HISTORY_OR_ATTENDENCE!!.size == 0)
                             {
                                 meetingsCheckTxt.visibility = View.VISIBLE
                             }
                             else{
                                 meetingsCheckTxt.visibility = View.GONE
                                 mRecyclerAdapter = AdapterAllMeetingHistories(
-                                    this@ActivityMeetingsHistoryAndAttendence,users_faculty)
+                                    this@ActivityMeetingsHistoryAndAttendence,ARRAYS_USERS_HISTORY_OR_ATTENDENCE,strHistoryOrAttendence)
                                 all_users_recyclerview.adapter = mRecyclerAdapter
                             }
 

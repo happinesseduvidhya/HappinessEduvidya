@@ -41,10 +41,8 @@ class AddStudentByFaculty : AppCompatActivity(){
     val db = FirebaseFirestore.getInstance()
     val classes = db.collection("Classes")
     val users_collection = db.collection("Users")
+    val faculty_collection = db.collection("Faculties")
     var updatedProgressDilaog = CustomProgressDialog()
-
-
-
 
 
 
@@ -62,7 +60,7 @@ class AddStudentByFaculty : AppCompatActivity(){
 
         spinner = findViewById(R.id.spinner)
 
-        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Toast.makeText(applicationContext, "enter ", Toast.LENGTH_SHORT).show()
 
@@ -130,6 +128,9 @@ class AddStudentByFaculty : AppCompatActivity(){
                     modelUserInfo?.let { it1 -> usersAdd!!.set(it1) }!!.addOnSuccessListener {
 
                         val student = StudentEmail("0")
+
+                        val modelUserInfo = ModelUserInfo("",search_user.text.toString(),"",strClass.toString())
+                        faculty_collection.document(email.toString()).collection("Users").document(search_user.text.toString()).set(modelUserInfo)
                         users_collection.document(search_user.text.toString()).collection("Faculties").document(email.toString()).set(student)
                         usersAdd = users_collection.document(search_user.text.toString()).collection("Faculties").document(email.toString()).collection("Classes").document(strClass.toString())
                         usersAdd!!.set(student).addOnSuccessListener {

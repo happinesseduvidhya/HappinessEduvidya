@@ -6,6 +6,8 @@ public class ModelMeetingHistories {
     String strMeetingID;
     String strMeetingDate;
     String strMeetingTime;
+    String strMeetingStatus;
+    String strClassName;
 
     public String getStrMeetingStatus() {
         return strMeetingStatus;
@@ -23,11 +25,6 @@ public class ModelMeetingHistories {
         this.strMeetingStatus = strMeetingStatus;
         this.strClassName = strClassName;
     }
-
-    String strMeetingStatus;
-    String strClassName;
-
-
 
     public String getStrMeetingName() {
         return strMeetingName;

@@ -24,13 +24,10 @@ import java.util.*
 
 class FragmentHome : Fragment() {
 
-    private lateinit var create_meeting_cardview: CardView
     private lateinit var join_meeting_cardview: CardView
     private lateinit var meetingCardView: CardView
     private lateinit var classrooms_cardview: CardView
     private lateinit var scoreboard_card: CardView
-    private lateinit var add_students_cardview: CardView
-    private lateinit var attendences_cardview: CardView
 
     private lateinit var scheduled_meeting_card: CardView
     private lateinit var logoutBtn: Button
@@ -50,15 +47,12 @@ class FragmentHome : Fragment() {
         val type = mySharedPreferences?.getString("type", "")
 
         auth = FirebaseAuth.getInstance()
-        create_meeting_cardview = v.findViewById(R.id.create_meeting_card)
         join_meeting_cardview = v.findViewById(R.id.join_meeting_card)
         meetingCardView = v.findViewById(R.id.meetingCardView)
         classrooms_cardview = v.findViewById(R.id.classrooms_cardview)
         scoreboard_card = v.findViewById(R.id.scoreboard_card)
-        attendences_cardview = v.findViewById(R.id.attendences_cardview)
 
         scheduled_meeting_card = v.findViewById(R.id.scheduled_meeting_card)
-        add_students_cardview = v.findViewById(R.id.add_students_cardview)
 
         logoutBtn = v.findViewById(R.id.logoutBtn)
 
@@ -77,23 +71,8 @@ class FragmentHome : Fragment() {
             }
         }
 
-        create_meeting_cardview.setOnClickListener {
 
-            if (type.equals("User")) {
-                Constant.showMessage(it, "You are user, you cannot create meetings")
-            } else {
-                val i = Intent(activity, ActivityBaseForFragment::class.java)
-                i.putExtra("checkPage", "create")
-                startActivity(i)
-            }
 
-        }
-
-        attendences_cardview.setOnClickListener {
-
-            val i = Intent(activity, ActivityMeetingsHistoryAndAttendence::class.java)
-            startActivity(i)
-        }
 
         scoreboard_card.setOnClickListener {
             Constant.showMessage(it, "No story board found")
@@ -150,26 +129,6 @@ class FragmentHome : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
-
-        add_students_cardview.setOnClickListener {
-
-            if (type.equals("User")) {
-                Constant.showMessage(it, "You are user, you cannot add users")
-            } else {
-                val intent = Intent(activity, AddStudentByFaculty::class.java)
-                startActivity(intent)
-            }
-        }
-
-
-        if (type.equals("User"))
-        {
-            attendences_cardview.visibility = View.GONE
-        }
-        else if (type.equals("Faculty")) {
-            attendences_cardview.visibility = View.VISIBLE
-        }
-
 
         return v
     }

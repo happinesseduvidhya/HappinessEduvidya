@@ -32,11 +32,10 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
 
     private lateinit var student_list_constraint: ConstraintLayout
     private lateinit var enter_meeting_name:EditText
-    private lateinit var enter_meeting_time:EditText
     private lateinit var enter_meeting_date:EditText
+    private lateinit var enter_meeting_time:EditText
     private lateinit var add_student_name:EditText
     private lateinit var add_student_to_list: ImageView
-    private lateinit var submit_batch: Button
     private lateinit var add_student_recycler: RecyclerView
     private var mAdapter: AddStudentEmailAdapter? = null
     var myStudentList: ArrayList<StudentEmail> = ArrayList()
@@ -56,7 +55,7 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_add_batch_details, container, false)
 
-        requireActivity()!!.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         val subject = requireArguments().getString("subject_name")
         val topic = requireArguments().getString("topic_name")
@@ -77,35 +76,25 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
         enter_meeting_date=v.findViewById(R.id.enter_meeting_date)
         add_student_name=v.findViewById(R.id.enter_student_name)
         add_student_to_list=v.findViewById(R.id.add_student_img)
-        submit_batch=v.findViewById(R.id.submit_batch)
         add_student_recycler=v.findViewById(R.id.student_list_recycler)
         student_list_constraint=v.findViewById(R.id.student_list_constraint)
 
-//        mAdapter =AddStudentEmailAdapter(requireActivity(),myStudentList, this)
-//        val layoutManager = LinearLayoutManager(activity)
-//        layoutManager.orientation = LinearLayoutManager.VERTICAL
-//
-//        add_student_recycler.setLayoutManager(layoutManager)
-//        add_student_recycler.adapter=mAdapter
 
 
 
         if (position == null)
         {
-            submit_batch.visibility = View.VISIBLE
             enter_meeting_time.isEnabled = true
             enter_meeting_date.isEnabled = true
         }
         else if (subject == "" && topic =="" && position =="")
         {
-            submit_batch.visibility = View.GONE
             Toast.makeText(context, "No meetings found", Toast.LENGTH_SHORT).show()
         }
         else{
 
             if (topic.equals("createBatch"))
             {
-                submit_batch.visibility = View.VISIBLE
                 enter_meeting_time.isEnabled = true
                 enter_meeting_date.isEnabled = true
             }
@@ -117,98 +106,8 @@ class FragmentAddBatchDetails : Fragment(),RemoveClickListener {
                 enter_meeting_name.isEnabled = false
                 enter_meeting_time.isEnabled = false
                 enter_meeting_date.isEnabled = false
-
-                submit_batch.visibility = View.GONE
             }
-
-
         }
-
-
-        val date = DatePickerDialog.OnDateSetListener {
-
-                view, year, monthOfYear, dayOfMonth ->
-                myCalendar.set(Calendar.YEAR, year)
-                myCalendar.set(Calendar.MONTH, monthOfYear)
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                updateLabel()
-            }
-        enter_meeting_date.setOnClickListener {
-
-            DatePickerDialog(requireActivity(), date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH], myCalendar[Calendar.DAY_OF_MONTH]).show()
-        }
-        enter_meeting_time.setOnClickListener {
-
-            val mcurrentTime = Calendar.getInstance()
-            val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-            val minute = mcurrentTime[Calendar.MINUTE]
-            val myFormat = "hh:mm a" //In which you need put here
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(requireActivity(), TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute -> showTime(selectedHour, selectedMinute)
-
-                }, hour, minute, false
-            ) //Yes 24 hour time
-
-            mTimePicker.setTitle("Select Time")
-            mTimePicker.show()
-        }
-        submit_batch.setOnClickListener {
-
-            if (!enter_meeting_name.text.toString().isEmpty())
-            {
-                if (!enter_meeting_time.text.toString().isEmpty())
-                {
-                    if (!enter_meeting_date.text.toString().isEmpty())
-                    {
-                        updatedProgressDilaog.show(requireActivity())
-
-                        val batch_detail = BatchDeatailModel(enter_meeting_name.text.toString(), enter_meeting_date.text.toString(), enter_meeting_time.text.toString())
-
-                        classes.document(email!!).collection("classrooms").document(classname.toString()).collection("Batches").document("Batch"+(position)).set(batch_detail).addOnSuccessListener {
-
-                            updatedProgressDilaog.dialog.dismiss()
-                            submit_batch.isEnabled = false
-                            Toast.makeText(context, "meeting created", Toast.LENGTH_SHORT).show()
-
-
-                        }.addOnFailureListener {
-                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else{
-                        Constant.showMessage(it,"enter meeting date")
-                    }
-                }
-                else{
-                    Constant.showMessage(it,"enter meeting time")
-                }
-            }
-                else{
-                Constant.showMessage(it,"enter meeting name")
-            }
-
-        }
-
-
-
-//        add_student_to_list.setOnClickListener {
-//            if(add_student_name.text.toString().isEmpty())
-//            {
-//                Toast.makeText(activity,"Enter Any Email",Toast.LENGTH_SHORT).show()
-//            }
-//            else {
-//
-//                student_list_constraint.visibility = View.VISIBLE
-//                val mLog = StudentEmail()
-//                mLog.Email = add_student_name.text.toString()
-//                myStudentList.add(mLog)
-//                mAdapter!!.notifyData(myStudentList)
-//                add_student_name.setText("");
-//            }
-//        }
-
         return v
     }
 
