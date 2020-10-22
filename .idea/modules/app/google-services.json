@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "818067165937",
+    "firebase_url": "https://eduvidhya-cf368.firebaseio.com",
+    "project_id": "eduvidhya-cf368",
+    "storage_bucket": "eduvidhya-cf368.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818067165937:android:048d32c20c47f8b4214f50",
+        "android_client_info": {
+          "package_name": "com.happiness.eduvidhya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818067165937-ptrmusch5mbrv9ja0k9kc9a5ir6cdeai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.happiness.eduvidhya",
+            "certificate_hash": "51f2c8b8efe8b599a90356336eb39634c6a51700"
+          }
+        },
+        {
+          "client_id": "818067165937-evkcqkmgi2sd5t9tcfelputph3e0s88u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.happiness.eduvidhya",
+            "certificate_hash": "9d782934271db78c4fe9c41997b669f73ebfeae6"
+          }
+        },
+        {
+          "client_id": "818067165937-di0jcsipk9mnb9efk99fu8sufvm5ku9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ym10HKTMyZ6V3I361uO_-xY6hI26F9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818067165937-di0jcsipk9mnb9efk99fu8sufvm5ku9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

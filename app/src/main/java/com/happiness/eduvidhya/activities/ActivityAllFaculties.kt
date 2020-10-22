@@ -6,6 +6,8 @@ import com.happiness.eduvidhya.R
 
 class ActivityAllFaculties : AppCompatActivity() {
 
+    // find it direction things.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
