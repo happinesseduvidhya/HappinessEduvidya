@@ -1,15 +1,14 @@
 package com.happiness.eduvidhya.fragments
 
-import android.app.Notification
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.EventListener
@@ -17,11 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.happiness.eduvidhya.R
-import com.happiness.eduvidhya.activities.ActivityBaseForFragment
-import com.happiness.eduvidhya.adapters.AdapterAllClassesUser
 import com.happiness.eduvidhya.adapters.AdapterNotification
-import com.happiness.eduvidhya.datamodels.notificationModel
-import kotlinx.android.synthetic.main.activity_users.*
+import com.happiness.eduvidhya.datamodels.NotificationModel
 
 
 class FragmentNotification : Fragment() {
@@ -36,7 +32,7 @@ class FragmentNotification : Fragment() {
     val users_collection = db.collection("Users")
     val notifications_collection = db.collection("Notifications")
     var mArraysFacultiesEmail:ArrayList<String> ?= null
-    var mArraysNotifications:ArrayList<notificationModel> ?= null
+    var mArraysNotifications:ArrayList<NotificationModel> ?= null
 
     private var mRecyclerAdapter: AdapterNotification? = null
     private var all_users_recyclerview: RecyclerView? = null
@@ -90,37 +86,63 @@ class FragmentNotification : Fragment() {
 
     private fun checkfun()
     {
-        notifications_collection.addSnapshotListener(object :
-            EventListener<QuerySnapshot> {
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?
-            ) {
-                for (data in value!!.documents) {
 
-                    if (data.exists()) {
+        try {
+            notifications_collection.addSnapshotListener(object :
+                EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?
+                ) {
+                    for (data in value!!.documents) {
 
-                        val emailInfo = data.get("facultyEmail")
+                        if (data.exists()) {
 
-                        for (dataFirstLoop in 0 until  mArraysFacultiesEmail!!.size)
-                        {
-                            val facultyIDEmail = mArraysFacultiesEmail!!.get(dataFirstLoop)
-                            if (facultyIDEmail.equals(emailInfo))
+                            val emailInfo = data.get("facultyEmail")
+
+                            for (dataFirstLoop in 0 until  mArraysFacultiesEmail!!.size)
                             {
-                                val facultyEmail = data.get("facultyEmail")
-                                val facultyMeeting = data.get("facultyMeeting")
-                                val facultyTime = data.get("meetingTime")
-                                val notification_status = data.get("notification_status")
-                                val notificationModel = notificationModel(facultyEmail.toString(),facultyMeeting.toString(),facultyTime.toString(),notification_status.toString())
-                                mArraysNotifications!!.add(notificationModel)
+                                val facultyIDEmail = mArraysFacultiesEmail!!.get(dataFirstLoop)
+                                if (facultyIDEmail.equals(emailInfo))
+                                {
+                                    val facultyEmail = data.get("facultyEmail")
+                                    val facultyMeeting = data.get("facultyMeeting")
+                                    val facultyTime = data.get("meetingTime")
+                                    val notification_status = data.get("notification_status")
+                                    val notification_className = data.get("meetingClassName")
+                                    val notificationModel = NotificationModel(facultyEmail.toString(),facultyMeeting.toString(),facultyTime.toString(),notification_className.toString(),notification_status.toString())
+                                    mArraysNotifications!!.add(notificationModel)
+                                    notifications_collection.document(data.id).update("notification_status","1")
+                                }
                             }
+
+                            if (isAdded){
+
+                            }
+
+                            mRecyclerAdapter = mContext?.let { AdapterNotification(it,mArraysNotifications,"faculty","") }
+                            all_users_recyclerview!!.adapter = mRecyclerAdapter
+
                         }
-
-                        mRecyclerAdapter = AdapterNotification(requireContext(),mArraysNotifications,"faculty","")
-                        all_users_recyclerview!!.adapter = mRecyclerAdapter
-
                     }
                 }
-            }
 
-        })
+            })
+        }
+        catch (e:Exception)
+        {
+            Toast.makeText(activity,e.message.toString(),Toast.LENGTH_SHORT).show()
+        }
+
     }
+    private var mContext: Context? = null
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mContext = null
+    }
+
+
 }

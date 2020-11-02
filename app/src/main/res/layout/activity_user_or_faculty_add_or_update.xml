@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/signin_heading"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|center"
@@ -21,17 +21,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <View
+        android:background="@color/colorBlack"
+        app:layout_constraintTop_toBottomOf="@+id/signin_heading"
+        app:layout_constraintStart_toStartOf="@+id/signin_heading"
+        app:layout_constraintEnd_toEndOf="@+id/signin_heading"
+        android:layout_width="0dp"
+        android:layout_height="1dp"/>
+
+
     <EditText
         android:id="@+id/enter_name_edt"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
-        android:hint="enter the name"
+        android:hint="Enter the name"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_size_12sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -51,7 +60,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
-        android:hint="enter email"
+        android:hint="Enter email"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_size_12sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -68,7 +77,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
-        android:hint="enter the password"
+        android:hint="Enter the password"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_size_12sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -77,10 +86,9 @@
 
     <Button
         android:id="@+id/submit_btn"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
@@ -88,8 +96,8 @@
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/enter_password_edt"
+        app:layout_constraintRight_toRightOf="@+id/enter_password_edt"
         app:layout_constraintTop_toBottomOf="@id/enter_password_edt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -100,29 +100,6 @@ class FragementShowBatches : Fragment() {
 
             })
 
-//            classes.document(email!!).collection("classrooms").document(get_classroom.toString()).collection("Batches").get()
-//                .addOnSuccessListener { documents ->
-//                    updatedProgressDilaog.dialog.dismiss()
-//                    for (document in documents) {
-//                        detail_db = ListOfBatchesModel(document.id)
-//                        list_of_batches!!.add(detail_db!!)
-//                    }
-//
-//                    if (list_of_batches!!.size == 0)
-//                    {
-//                        no_batches_txt.visibility = View.VISIBLE
-//
-//                    }
-//                    else{
-//                        no_batches_txt.visibility = View.GONE
-//                        mRecyclerAdapter = AdapterShowBatches(requireActivity(),list_of_batches,get_classroom.toString())
-//                        show_batches_recycler.adapter = mRecyclerAdapter
-//                    }
-//
-//                }.addOnFailureListener { exception ->
-//                    updatedProgressDilaog.dialog.dismiss()
-//                    Log.w("TAG", "Error getting documents: ", exception)
-//                }
         }else {
             Toast.makeText(activity, "No network available", Toast.LENGTH_SHORT).show()
 

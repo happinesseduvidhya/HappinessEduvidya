@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
@@ -31,6 +32,7 @@ import com.happiness.eduvidhya.utils.CustomProgressDialog
 
 class FragmentSmallClassroom : Fragment() {
 
+    private lateinit var image_back_arrow: ImageView
     private lateinit var schedule_meeting_recyler: RecyclerView
     var detail_db: ClassroomDetailsModel? = null
     private var mRecyclerAdapter: AdapterSmallClassRoom? = null
@@ -50,6 +52,7 @@ class FragmentSmallClassroom : Fragment() {
         mArrayBatchesWithMeeting = ArrayList<ClassroomDetailsModel>()
 
         schedule_meeting_recyler = v.findViewById(R.id.all_classes_recyclerview)
+        image_back_arrow = v.findViewById(R.id.image_back_arrow)
 
         create_batch_btn = v.findViewById(R.id.create_classroom_btn)
 
@@ -135,6 +138,12 @@ class FragmentSmallClassroom : Fragment() {
         } else {
             Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
         }
+
+        image_back_arrow.setOnClickListener {
+            requireActivity().finish()
+        }
+
+
         return v
 
 

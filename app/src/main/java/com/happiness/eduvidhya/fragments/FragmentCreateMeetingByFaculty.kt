@@ -17,7 +17,7 @@ import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.RetrofitConnection.ApiCllientXml
 import com.happiness.eduvidhya.datamodels.ModelMeetings
 import com.happiness.eduvidhya.datamodels.StudentEmail
-import com.happiness.eduvidhya.datamodels.notificationModel
+import com.happiness.eduvidhya.datamodels.NotificationModel
 import com.happiness.eduvidhya.datamodels.response
 import com.happiness.eduvidhya.utils.Constant
 import com.happiness.eduvidhya.utils.CustomProgressDialog
@@ -31,6 +31,7 @@ import java.util.*
 
 class FragmentCreateMeetingByFaculty : Fragment() {
 
+    private lateinit var image_back_arrow: ImageView
     private lateinit var enter_meeting_name: EditText
     private lateinit var enter_meeting_date: EditText
     private lateinit var enter_meeting_time: EditText
@@ -62,6 +63,7 @@ class FragmentCreateMeetingByFaculty : Fragment() {
         val v: View = inflater.inflate(R.layout.fragment_create_meeting_by_faculty, container, false)
 
 
+        image_back_arrow = v.findViewById(R.id.image_back_arrow)
         enter_meeting_name = v.findViewById(R.id.enter_meeting_name)
         enter_meeting_date = v.findViewById(R.id.enter_meeting_date)
         enter_meeting_time = v.findViewById(R.id.enter_meeting_time)
@@ -140,6 +142,10 @@ class FragmentCreateMeetingByFaculty : Fragment() {
 
         }
 
+        image_back_arrow.setOnClickListener {
+            requireActivity().finish()
+        }
+
         mCallGetUsers()
 
         return v
@@ -195,7 +201,6 @@ class FragmentCreateMeetingByFaculty : Fragment() {
                             display_code_value.setText(dataValue.meetingID.toString())
                             display_name_value.setText(meeting_name)
 
-                            val meetingsModel = ModelMeetings(enter_meeting_name.text.toString(),enter_meeting_time.text.toString(),enter_meeting_date.text.toString(),display_code_value.text.toString(),strClass.toString(),"0")
 
                             val mySharedPreferences = requireActivity().getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
                             val email = mySharedPreferences.getString("user_email", "")
@@ -205,10 +210,12 @@ class FragmentCreateMeetingByFaculty : Fragment() {
                             meetings.document(email.toString()).collection("Classes").document(strClass.toString()).set(model)
 
 
-                            val notificationModel = notificationModel(email.toString(),display_code_value.text.toString(),enter_meeting_time.text.toString()+", "+enter_meeting_date.text.toString(),"0")
+                            val notificationModel = NotificationModel(email.toString(),display_code_value.text.toString(),enter_meeting_time.text.toString()+", "+enter_meeting_date.text.toString(),strClass.toString(),"0")
                             myNotifications.document(display_code_value.text.toString()).set(notificationModel)
 
                             val meetings = meetings.document(email.toString()).collection("Classes").document(strClass.toString()).collection("Meetings").document(display_code_value.text.toString())
+
+                            val meetingsModel = ModelMeetings(enter_meeting_name.text.toString(),enter_meeting_time.text.toString(),enter_meeting_date.text.toString(),display_code_value.text.toString(),strClass.toString(),"0")
 
                             meetings.set(meetingsModel).addOnSuccessListener {
                                 updatedProgressDilaog.dialog.dismiss()
@@ -291,9 +298,13 @@ class FragmentCreateMeetingByFaculty : Fragment() {
                     else{
 
                         create_meeting_btn.visibility = View.VISIBLE
-                        val aa = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, mArray)
-                        // Set layout to use when the list of choices appear
-                        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+                        val aa = ArrayAdapter(requireActivity(), R.layout.custom_spinner,mArray) // where array_name consists of the items to show in Spinner
+                        aa.setDropDownViewResource(R.layout.custom_spinner)
+
+//                        val aa = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, mArray)
+//                        // Set layout to use when the list of choices appear
+//                        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         // Set Adapter to Spinner
                         spinner.setAdapter(aa)
                     }

@@ -3,12 +3,16 @@ package com.happiness.eduvidhya.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -20,11 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.happiness.eduvidhya.R
-import com.happiness.eduvidhya.datamodels.ModelUserInfo
+import com.happiness.eduvidhya.datamodels.NotificationModel
 import com.happiness.eduvidhya.fragments.FragmentFacultyHome
 import com.happiness.eduvidhya.fragments.FragmentHome
-import com.happiness.eduvidhya.utils.Constant
 import ru.nikartm.support.ImageBadgeView
+import java.lang.Exception
 
 
 class ActivityHome : AppCompatActivity() {
@@ -41,8 +45,11 @@ class ActivityHome : AppCompatActivity() {
 
     var notificationCount:Int = 0
 
+    var user_email:String = ""
+    var strType:String = ""
+    var mArraysNotificatioCheck:ArrayList<NotificationModel> ?= null
 
-    var mArraysFacultiesEmail:ArrayList<String> ?= null
+    var mediaPlayer:MediaPlayer ?=null
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +70,9 @@ class ActivityHome : AppCompatActivity() {
 
         val mySharedPreferences = applicationContext.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
 
-        val user_email = mySharedPreferences.getString("user_email", "")
+        user_email = mySharedPreferences.getString("user_email", "")!!
+        strType = mySharedPreferences.getString("type", "")!!
+
 
 
         if (type!!.equals("Faculty"))
@@ -83,31 +92,31 @@ class ActivityHome : AppCompatActivity() {
                 transcation.replace(R.id.home_frame_layout, fragmenthome)
                 transcation.commit()
             }
+
+            users_collection.document(user_email.toString()).collection("Faculties").addSnapshotListener(object :
+                EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+
+                    mArraysNotificatioCheck = ArrayList<NotificationModel>()
+
+
+                    for (data in value!!.documents) {
+                        if (data.exists()) {
+                            val facultyIDEmail = data.id
+                            val classRoom = data.get("facultyClass")
+                            val notification = NotificationModel(facultyIDEmail,"","",classRoom.toString(),"")
+                            mArraysNotificatioCheck!!.add(notification)
+
+                        }
+                    }
+                    check()
+
+                }
+
+            })
         }
 
-        mArraysFacultiesEmail = null
-        mArraysFacultiesEmail = ArrayList()
-
-        users_collection.document(user_email.toString()).collection("Faculties").addSnapshotListener(object :
-            EventListener<QuerySnapshot> {
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-
-                for (data in value!!.documents) {
-                    if (data.exists()) {
-
-//                        Toast.makeText(applicationContext,"First Loop"+data.id.toString(),Toast.LENGTH_SHORT).show()
-                        val facultyIDEmail = data.id
-                        mArraysFacultiesEmail!!.add(facultyIDEmail)
-
-                    }
-                }
-                check()
-
-            }
-
-        })
-
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.notification)
 
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView: View = navView.getHeaderView(0)
@@ -119,6 +128,7 @@ class ActivityHome : AppCompatActivity() {
 
         val name = mySharedPreferences.getString("user_name", "")
         navUsername.setText(name)
+
 
         navgationImgBtn.setOnClickListener {
 
@@ -134,8 +144,6 @@ class ActivityHome : AppCompatActivity() {
 
                         }
                         R.id.logout -> {
-
-                            Toast.makeText(applicationContext,"check things",Toast.LENGTH_SHORT).show()
 
                             val mySharedPreferences = getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
                             val editor = mySharedPreferences.edit()
@@ -174,6 +182,15 @@ class ActivityHome : AppCompatActivity() {
             finish()
 
         }
+
+        notification_bell.setOnClickListener {
+            val i = Intent(this@ActivityHome, ActivityBaseForFragment::class.java)
+            i.putExtra("checkPage", "notification_bell")
+            startActivity(i)
+
+        }
+
+
     }
 
     private fun check()
@@ -184,42 +201,52 @@ class ActivityHome : AppCompatActivity() {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?
             ) {
                 notificationCount = 0
-                for (data in value!!.documents) {
 
+                try {
+                    for (data in value!!.documents) {
 
-                    if (data.exists()) {
+                        if (data.exists()) {
 
-                        val emailInfo = data.get("facultyEmail")
+                            val emailInfo = data.get("facultyEmail")
+                            val className = data.get("meetingClassName")
+                            val notificationStatus = data.get("notification_status")
 
-                        for (dataFirstLoop in 0 until  mArraysFacultiesEmail!!.size)
-                        {
-                            val facultyIDEmail = mArraysFacultiesEmail!!.get(dataFirstLoop)
-                            if (facultyIDEmail.equals(emailInfo))
+                            if (mArraysNotificatioCheck!!.size !=0)
                             {
-//                                Toast.makeText(applicationContext,"Second Loop"+notificationCount.toString(),Toast.LENGTH_SHORT).show()
-                                notificationCount++
+                                for (dataFirstLoop in 0 until  mArraysNotificatioCheck!!.size)
+                                {
+                                    if (notificationStatus!!.equals("0"))
+                                    {
+                                        val facultyIDEmail = mArraysNotificatioCheck!!.get(dataFirstLoop).facultyEmail
+                                        val facultyIDClassName = mArraysNotificatioCheck!!.get(dataFirstLoop).meetingClassName
+                                        if (facultyIDEmail.equals(emailInfo) && facultyIDClassName.equals(className))
+                                        {
+                                            notificationCount++
+                                            notification_bell.setBadgeValue(notificationCount)
+//                                        mediaPlayer!!.start()
+                                        }
+                                    }
+                                }
                             }
                         }
-
-
                     }
+                }
+                catch (e:Exception)
+                {
+                    Toast.makeText(this@ActivityHome, e.message.toString(), Toast.LENGTH_SHORT).show()
+                }
 
-                }
-//                Toast.makeText(applicationContext,notificationCount.toString(),Toast.LENGTH_SHORT).show()
-                notification_bell.setBadgeValue(notificationCount)
-                notification_bell.setOnClickListener {
-                    val i = Intent(this@ActivityHome, ActivityBaseForFragment::class.java)
-                    i.putExtra("checkPage", "notification_bell")
-                    startActivity(i)
-                }
 
             }
-
         })
     }
 
+    private fun MediaPlayer()
+    {
+        notification_bell.setBadgeValue(notificationCount)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.activity_home, menu)
         return true
     }

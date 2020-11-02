@@ -28,6 +28,7 @@ class FragmentFacultyHome : Fragment() {
     private lateinit var attendences_cardview: CardView
     private lateinit var meeting_history_card: CardView
     private lateinit var saved_recordings_card: CardView
+    private lateinit var create_meeting_for_batches_cardview: CardView
 
     private lateinit var scheduled_meeting_card: CardView
     private lateinit var add_users_in_class_by_faculty_cardview: CardView
@@ -52,6 +53,7 @@ class FragmentFacultyHome : Fragment() {
         attendences_cardview = v.findViewById(R.id.attendences_cardview)
         meeting_history_card = v.findViewById(R.id.meeting_history_card)
         saved_recordings_card = v.findViewById(R.id.saved_recordings_card)
+        create_meeting_for_batches_cardview = v.findViewById(R.id.create_meeting_for_batches_cardview)
 
         scheduled_meeting_card = v.findViewById(R.id.scheduled_meeting_card)
         add_users_in_class_by_faculty_cardview = v.findViewById(R.id.add_users_in_class_by_faculty_cardview)
@@ -99,7 +101,9 @@ class FragmentFacultyHome : Fragment() {
         }
 
         scoreboard_card.setOnClickListener {
-            Constant.showMessage(it, "No story board found")
+
+            val i = Intent(activity, AddUsersInBatchesByFaculty::class.java)
+            startActivity(i)
         }
 
         join_meeting_cardview.setOnClickListener {
@@ -112,11 +116,11 @@ class FragmentFacultyHome : Fragment() {
 
 
         classrooms_cardview.setOnClickListener {
-
             val i = Intent(activity, ActivityBaseForFragment::class.java)
             i.putExtra("checkPage", "createRoom")
             startActivity(i)
         }
+
         scheduled_meeting_card.setOnClickListener {
 
             if (type.equals("User")) {
@@ -149,6 +153,12 @@ class FragmentFacultyHome : Fragment() {
         }
         else if (type.equals("Faculty")) {
             attendences_cardview.visibility = View.VISIBLE
+        }
+
+        create_meeting_for_batches_cardview.setOnClickListener {
+            val i = Intent(activity, ActivityBaseForFragment::class.java)
+            i.putExtra("checkPage", "createMeetingForBatch")
+            startActivity(i)
         }
 
 

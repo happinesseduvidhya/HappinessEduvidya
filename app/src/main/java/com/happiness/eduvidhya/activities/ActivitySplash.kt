@@ -15,8 +15,6 @@ import com.happiness.eduvidhya.R
 
 class ActivitySplash : AppCompatActivity(), Animation.AnimationListener {
 
-
-
     override fun onAnimationRepeat(p0: Animation?) {
     }
 

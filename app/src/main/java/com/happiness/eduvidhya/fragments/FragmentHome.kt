@@ -28,6 +28,7 @@ class FragmentHome : Fragment() {
     private lateinit var meetingCardView: CardView
     private lateinit var classrooms_cardview: CardView
     private lateinit var scoreboard_card: CardView
+    private lateinit var batches_meeting_cardview: CardView
 
     private lateinit var scheduled_meeting_card: CardView
     private lateinit var logoutBtn: Button
@@ -51,6 +52,7 @@ class FragmentHome : Fragment() {
         meetingCardView = v.findViewById(R.id.meetingCardView)
         classrooms_cardview = v.findViewById(R.id.classrooms_cardview)
         scoreboard_card = v.findViewById(R.id.scoreboard_card)
+        batches_meeting_cardview = v.findViewById(R.id.batches_meeting_cardview)
 
         scheduled_meeting_card = v.findViewById(R.id.scheduled_meeting_card)
 
@@ -105,7 +107,8 @@ class FragmentHome : Fragment() {
         classrooms_cardview.setOnClickListener {
 
             if (type.equals("User")) {
-                Constant.showMessage(it, "You are user, you cannot create class")
+                val i = Intent(activity, ActivityMeetingsFaculties::class.java)
+                startActivity(i)
             } else {
                 val i = Intent(activity, ActivityBaseForFragment::class.java)
                 i.putExtra("checkPage", "createRoom")
@@ -127,6 +130,10 @@ class FragmentHome : Fragment() {
 
             val intent = Intent(activity, ActivityStart::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        }
+        batches_meeting_cardview.setOnClickListener {
+            val intent = Intent(activity, ActivityAllBatchesMeetingSeeByUser::class.java)
             startActivity(intent)
         }
 

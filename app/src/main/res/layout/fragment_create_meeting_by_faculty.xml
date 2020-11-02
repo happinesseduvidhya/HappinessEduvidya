@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0">
+    android:background="@color/colorWhite">
 
     <ImageView
         android:id="@+id/image_back_arrow"
-        android:layout_width="@dimen/margin_15"
-        android:layout_height="@dimen/margin_15"
+        android:layout_width="@dimen/margin_25"
+        android:layout_height="@dimen/margin_25"
         android:layout_marginStart="15dp"
-        android:src="@drawable/ic_back_arrow"
+        android:src="@drawable/ic_left_arrow"
         app:layout_constraintBottom_toBottomOf="@id/create_heading_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/create_heading_title"
@@ -59,7 +59,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
-        android:hint="space not allowed in meeting name"
+        android:hint="Space not allowed in meeting name"
         android:fontFamily="@font/montserrat"
         android:gravity="start|center_vertical"
         android:textColor="#000000"
@@ -95,7 +95,7 @@
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
         android:clickable="true"
-        android:hint="enter meeting time"
+        android:hint="Enter meeting time"
         android:cursorVisible="false"
         android:drawableRight="@drawable/ic_clock"
         android:drawablePadding="@dimen/margin_10"
@@ -137,7 +137,7 @@
         android:layout_marginRight="10dp"
         android:backgroundTint="#FF9800"
         android:clickable="true"
-        android:hint="enter meeting date"
+        android:hint="Enter meeting date"
         android:cursorVisible="false"
         android:drawableRight="@drawable/ic_calendar"
         android:drawablePadding="@dimen/margin_10"
@@ -186,9 +186,9 @@
 
     <Button
         android:id="@+id/create_meeting_btn"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
@@ -197,8 +197,8 @@
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/relative_layout"
+        app:layout_constraintRight_toRightOf="@+id/relative_layout"
         app:layout_constraintTop_toBottomOf="@id/relative_layout" />
 
     <TextView

@@ -31,7 +31,7 @@ class ActivityTypeBatchesOrMeetings : AppCompatActivity() {
         }
 
         mangesMeetingBtn.setOnClickListener {
-            val i = Intent(applicationContext, ActivityMeetingStartByFaculty::class.java)
+            val i = Intent(applicationContext, ActivityAllMeetingsFacultyCanStart::class.java)
             i.putExtra("classroom_name", className)
             startActivity(i)
         }

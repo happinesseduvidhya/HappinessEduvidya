@@ -43,6 +43,8 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
     var listOfUsers: ArrayList<ModelUserInfo>? = null
 
     var type: String = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_users)
@@ -164,7 +166,6 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                             firstString: String,
                             secondString: String
                         ) {
-
                             if (secondString.equals("delete")) {
                                 mAlertShowDelete(firstString, type.toString())
 

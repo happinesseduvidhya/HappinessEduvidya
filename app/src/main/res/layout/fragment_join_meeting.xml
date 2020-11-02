@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f0f0f0">
+    android:background="@color/colorWhite">
+
+
+
 
     <ImageView
         android:id="@+id/image_back_arrow"
-        android:layout_width="@dimen/margin_15"
-        android:layout_height="@dimen/margin_15"
-        android:layout_marginLeft="15dp"
-        android:src="@drawable/ic_back_arrow"
+        android:layout_width="@dimen/margin_25"
+        android:layout_height="@dimen/margin_25"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_left_arrow"
         app:layout_constraintBottom_toBottomOf="@id/join_heading_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/join_heading_title"
@@ -20,7 +23,7 @@
         android:id="@+id/join_heading_title"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center_vertical|start"
@@ -48,7 +51,10 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/join_heading_title" />
+        app:layout_constraintTop_toBottomOf="@+id/join_heading_title"/>
+
+
+
 
     <EditText
         android:id="@+id/enter_join_meeting_edit"
@@ -61,16 +67,19 @@
         android:fontFamily="@font/montserrat"
         android:gravity="start|center_vertical"
         android:textColor="#000000"
+        android:hint="Enter meeting id"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meeting_id_text" />
 
+
+
     <Button
         android:id="@+id/enter_join_meeting_btn"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_round_btn"
         android:fontFamily="@font/montserrat"
@@ -79,8 +88,8 @@
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/enter_join_meeting_edit"
+        app:layout_constraintRight_toRightOf="@+id/enter_join_meeting_edit"
         app:layout_constraintTop_toBottomOf="@id/enter_join_meeting_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

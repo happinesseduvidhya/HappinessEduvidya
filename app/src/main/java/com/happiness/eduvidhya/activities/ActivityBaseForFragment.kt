@@ -37,6 +37,11 @@ class ActivityBaseForFragment: AppCompatActivity() {
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentCreate)
                 transcation.commit()
             }
+            if (checkPage.equals("createMeetingForBatch")) {
+                val fragmentCreateMeetingForBatchesByFaculty = FragmentCreateMeetingForBatchesByFaculty()
+                transcation.replace(R.id.frame_layout_base_fragment, fragmentCreateMeetingForBatchesByFaculty)
+                transcation.commit()
+            }
             if (checkPage.equals("join")) {
                 val fragmentJoin = FragmentJoinMeeting()
                 fragmentJoin.setArguments(bundle);

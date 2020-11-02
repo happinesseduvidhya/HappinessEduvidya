@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ActivityAllBatchesMeetingSeeByUser">
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/top_bar"/>
+
+
+    <TextView
+        android:id="@+id/select_faculty_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Please select your faculty"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar" />
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_faculty"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/custom_spinner"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="@+id/select_faculty_txt"
+        app:layout_constraintTop_toBottomOf="@+id/select_faculty_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_faculty"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/select_your_class_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Please select your class"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relative_layout_faculty" />
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_class"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/custom_spinner"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="@+id/select_your_class_txt"
+        app:layout_constraintTop_toBottomOf="@+id/select_your_class_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_class"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/select_from_batch_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Please select your batch"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relative_layout_class" />
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_batches"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/custom_spinner"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        app:layout_constraintStart_toStartOf="@+id/select_your_class_txt"
+        app:layout_constraintTop_toBottomOf="@+id/select_from_batch_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_batches"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:text="Next"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

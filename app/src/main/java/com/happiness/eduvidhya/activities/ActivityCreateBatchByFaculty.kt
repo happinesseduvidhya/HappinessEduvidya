@@ -179,7 +179,7 @@ class ActivityCreateBatchByFaculty : AppCompatActivity() {
 
                     classes.document(strEmail!!).collection("classrooms")
                         .document(strClassName.toString()).collection("Batches")
-                        .document(batchCheckLast.toString()).set(batch_detail).addOnSuccessListener {
+                        .document(batchCheckLast).set(batch_detail).addOnSuccessListener {
 
                         updatedProgressDilaog.dialog.dismiss()
                         submit_batch.isEnabled = false

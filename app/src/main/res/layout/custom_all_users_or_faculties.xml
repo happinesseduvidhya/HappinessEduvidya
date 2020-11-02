@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:background="@color/colorWhite"
     android:paddingBottom="@dimen/margin_5"
     android:layout_height="wrap_content">
 
@@ -15,6 +16,7 @@
         android:layout_marginBottom="@dimen/margin_5"
         app:cardCornerRadius="@dimen/margin_5"
         android:padding="@dimen/margin_5"
+        app:cardBackgroundColor="#F2F2F2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -42,7 +44,7 @@
                     android:gravity="center_vertical"
                     android:padding="10dp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/color_text"
                     android:textSize="@dimen/text_size_12sp"
                     android:fontFamily="@font/montserrat"
                     app:layout_constraintBottom_toBottomOf="parent"

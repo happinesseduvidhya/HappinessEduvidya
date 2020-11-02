@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/image_back_arrow"
-        android:layout_width="@dimen/margin_15"
-        android:layout_height="@dimen/margin_15"
-        android:layout_marginLeft="15dp"
-        android:src="@drawable/ic_back_arrow"
+        android:layout_width="@dimen/margin_25"
+        android:layout_height="@dimen/margin_25"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_left_arrow"
         app:layout_constraintBottom_toBottomOf="@id/class_heading_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/class_heading_title"

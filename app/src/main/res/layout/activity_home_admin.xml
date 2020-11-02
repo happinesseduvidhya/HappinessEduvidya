@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".activities.ActivityHomeAdmin">
 
     <View
@@ -11,7 +11,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="60dp"/>
 
     <TextView
         app:layout_constraintTop_toTopOf="@+id/firstView"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="@dimen/text_size_14sp"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:text="Admin"
         android:textStyle="bold"
         android:fontFamily="@font/montserrat"
@@ -38,78 +38,307 @@
         android:src="@drawable/ic_logout_"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
-        android:id="@+id/btnfaculaties"
-        android:text="Manages Faculties"
-        android:textAllCaps="false"
-        android:fontFamily="@font/montserrat"
-        android:background="@drawable/background_custom_btn"
+
+    <ScrollView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintBottom_toTopOf="@+id/usersBtn"
-        android:layout_width="@dimen/margin_200"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/usersBtn"
-        android:text="Manages Users"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btnfaculaties"
-        android:background="@drawable/background_custom_btn"
-        android:layout_marginTop="@dimen/margin_10"
-        android:fontFamily="@font/montserrat"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintBottom_toTopOf="@+id/createStudentBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        android:layout_width="@dimen/margin_200"
-        android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/createStudentBtn"
-        android:text="Create user"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/usersBtn"
-        android:background="@drawable/background_custom_btn"
-        app:layout_constraintBottom_toTopOf="@+id/createTeacherBtn"
-        android:layout_marginTop="@dimen/margin_10"
-        android:fontFamily="@font/montserrat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        android:layout_width="@dimen/margin_200"
-        android:layout_height="wrap_content"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/createTeacherBtn"
-        android:text="Create faculty"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/createStudentBtn"
-        android:background="@drawable/background_custom_btn"
-        android:layout_marginTop="@dimen/margin_10"
-        android:fontFamily="@font/montserrat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        android:layout_width="@dimen/margin_200"
-        android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/logoutBtn"
-        android:text="Logout"
-        android:visibility="gone"
-        android:layout_margin="@dimen/margin_10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/background_custom_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
+
+            <RelativeLayout
+                android:id="@+id/managesFacultiesRl"
+                android:textAllCaps="false"
+                android:layout_margin="@dimen/margin_10"
+                android:fontFamily="@font/montserrat"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_5"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_10"
+                android:background="@drawable/background_custom_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textColor="@color/color_text"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_100">
+
+                <ImageView
+                    android:id="@+id/firstIcon"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_admin_home"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+                <TextView
+                    android:id="@+id/managesFacultiesBtn"
+                    android:text="Manages Faculties"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:layout_toEndOf="@+id/firstIcon"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/firstMoveImg"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/managesUsersRl"
+                android:textAllCaps="false"
+                android:layout_margin="@dimen/margin_10"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_10"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/color_text"
+                android:background="@drawable/background_custom_btn"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/managesFacultiesRl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_100">
+
+
+
+
+
+                <ImageView
+                    android:id="@+id/secondIcon"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_admin_home"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+                <TextView
+                    android:id="@+id/managesUsersBtn"
+                    android:text="Manages Users"
+                    android:textAllCaps="false"
+                    android:layout_toEndOf="@+id/secondIcon"
+                    android:layout_margin="@dimen/margin_10"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/color_text"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/background_custom_btn"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/secondMoveImg"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/createUserRl"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginTop="@dimen/margin_5"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_10"
+                android:background="@drawable/background_custom_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_margin="@dimen/margin_10"
+                android:textColor="@color/color_text"
+                app:layout_constraintTop_toBottomOf="@+id/managesUsersRl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_100">
+
+
+                <ImageView
+                    android:id="@+id/thirdIcon"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_admin_home"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+                <TextView
+                    android:id="@+id/createUserBtn"
+                    android:text="Create User"
+                    android:textAllCaps="false"
+                    android:layout_toEndOf="@+id/thirdIcon"
+                    android:layout_margin="@dimen/margin_10"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/color_text"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/background_custom_btn"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/thirdMoveImg"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/createFacultyRl"
+                android:background="@drawable/background_custom_btn"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_margin="@dimen/margin_10"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_10"
+                android:textColor="@color/color_text"
+                app:layout_constraintTop_toBottomOf="@+id/createUserRl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_100">
+
+
+
+                <ImageView
+                    android:id="@+id/fourthIcon"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_admin_home"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+                <TextView
+                    android:id="@+id/createFacultyBtn"
+                    android:text="Create faculty"
+                    android:textAllCaps="false"
+                    android:layout_toEndOf="@+id/fourthIcon"
+                    android:layout_margin="@dimen/margin_10"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/margin_10"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/color_text"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/background_custom_btn"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/fourthMoveImg"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:scaleType="centerInside"
+                    android:layout_width="@dimen/margin_50"
+                    android:layout_height="@dimen/margin_50"/>
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/check_things"
+                android:layout_marginTop="@dimen/margin_10"
+                app:layout_constraintTop_toBottomOf="@+id/createFacultyRl"
+                app:layout_constraintStart_toStartOf="@+id/createFacultyRl"
+                app:layout_constraintEnd_toEndOf="@+id/createFacultyRl"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_40"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/meetingsBtn"-->
+<!--                android:text="Meetings"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:visibility="gone"-->
+<!--                android:fontFamily="@font/montserrat"-->
+<!--                android:layout_marginStart="@dimen/margin_5"-->
+<!--                android:layout_marginTop="@dimen/margin_5"-->
+<!--                android:background="@drawable/background_custom_btn"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                android:textColor="@color/colorWhite"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/batchesBtn"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/createFacultyBtn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="@dimen/margin_180"/>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/batchesBtn"-->
+<!--                android:text="Batches"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:visibility="gone"-->
+<!--                android:fontFamily="@font/montserrat"-->
+<!--                android:textColor="@color/colorWhite"-->
+<!--                android:layout_margin="@dimen/margin_5"-->
+<!--                android:background="@drawable/background_custom_btn"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/meetingsBtn"-->
+<!--                app:layout_constraintHorizontal_weight="1"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/createFacultyBtn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="@dimen/margin_180"/>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/logoutBtn"-->
+<!--                android:text="Logout"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_margin="@dimen/margin_10"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:background="@drawable/background_custom_btn"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                android:textColor="@color/colorWhite"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 
 

@@ -13,7 +13,7 @@
             android:id="@+id/image_back_arrow"
             android:layout_width="@dimen/margin_15"
             android:layout_height="@dimen/margin_15"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="@id/create_heading_title"
             app:layout_constraintLeft_toLeftOf="parent"

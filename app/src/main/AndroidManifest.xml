@@ -5,14 +5,23 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.MICROPHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name ="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name ="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTING"/>
+    <uses-permission android:name="android.permission.MICRO_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -22,11 +31,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ActivityCreateBatchByFaculty"></activity>
+        <activity android:name=".activities.ActivityOneBatcheAllMeetingSeeByUser"></activity>
+        <activity android:name=".activities.ActivityAllBatchesMeetingSeeByUser" />
+        <activity android:name=".activities.AddUsersInBatchesByFaculty" />
+        <activity android:name=".activities.ActivityCreateBatchByFaculty" />
         <activity android:name=".activities.ActivityTypeBatchesOrMeetings" />
         <activity android:name=".activities.ActivityMeetingAttendUsers" />
         <activity android:name=".activities.ActivityMeetingsHistoryAndAttendence" />
-        <activity android:name=".activities.ActivityMeetingStartByFaculty" />
+        <activity android:name=".activities.ActivityAllMeetingsFacultyCanStart" />
         <activity android:name=".activities.ActivityAllMeetingsSeeByUser" />
         <activity android:name=".activities.ActivityUsersAllClasses" />
         <activity android:name=".activities.ActivityMeetingsFaculties" />

@@ -1,7 +1,6 @@
 package com.happiness.eduvidhya.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.Interface.CallBackFirst
 import com.happiness.eduvidhya.R
-import com.happiness.eduvidhya.activities.ActivityAllMeetingsSeeByUser
-import com.happiness.eduvidhya.activities.ActivityUsersAllClasses
-import com.happiness.eduvidhya.datamodels.UserOrFacultyInfo
-import com.happiness.eduvidhya.datamodels.notificationModel
+import com.happiness.eduvidhya.datamodels.NotificationModel
 
 class AdapterNotification(
     val context: Context,
-    show_batches: ArrayList<notificationModel>?,
+    show_batches: ArrayList<NotificationModel>?,
     strTypeFacultyOrClasses: String,
     emailBackSide: String
 ) : RecyclerView.Adapter<AdapterNotification.ViewHolder>() {
@@ -27,7 +23,7 @@ class AdapterNotification(
     val db = FirebaseFirestore.getInstance()
     var strFacultyOrClasses: String? = ""
     var strFacultyEmail: String? = ""
-    var mArray: ArrayList<notificationModel>? = null
+    var mArray: ArrayList<NotificationModel>? = null
 
     var callBackFirst: CallBackFirst? = null
 
@@ -39,9 +35,10 @@ class AdapterNotification(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.meeting_id_txt.setText("Faculty Email : "+mArray?.get(position)?.facultyEmail)
-        holder.meeting_name_txt.setText("Meeting Time : "+mArray?.get(position)?.meetingTime)
-        holder.meeting_time_txt.setText("Meeting Status : Not started")
+        holder.meeting_id_txt.setText("Meeting ID : "+mArray?.get(position)?.facultyMeeting)
+        holder.meeting_name_txt.setText("Faculty Email : "+mArray?.get(position)?.facultyEmail)
+        holder.meeting_time_txt.setText("Meeting Time : "+mArray?.get(position)?.meetingTime)
+        holder.meeting_status_txt.visibility = View.GONE
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.happiness.eduvidhya.R
 import kotlinx.android.synthetic.main.activity_home_admin.*
 
@@ -15,14 +16,14 @@ class ActivityHomeAdmin : AppCompatActivity() {
         setContentView(R.layout.activity_home_admin)
 
 
-        btnfaculaties.setOnClickListener {
+        managesFacultiesRl.setOnClickListener {
 
             val intent = Intent(this, ActivityListUsersOrFaculty::class.java)
             intent.putExtra("Type","Faculties")
             startActivity(intent)
         }
 
-        usersBtn.setOnClickListener {
+        managesUsersRl.setOnClickListener {
 
             val intent = Intent(this, ActivityListUsersOrFaculty::class.java)
             intent.putExtra("Type","Users")
@@ -50,7 +51,7 @@ class ActivityHomeAdmin : AppCompatActivity() {
         }
 
 
-        createStudentBtn.setOnClickListener {
+        createUserRl.setOnClickListener {
             val intent = Intent(this, ActivityUserOrFacultyAddOrUpdate::class.java)
             intent.putExtra("Type","User")
             intent.putExtra("Name","")
@@ -59,7 +60,7 @@ class ActivityHomeAdmin : AppCompatActivity() {
             startActivity(intent)
         }
 
-        createTeacherBtn.setOnClickListener {
+        createFacultyRl.setOnClickListener {
 
             val intent = Intent(this, ActivityUserOrFacultyAddOrUpdate::class.java)
             intent.putExtra("Type","Faculty")

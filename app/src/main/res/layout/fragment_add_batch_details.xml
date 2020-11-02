@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f8f8f8">
 
     <ImageView
         android:id="@+id/image_back_arrow"
@@ -36,14 +32,13 @@
         app:layout_constraintLeft_toRightOf="@id/image_back_arrow"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
 
         android:id="@+id/meeting_name_text"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
@@ -76,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
@@ -115,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#000000"
         android:fontFamily="@font/montserrat"
@@ -149,6 +144,56 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meeting_date_text" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/meetingsUnder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorWhite"
+        android:text="Meetings Under Batch"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/margin_5"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/enter_meeting_date"/>
 
-</ScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toBottomOf="@+id/meetingsUnder"
+        android:layout_marginTop="@dimen/margin_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/all_users_recyclerview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_bar"/>
+
+
+
+        <TextView
+            android:id="@+id/meetingsCheckTxt"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:background="@color/colorWhite"
+            android:text="No meetings made by faculties"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/top_bar"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

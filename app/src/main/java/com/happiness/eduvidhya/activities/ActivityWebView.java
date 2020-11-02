@@ -53,8 +53,8 @@ public class ActivityWebView extends AppCompatActivity {
     String linkMy,meetingID,email,type,facultyEmailWhenUserComeOnThisScreen,classname;
     SharedPreferences mySharedPreferences;
 
-
     String strCheckMeetingWorkingOrExpired = "0";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

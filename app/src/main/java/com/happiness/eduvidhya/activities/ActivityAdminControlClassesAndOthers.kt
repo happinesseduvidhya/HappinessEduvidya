@@ -25,6 +25,7 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
 
     lateinit var enableDisableSwitch: Switch
 
+
     val db = FirebaseFirestore.getInstance()
     val faculties = db.collection("Faculties")
     val student_collection = db.collection("Users")
@@ -73,14 +74,7 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
             Constant.showMessage(it,"not working...")
             enableDisableSwitch_add_student.isChecked = false
 
-
         }
-
-//        add_students_in_batches_cardview.setOnClickListener {
-//            val intent = Intent(applicationContext,AllClassesByAdmin::class.java)
-//            intent.putExtra("email","gopi@gmail.com")
-//            startActivity(intent)
-//        }
 
         switch_case_login_approval.setOnClickListener {
 
@@ -92,8 +86,8 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
                 mDeActiveLoginApproval(it)
             }
 
-
         }
+
 
         enableDisableSwitch.setOnCheckedChangeListener(object :
             CompoundButton.OnCheckedChangeListener {
@@ -107,6 +101,7 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
     fun mActiveLoginApproval(buttonView:View)
     {
         updatedProgressDilaog.show(this@ActivityAdminControlClassesAndOthers)
+
         if (Constant.hasNetworkAvailable(applicationContext)) {
             val lucknowRef = db.collection(strType.toString()).document(email.toString())
             lucknowRef.update("admin_approvable", "1").addOnSuccessListener {

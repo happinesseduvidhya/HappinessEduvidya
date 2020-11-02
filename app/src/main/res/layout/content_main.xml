@@ -24,7 +24,7 @@
         android:layout_marginEnd="@dimen/margin_10"
         android:layout_gravity="center"
         app:ibv_badgeValue="12"
-        app:ibv_badgeTextSize="5sp"
+        app:ibv_badgeTextSize="7sp"
         app:ibv_fixedBadgeRadius="5dp"
         app:ibv_badgeTextStyle="bold"
         app:ibv_badgeTextColor="#ffffff"

@@ -1,5 +1,6 @@
 package com.happiness.eduvidhya.activities
 
+import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.happiness.eduvidhya.R
 
 
 class MainHome:AppCompatActivity() {
+
 
     private lateinit var create_meeting_cardview: CardView
     private lateinit var join_meeting_cardview: CardView
@@ -50,12 +52,14 @@ class MainHome:AppCompatActivity() {
             i.putExtra("checkPage", "batch")
             startActivity(i)
         }
-
-
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    override fun getActionBar(): ActionBar? {
+        return super.getActionBar()
     }
 }

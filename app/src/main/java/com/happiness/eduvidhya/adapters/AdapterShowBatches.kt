@@ -63,6 +63,8 @@ class AdapterShowBatches(val context: Context, show_batches: ArrayList<ListOfBat
                 i.putExtra("subjectname", meetingName.toString())
                 i.putExtra("topicname", meetingDate.toString())
                 i.putExtra("position", meetingTime.toString())
+                i.putExtra("classname", classname.toString())
+                i.putExtra("classroom_name", mArray?.get(position)?.batches_name.toString())
                 it.context.startActivity(i)
 
             }

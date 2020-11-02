@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.happiness.eduvidhya.activities.ActivityWebView
@@ -21,6 +22,7 @@ import org.apache.commons.codec.digest.DigestUtils
 
 class FragmentJoinMeeting : Fragment() {
 
+    private lateinit var image_back_arrow: ImageView
     private lateinit var enter_join_meeting_code: EditText
     private lateinit var join_meeting_btn: Button
     private lateinit var webview_screen: WebView
@@ -38,12 +40,17 @@ class FragmentJoinMeeting : Fragment() {
         val v: View = inflater.inflate(R.layout.fragment_join_meeting, container, false)
 
 
+        image_back_arrow = v.findViewById(R.id.image_back_arrow)
         join_meeting_btn = v.findViewById(R.id.enter_join_meeting_btn)
         enter_join_meeting_code = v.findViewById(R.id.enter_join_meeting_edit)
 
         val joinMeetingID = requireArguments().getString("subject_name")
         facultyEmailWhenUserComeOnThisScreen = requireArguments().getString("topic_name")
         classname = requireArguments().getString("classname")
+
+
+
+        val james = requireActivity()
 
         if (joinMeetingID != null)
         {
@@ -64,6 +71,10 @@ class FragmentJoinMeeting : Fragment() {
 
         }
 
+        image_back_arrow.setOnClickListener {
+            requireActivity().finish()
+        }
+
         return v
     }
 
@@ -74,18 +85,18 @@ class FragmentJoinMeeting : Fragment() {
             updatedProgressDilaog.show(requireActivity())
 
             val mySharedPreferences = requireActivity().getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
-            val name = mySharedPreferences.getString("user_name", "")
+            val strUserName = mySharedPreferences.getString("user_name", "")
             val type = mySharedPreferences.getString("type", "")
-
+            val name = strUserName!!.replace(" ","")
             val method = "join"
 
             var parameters:String = ""
             if (type.equals("Faculty"))
             {
-                parameters = "fullName="+name!!.trim()+"&meetingID="+ meeting_id +"&password=mp&redirect=true"
+                parameters = "fullName="+name.trim()+"&meetingID="+ meeting_id +"&password=mp&redirect=true"
             }
             else{
-                parameters = "fullName="+name!!.trim()+"&meetingID="+ meeting_id +"&password=ap&redirect=true"
+                parameters = "fullName="+name.trim()+"&meetingID="+ meeting_id +"&password=ap&redirect=true"
             }
 
             // val checksum = DigestUtils.shaHex(method + parameters + Constant.shared_secret)

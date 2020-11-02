@@ -93,8 +93,6 @@ class ActivityMeetingsFaculties : AppCompatActivity() {
                                     users_faculty,"faculty","")
                                 all_users_recyclerview.adapter = mRecyclerAdapter
                             }
-
-
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException())
                         }

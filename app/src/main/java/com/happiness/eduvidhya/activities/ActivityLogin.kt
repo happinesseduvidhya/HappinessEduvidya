@@ -43,8 +43,8 @@ class ActivityLogin : AppCompatActivity() {
 
     val users_collection = db.collection("Users")
     val faculties_collection = db.collection("Faculties")
-
     val admin_collection = db.collection("admin")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +73,8 @@ class ActivityLogin : AppCompatActivity() {
             s.setSpan(ForegroundColorSpan(ContextCompat.getColor(applicationContext!!,R.color.color_red)), 0, s.length, 0)
             liveitem.title = s
 
-
             popup.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
-
                 override fun onMenuItemClick(item: MenuItem): Boolean {
-
                     val types = item.getTitle()
                     if (types.equals("Select your type")) {
 
@@ -128,7 +125,7 @@ class ActivityLogin : AppCompatActivity() {
                             val document = task.getResult()
                             if (document!!.exists()) {
                                 val name = document.get("name")
-                                mLoginSucess(email,name.toString(),password,type)
+                                mLoginSucess(email.trim(),name.toString().trim(),password,type.trim())
 
                             } else {
                                 Constant.showMessage(view,"type is not valid")
@@ -194,6 +191,7 @@ class ActivityLogin : AppCompatActivity() {
                                 Constant.showMessage(view,"type is not valid")
                             }
                         } else {
+                            progressBar.dialog.dismiss()
                             Constant.showMessage(view,task.getException().toString())
                         }
                     }
@@ -203,8 +201,6 @@ class ActivityLogin : AppCompatActivity() {
         else {
             Toast.makeText(applicationContext, "No network available!", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     fun mLoginSucess(email:String,name:String,password:String,type:String)

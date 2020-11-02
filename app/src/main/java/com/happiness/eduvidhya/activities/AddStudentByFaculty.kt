@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.datamodels.ClassroomDetailsModel
+import com.happiness.eduvidhya.datamodels.Faculty
 import com.happiness.eduvidhya.datamodels.ModelUserInfo
 import com.happiness.eduvidhya.datamodels.StudentEmail
 import com.happiness.eduvidhya.utils.Constant
@@ -123,11 +124,12 @@ class AddStudentByFaculty : AppCompatActivity(){
                     updatedProgressDilaog.show(this)
                     val mySharedPreferences = getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
                     val email = mySharedPreferences.getString("user_email", "")
+                    val name = mySharedPreferences.getString("user_name", "")
 
                     usersAdd = classes.document(email.toString()).collection("classrooms").document(strClass.toString()).collection("users").document(search_user.text.toString())
                     modelUserInfo?.let { it1 -> usersAdd!!.set(it1) }!!.addOnSuccessListener {
 
-                        val student = StudentEmail("0")
+                        val student = Faculty(name.toString(),email.toString(),strClass.toString())
 
                         val modelUserInfo = ModelUserInfo("",search_user.text.toString(),"",strClass.toString())
                         faculty_collection.document(email.toString()).collection("Users").document(search_user.text.toString()).set(modelUserInfo)
