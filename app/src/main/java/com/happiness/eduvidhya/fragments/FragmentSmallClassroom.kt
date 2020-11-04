@@ -42,7 +42,6 @@ class FragmentSmallClassroom : Fragment() {
 
     var updatedProgressDilaog = CustomProgressDialog()
 
-
     private lateinit var create_batch_btn: Button
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -56,12 +55,15 @@ class FragmentSmallClassroom : Fragment() {
 
         create_batch_btn = v.findViewById(R.id.create_classroom_btn)
 
+
+        schedule_meeting_recyler.setOnClickListener {
+
+        }
+
         create_batch_btn.setOnClickListener {
             val i = Intent(activity, ActivityBaseForFragment::class.java)
             i.putExtra("checkPage", "createClassroom")
             startActivity(i)
-            //Toast.makeText(activity, "skdnskncfkd", Toast.LENGTH_SHORT).show()
-
         }
 
 
@@ -135,6 +137,7 @@ class FragmentSmallClassroom : Fragment() {
 //                }.addOnFailureListener { exception ->
 //                    updatedProgressDilaog.dialog.dismiss()
 //                }
+
         } else {
             Toast.makeText(activity, "No network available!", Toast.LENGTH_SHORT).show()
         }
@@ -143,9 +146,6 @@ class FragmentSmallClassroom : Fragment() {
             requireActivity().finish()
         }
 
-
         return v
-
-
     }
 }

@@ -32,10 +32,14 @@ class ActivityMeetingsFaculties : AppCompatActivity() {
     lateinit var title_top_bar_txt: TextView
 
 
+
+
     val db = FirebaseFirestore.getInstance()
     val users_collection = db.collection("Users")
 
     var updatedProgressDilaog = CustomProgressDialog()
+
+    lateinit var checkClick: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,7 @@ class ActivityMeetingsFaculties : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this@ActivityMeetingsFaculties)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         all_users_recyclerview.setLayoutManager(layoutManager)
+
 
         mFaculties()
     }
@@ -88,9 +93,7 @@ class ActivityMeetingsFaculties : AppCompatActivity() {
                             }
                             else{
                                 meetingsCheckTxt.visibility = View.GONE
-                                mRecyclerAdapter = AdapterAllClassesUser(
-                                    this@ActivityMeetingsFaculties,
-                                    users_faculty,"faculty","")
+                                mRecyclerAdapter = AdapterAllClassesUser(this@ActivityMeetingsFaculties, users_faculty,"faculty","")
                                 all_users_recyclerview.adapter = mRecyclerAdapter
                             }
                         } else {

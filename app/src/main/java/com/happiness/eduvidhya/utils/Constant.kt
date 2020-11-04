@@ -19,6 +19,8 @@ object Constant {
     var shared_secret = "KhYssBmjq3Q4OouoVGB1TorbBKnpxBSXGRDLbpNKsY"
     var myauth:FirebaseAuth?=null
 
+    var mConstantType =""
+
     fun showMessage(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).setAction("Action", null).show()
     }

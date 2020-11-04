@@ -2,6 +2,7 @@ package com.happiness.eduvidhya.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.transition.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.Hold
 import com.google.firebase.firestore.FirebaseFirestore
 import com.happiness.eduvidhya.Interface.CallBackFirst
 import com.happiness.eduvidhya.R
 import com.happiness.eduvidhya.activities.ActivityAllMeetingsSeeByUser
 import com.happiness.eduvidhya.activities.ActivityUsersAllClasses
 import com.happiness.eduvidhya.datamodels.UserOrFacultyInfo
+import com.happiness.eduvidhya.utils.Constant
 
 class AdapterAllClassesUser(
     val context: Context,
@@ -28,7 +31,12 @@ class AdapterAllClassesUser(
     var strFacultyEmail: String? = ""
     var mArray: ArrayList<UserOrFacultyInfo>? = null
 
-    var callBackFirst: CallBackFirst? = null
+
+    init {
+        this.mArray = show_batches
+        this.strFacultyOrClasses = strTypeFacultyOrClasses
+        this.strFacultyEmail = emailBackSide
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -47,6 +55,8 @@ class AdapterAllClassesUser(
 
         holder.etTitleTextView.setText(mArray?.get(position)?.strEmail)
 
+        holder.edit_img.visibility = View.GONE
+        holder.mDeleteImg.visibility = View.GONE
 
         holder.etTitleTextView.setOnClickListener {
 
@@ -57,16 +67,22 @@ class AdapterAllClassesUser(
                 it.context.startActivity(intent)
             }
             else if (strFacultyOrClasses.equals("AllUsersClasses")) {
-                val intent = Intent(it.context, ActivityAllMeetingsSeeByUser::class.java)
-                intent.putExtra("Email", strFacultyEmail)
-                intent.putExtra("ClassName", mArray?.get(position)?.strEmail.toString())
-                it.context.startActivity(intent)
+
+                if (Constant.mConstantType.equals("SeeOnlyClass"))
+                {
+                    //
+                }
+                else{
+                    val intent = Intent(it.context, ActivityAllMeetingsSeeByUser::class.java)
+                    intent.putExtra("Email", strFacultyEmail)
+                    intent.putExtra("ClassName", mArray?.get(position)?.strEmail.toString())
+                    it.context.startActivity(intent)
+                }
+
             }
-
         }
-
-
     }
+
 
     override fun getItemCount(): Int {
         return if (null != mArray) mArray!!.size else 0
@@ -92,9 +108,5 @@ class AdapterAllClassesUser(
     }
 
 
-    init {
-        this.mArray = show_batches
-        this.strFacultyOrClasses = strTypeFacultyOrClasses
-        this.strFacultyEmail = emailBackSide
-    }
+
 }

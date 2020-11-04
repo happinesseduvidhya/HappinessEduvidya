@@ -40,6 +40,7 @@ class ActivityOneBatcheAllMeetingSeeByUser : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_one_batch_all_meetings)
+
         back_top_bar_img = findViewById(R.id.back_top_bar_img)
         title_top_bar_txt = findViewById(R.id.title_top_bar_txt)
 

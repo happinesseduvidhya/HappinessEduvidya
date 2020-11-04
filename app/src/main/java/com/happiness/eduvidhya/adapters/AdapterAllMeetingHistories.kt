@@ -66,14 +66,20 @@ class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<M
             holder.moveForwardImg.visibility = View.INVISIBLE
         }
         else{
+            holder.meeting_name_txt.visibility = View.GONE
+            holder.meeting_status_txt.visibility = View.GONE
             holder.moveForwardImg.visibility = View.VISIBLE
         }
 
         holder.cardview_history_meeting.setOnClickListener {
 
-            val intent = Intent(it.context, ActivityMeetingAttendUsers::class.java)
-            intent.putExtra("Email", mArray?.get(position)?.strMeetingID)
-            it.context.startActivity(intent)
+            if (HistoryOrAttendence.equals("Attendence"))
+            {
+                val intent = Intent(it.context, ActivityMeetingAttendUsers::class.java)
+                intent.putExtra("Email", mArray?.get(position)?.strMeetingID)
+                it.context.startActivity(intent)
+            }
+
         }
     }
 
@@ -107,6 +113,5 @@ class AdapterAllMeetingHistories(val context: Context, show_batches: ArrayList<M
     init {
         this.mArray = show_batches
         this.HistoryOrAttendence = strHistoryOrAttendence
-
     }
 }

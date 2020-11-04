@@ -44,7 +44,8 @@ class FragmentHome : Fragment() {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.activity_home, container, false)
 
-        val mySharedPreferences = activity?.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+        val mySharedPreferences =
+            activity?.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
         val type = mySharedPreferences?.getString("type", "")
 
         auth = FirebaseAuth.getInstance()
@@ -61,15 +62,16 @@ class FragmentHome : Fragment() {
         if ((getActivity()?.let {
                 ContextCompat.checkSelfPermission(
                     it,
-                    Manifest.permission.RECORD_AUDIO)
-            } !== PackageManager.PERMISSION_GRANTED))
-        {
+                    Manifest.permission.RECORD_AUDIO
+                )
+            } !== PackageManager.PERMISSION_GRANTED)) {
             getActivity()?.let {
 
                 ActivityCompat.requestPermissions(
                     it,
                     arrayOf<String>(Manifest.permission.RECORD_AUDIO),
-                    REQUEST_MICROPHONE)
+                    REQUEST_MICROPHONE
+                )
             }
         }
 
@@ -94,26 +96,15 @@ class FragmentHome : Fragment() {
         }
         meetingCardView.setOnClickListener {
 
-            if (type.equals("User")) {
-
-                val i = Intent(activity, ActivityMeetingsFaculties::class.java)
-                startActivity(i)
-
-            } else {
-                Constant.showMessage(it, "no meetings available")
-            }
+            Constant.mConstantType =""
+            val i = Intent(activity, ActivityMeetingsFaculties::class.java)
+            startActivity(i)
         }
 
         classrooms_cardview.setOnClickListener {
-
-            if (type.equals("User")) {
-                val i = Intent(activity, ActivityMeetingsFaculties::class.java)
-                startActivity(i)
-            } else {
-                val i = Intent(activity, ActivityBaseForFragment::class.java)
-                i.putExtra("checkPage", "createRoom")
-                startActivity(i)
-            }
+            Constant.mConstantType ="SeeOnlyClass"
+            val i = Intent(activity, ActivityMeetingsFaculties::class.java)
+            startActivity(i)
         }
         scheduled_meeting_card.setOnClickListener {
 

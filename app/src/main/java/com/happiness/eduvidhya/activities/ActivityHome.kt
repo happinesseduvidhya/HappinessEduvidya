@@ -84,6 +84,8 @@ class ActivityHome : AppCompatActivity() {
                 transcation.replace(R.id.home_frame_layout, fragmentFacultyHome)
                 transcation.commit()
             }
+
+
         }
         else{
             if (savedInstanceState == null)
@@ -128,6 +130,9 @@ class ActivityHome : AppCompatActivity() {
 
         val name = mySharedPreferences.getString("user_name", "")
         navUsername.setText(name)
+
+
+
 
 
         navgationImgBtn.setOnClickListener {

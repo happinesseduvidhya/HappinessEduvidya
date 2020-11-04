@@ -32,6 +32,7 @@ import java.util.*
 
 class FragmentCreateMeetingForBatchesByFaculty : Fragment() {
 
+    private lateinit var image_back_arrow: ImageView
     private lateinit var enter_meeting_name: EditText
     private lateinit var enter_meeting_date: EditText
     private lateinit var enter_meeting_time: EditText
@@ -68,6 +69,7 @@ class FragmentCreateMeetingForBatchesByFaculty : Fragment() {
         val v: View = inflater.inflate(R.layout.fragment_create_meeting_for_batch_by_faculty, container, false)
 
 
+        image_back_arrow = v.findViewById(R.id.image_back_arrow)
         enter_meeting_name = v.findViewById(R.id.enter_meeting_name)
         enter_meeting_date = v.findViewById(R.id.enter_meeting_date)
         enter_meeting_time = v.findViewById(R.id.enter_meeting_time)
@@ -181,6 +183,10 @@ class FragmentCreateMeetingForBatchesByFaculty : Fragment() {
 
             }
 
+        }
+
+        image_back_arrow.setOnClickListener {
+            requireActivity().finish()
         }
 
         return v

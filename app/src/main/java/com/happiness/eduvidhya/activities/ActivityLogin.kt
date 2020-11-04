@@ -125,6 +125,8 @@ class ActivityLogin : AppCompatActivity() {
                             val document = task.getResult()
                             if (document!!.exists()) {
                                 val name = document.get("name")
+                                val checkName = document.get("high")
+                                val gaurav=
                                 mLoginSucess(email.trim(),name.toString().trim(),password,type.trim())
 
                             } else {
@@ -157,7 +159,6 @@ class ActivityLogin : AppCompatActivity() {
                                         mLoginSucess(email,name.toString(),password,type)
                                     }
 
-
                                 } else {
                                     Constant.showMessage(view,"type is not valid")
                                 }
@@ -176,6 +177,7 @@ class ActivityLogin : AppCompatActivity() {
                             progressBar.dialog.dismiss()
 
                             val document = task.getResult()
+
                             if (document!!.exists()) {
                                 val name = document.get("name")
                                 val admin_status = document.get("admin_approvable")
