@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_users.*
 
 class FragementShowBatches : Fragment() {
 
-    private var mRecyclerAdapter: AdapterShowBatches? = null
     private lateinit var show_batches_recycler:RecyclerView
     var list_of_batches: ArrayList<ListOfBatchesModel>? = null
     var detail_db: ListOfBatchesModel? = null
@@ -93,7 +92,7 @@ class FragementShowBatches : Fragment() {
                     }
                     else{
                         no_batches_txt.visibility = View.GONE
-                        mRecyclerAdapter = AdapterShowBatches(activity!!,list_of_batches,get_classroom.toString())
+                        val mRecyclerAdapter = AdapterShowBatches(activity!!,list_of_batches,get_classroom.toString())
                         show_batches_recycler.adapter = mRecyclerAdapter
                     }
                 }

@@ -182,6 +182,7 @@ class AddStudentByFaculty : AppCompatActivity(){
 
                     if (mArray.size ==0)
                     {
+                        add_student_btn.visibility = View.INVISIBLE
                         Toast.makeText(applicationContext, "No data found", Toast.LENGTH_SHORT).show()
                     }
                     else{

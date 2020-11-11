@@ -107,10 +107,10 @@ class FragmentFacultyHome : Fragment() {
         }
 
         join_meeting_cardview.setOnClickListener {
-
-            val i = Intent(activity, ActivityBaseForFragment::class.java)
-            i.putExtra("checkPage", "join")
-            startActivity(i)
+            Constant.showMessage(it, "not working...")
+//            val i = Intent(activity, ActivityBaseForFragment::class.java)
+//            i.putExtra("checkPage", "join")
+//            startActivity(i)
 
         }
 

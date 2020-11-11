@@ -74,7 +74,6 @@ class ActivityHome : AppCompatActivity() {
         strType = mySharedPreferences.getString("type", "")!!
 
 
-
         if (type!!.equals("Faculty"))
         {
             notification_bell.visibility = View.INVISIBLE

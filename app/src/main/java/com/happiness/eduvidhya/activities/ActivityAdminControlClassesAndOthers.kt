@@ -35,6 +35,8 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
     var email:String ?= null
     var strType:String ?= null
     var strKey:String ?= null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_control_classes_and_others)
@@ -67,6 +69,8 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
                 mDeActiveTheClass(it)
             }
         }
+
+        enableDisableSwitch = findViewById(R.id.enableDisableSwitch)
 
 
         enableDisableSwitch_add_student.setOnClickListener {
@@ -144,7 +148,7 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
             val lucknowRef = db.collection(strType.toString()).document(email.toString())
             lucknowRef.update("class_status", "1").addOnSuccessListener {
                 updatedProgressDilaog.dialog.dismiss()
-                Constant.showMessage(buttonView, "class disabled successfully")
+                Constant.showMessage(buttonView, "class enabled successfully")
             }
                 .addOnFailureListener {
                     updatedProgressDilaog.dialog.dismiss()
@@ -163,7 +167,7 @@ class ActivityAdminControlClassesAndOthers : AppCompatActivity() {
             val lucknowRef = db.collection(strType.toString()).document(email.toString())
             lucknowRef.update("class_status", "0").addOnSuccessListener {
                 updatedProgressDilaog.dialog.dismiss()
-                Constant.showMessage(buttonView, "class enable successfully")
+                Constant.showMessage(buttonView, "class disabled successfully")
             }
                 .addOnFailureListener {
                     updatedProgressDilaog.dialog.dismiss()

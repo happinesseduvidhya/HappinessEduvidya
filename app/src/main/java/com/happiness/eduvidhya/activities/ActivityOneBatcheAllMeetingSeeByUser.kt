@@ -34,7 +34,6 @@ class ActivityOneBatcheAllMeetingSeeByUser : AppCompatActivity() {
     var classType:String ?= null
     var classBatchID:String ?= null
     var meetingsArrays: ArrayList<ModelMeetings>? = null
-    private var mRecyclerAdapter: AdapterMeetingFacultyCanStart? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +104,7 @@ class ActivityOneBatcheAllMeetingSeeByUser : AppCompatActivity() {
                         meetingsCheckTxt.visibility = View.VISIBLE
                     } else {
                         meetingsCheckTxt.visibility = View.GONE
-                        mRecyclerAdapter = AdapterMeetingFacultyCanStart(
+                        val mRecyclerAdapter = AdapterMeetingFacultyCanStart(
                             this@ActivityOneBatcheAllMeetingSeeByUser,
                             meetingsArrays,
                             emailFaculty.toString(),

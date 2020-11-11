@@ -53,6 +53,7 @@ class AllClassesByAdmin : AppCompatActivity() {
 
         updatedProgressDilaog.show(this)
 
+
         if (Constant.hasNetworkAvailable(this)) {
 
 
@@ -92,6 +93,12 @@ class AllClassesByAdmin : AppCompatActivity() {
                         mRecyclerAdapter = AdapterAllScheduledMeetings(this, mArrayBatchesWithMeeting)
                         schedule_meeting_recyler.adapter = mRecyclerAdapter
                     }
+
+                    if (mRecyclerAdapter!!.equals(""))
+                    {
+                        Toast.makeText(applicationContext,"step",Toast.LENGTH_SHORT).show()
+                    }
+
                 }.addOnFailureListener { exception ->
                     updatedProgressDilaog.dialog.dismiss()
 
@@ -99,6 +106,8 @@ class AllClassesByAdmin : AppCompatActivity() {
         } else {
             Toast.makeText(applicationContext, "No network available!", Toast.LENGTH_SHORT).show()
         }
+
+
 
         title_top_bar_txt.setText("All Classrooms")
 

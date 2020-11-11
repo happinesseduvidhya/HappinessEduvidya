@@ -62,7 +62,6 @@ class ActivityAllMeetingsSeeByUser : AppCompatActivity() {
     }
 
     var meetingsArrays: ArrayList<ModelMeetings>? = null
-    private var mRecyclerAdapter: AdapterMeetingFacultyCanStart? = null
 
     fun mAllMeetings() {
         updatedProgressDilaog.show(this)
@@ -97,11 +96,11 @@ class ActivityAllMeetingsSeeByUser : AppCompatActivity() {
                     }
                     else{
                         meetingsCheckTxt.visibility = View.GONE
-                        mRecyclerAdapter = AdapterMeetingFacultyCanStart(this@ActivityAllMeetingsSeeByUser, meetingsArrays,emailFaculty.toString(),classType.toString())
+                        val mRecyclerAdapter = AdapterMeetingFacultyCanStart(this@ActivityAllMeetingsSeeByUser, meetingsArrays,emailFaculty.toString(),classType.toString())
                         all_users_recyclerview.adapter = mRecyclerAdapter
                     }
 
-                    all_users_recyclerview.adapter = mRecyclerAdapter
+//                    all_users_recyclerview.adapter = mRecyclerAdapter
 
                 }
 

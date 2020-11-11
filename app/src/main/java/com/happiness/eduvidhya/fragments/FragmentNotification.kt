@@ -34,7 +34,6 @@ class FragmentNotification : Fragment() {
     var mArraysFacultiesEmail:ArrayList<String> ?= null
     var mArraysNotifications:ArrayList<NotificationModel> ?= null
 
-    private var mRecyclerAdapter: AdapterNotification? = null
     private var all_users_recyclerview: RecyclerView? = null
 
 
@@ -118,7 +117,7 @@ class FragmentNotification : Fragment() {
 
                             }
 
-                            mRecyclerAdapter = mContext?.let { AdapterNotification(it,mArraysNotifications,"faculty","") }
+                            val mRecyclerAdapter = mContext?.let { AdapterNotification(it,mArraysNotifications,"faculty","") }
                             all_users_recyclerview!!.adapter = mRecyclerAdapter
 
                         }

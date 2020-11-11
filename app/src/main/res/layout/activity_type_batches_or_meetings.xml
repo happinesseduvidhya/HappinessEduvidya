@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@+id/managesBatchesBtn"
         app:layout_constraintVertical_chainStyle="packed"
         android:layout_width="@dimen/margin_200"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:layout_width="@dimen/margin_200"
         android:layout_height="wrap_content"/>
 

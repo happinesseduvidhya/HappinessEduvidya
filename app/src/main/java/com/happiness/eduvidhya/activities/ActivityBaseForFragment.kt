@@ -32,6 +32,8 @@ class ActivityBaseForFragment: AppCompatActivity() {
             bundle.putString("get_class_name", get_class_name)
 
 
+
+
             if (checkPage!!.equals("create")) {
                 val fragmentCreate = FragmentCreateMeetingByFaculty()
                 transcation.replace(R.id.frame_layout_base_fragment, fragmentCreate)

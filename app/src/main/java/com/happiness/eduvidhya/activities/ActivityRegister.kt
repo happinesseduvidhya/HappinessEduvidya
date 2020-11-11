@@ -244,13 +244,13 @@ class ActivityRegister : AppCompatActivity() {
 
     private fun mCallRegister(email:String,name:String,password:String)
     {
-        val mySharedPreferences = this.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
-        val editor = mySharedPreferences.edit()
-        editor.putString("user_email", email)
-        editor.putString("user_name", name)
-        editor.putString("user_password", password)
-        editor.putString("type", user_type)
-        editor.apply()
+//        val mySharedPreferences = this.getSharedPreferences("MYPREFERENCENAME", Context.MODE_PRIVATE)
+//        val editor = mySharedPreferences.edit()
+//        editor.putString("user_email", email)
+//        editor.putString("user_name", name)
+//        editor.putString("user_password", password)
+//        editor.putString("type", user_type)
+//        editor.apply()
         signin_btn.isEnabled = false
         finish()
         Toast.makeText(applicationContext, "Your account created successfully, please wait for the approval", Toast.LENGTH_SHORT).show()

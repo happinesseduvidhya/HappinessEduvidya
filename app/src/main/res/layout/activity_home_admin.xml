@@ -35,7 +35,7 @@
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="@+id/firstView"
         app:layout_constraintBottom_toBottomOf="@+id/firstView"
-        android:src="@drawable/ic_logout_"
+        android:src="@drawable/ic_logout_copy"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 

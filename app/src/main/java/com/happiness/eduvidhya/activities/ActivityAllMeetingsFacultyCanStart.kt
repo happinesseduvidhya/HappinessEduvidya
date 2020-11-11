@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.EventListener
@@ -64,7 +65,8 @@ class ActivityAllMeetingsFacultyCanStart : AppCompatActivity() {
 
 
     var meetingsArrays: ArrayList<ModelMeetings>? = null
-    private var mRecyclerAdapter: AdapterMeetingFacultyCanStart? = null
+
+
 
     fun mAllMeetings() {
 
@@ -103,7 +105,7 @@ class ActivityAllMeetingsFacultyCanStart : AppCompatActivity() {
                     else{
                         meetingsCheckTxt.visibility = View.GONE
                         Collections.reverse(meetingsArrays)
-                        mRecyclerAdapter = AdapterMeetingFacultyCanStart(this@ActivityAllMeetingsFacultyCanStart, meetingsArrays,"faculty",className.toString())
+                        val mRecyclerAdapter = AdapterMeetingFacultyCanStart(this@ActivityAllMeetingsFacultyCanStart, meetingsArrays,"faculty",className.toString())
                         meetings_recycler_start_faculty.adapter = mRecyclerAdapter
                     }
 

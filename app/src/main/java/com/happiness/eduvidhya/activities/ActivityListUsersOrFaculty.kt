@@ -37,7 +37,6 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
 
     var mArrayModelUserInfo: ModelUserInfo? = null
     var list_of_batches: ArrayList<ListOfBatchesModel>? = null
-    private var mRecyclerAdapter: AdapterAllUsersOrFaculties? = null
 
 
     var listOfUsers: ArrayList<ModelUserInfo>? = null
@@ -154,7 +153,7 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                             listOfUsers!!.add(modelUserInfo)
                         }
                     }
-                    mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                    val mRecyclerAdapter = AdapterAllUsersOrFaculties(
                         this@ActivityListUsersOrFaculty,
                         listOfUsers,
                         type
@@ -263,13 +262,13 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                             listOfUsers!!.add(modelUserInfo)
                         }
                     }
-                    mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                    val mRecyclerAdapter = AdapterAllUsersOrFaculties(
                         this@ActivityListUsersOrFaculty,
                         listOfUsers,
                         type
                     )
                     all_users_recyclerview.adapter = mRecyclerAdapter
-                            mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+                            mRecyclerAdapter.callBackFirst = object : CallBackFirst {
                                 override fun mCallBack(
                                     position: String,
                                     firstString: String,
@@ -359,14 +358,14 @@ class ActivityListUsersOrFaculty : AppCompatActivity() {
                         listOfUsers!!.add(modelUserInfo)
                     }
                 }
-                mRecyclerAdapter = AdapterAllUsersOrFaculties(
+                val mRecyclerAdapter = AdapterAllUsersOrFaculties(
                     this@ActivityListUsersOrFaculty,
                     listOfUsers,
                     type
                 )
                 all_users_recyclerview.adapter = mRecyclerAdapter
                 all_users_recyclerview.adapter = mRecyclerAdapter
-                mRecyclerAdapter!!.callBackFirst = object : CallBackFirst {
+                mRecyclerAdapter.callBackFirst = object : CallBackFirst {
                     override fun mCallBack(
                         position: String,
                         firstString: String,

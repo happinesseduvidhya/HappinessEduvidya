@@ -35,7 +35,6 @@ class FragmentSmallClassroom : Fragment() {
     private lateinit var image_back_arrow: ImageView
     private lateinit var schedule_meeting_recyler: RecyclerView
     var detail_db: ClassroomDetailsModel? = null
-    private var mRecyclerAdapter: AdapterSmallClassRoom? = null
     val db = FirebaseFirestore.getInstance()
     val faculties_collection = db.collection("Classes")
     var mArrayBatchesWithMeeting: ArrayList<ClassroomDetailsModel>? = null
@@ -83,14 +82,17 @@ class FragmentSmallClassroom : Fragment() {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     updatedProgressDilaog.dialog.dismiss()
                     detail_db = null
+
                     mArrayBatchesWithMeeting!!.clear()
+
                     for (data in value!!.documents) {
                         if (data.exists()) {
                             detail_db = ClassroomDetailsModel(data.id, "0", "0")
                             mArrayBatchesWithMeeting!!.add(detail_db!!)
                         }
                     }
-                    mRecyclerAdapter = AdapterSmallClassRoom(activity!!, mArrayBatchesWithMeeting)
+
+                    val mRecyclerAdapter = AdapterSmallClassRoom(activity!!, mArrayBatchesWithMeeting)
                     schedule_meeting_recyler.adapter = mRecyclerAdapter
                 }
 

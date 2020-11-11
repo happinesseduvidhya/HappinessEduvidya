@@ -1,6 +1,5 @@
 package com.happiness.eduvidhya.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -19,6 +18,8 @@ class ActivityStart:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+
+
         register_intent = findViewById(R.id.register_intent)
         login = findViewById(R.id.loginBtn)
 
@@ -26,12 +27,14 @@ class ActivityStart:AppCompatActivity() {
             val intent = Intent(this, ActivityLogin::class.java)
             startActivity(intent)
             finish()
-
         }
         register_intent.setOnClickListener {
             val intent = Intent(this, ActivityRegister::class.java)
             startActivity(intent)
         }
+
+
+
     }
 
 }
